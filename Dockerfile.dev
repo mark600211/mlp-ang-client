@@ -1,0 +1,24 @@
+FROM node
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.5 \
+    python3-pip \
+    && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm cache clean --force
+
+RUN npm install --no-package-lock --legacy-peer-deps
+
+RUN npm install --save typescript@3.9.2 --no-package-lock --force --legacy-peer-deps
+
+RUN npm install -g @angular/cli --no-package-lock
+
+COPY . /app
+
+CMD ["npm", "run", "start:dev"]

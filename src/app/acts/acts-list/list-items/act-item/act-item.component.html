@@ -1,0 +1,23 @@
+<mat-card
+  fxFlex
+  class="actCard"
+  *ngFor="let act of acts"
+  [routerLink]="['../details', act.id]"
+>
+  <mat-card-title>
+    {{ act.name }}
+  </mat-card-title>
+  <mat-card-subtitle> Лаборатория: {{ act.lab.label }} </mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="row">
+    <div>
+      <mat-icon>cloud_download</mat-icon>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div>
+      <mat-icon>cloud_download</mat-icon>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- [ngStyle]="{ backgroundColor: getColor(act.status) }" -->
