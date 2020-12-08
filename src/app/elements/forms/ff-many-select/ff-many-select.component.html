@@ -1,8 +1,8 @@
-<p *ngIf="!form.controls[key].valid && form.controls[key].touched">
-  Поле {{ label }} обязательно к заполнению
-</p>
 <mat-form-field fxFlexFill [formGroup]="form">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label *ngIf="!touchedAndNotValid">{{ label }}</mat-label>
+  <mat-label *ngIf="touchedAndNotValid"
+    >Поле {{ label }} обязательно к заполнению</mat-label
+  >
   <div *ngIf="optionsList.length < 1">
     <mat-select>
       <mat-option (click)="addItem()">Добавить</mat-option>

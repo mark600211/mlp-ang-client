@@ -16,9 +16,18 @@ export class FfInputComponent
   @Input() key: string;
   @Input() form: FormGroup;
   @Input() required: boolean;
-  get isValid() {
-    return this.form.controls[this.key].valid;
+  get touchedAndNotValid() {
+    if (
+      !this.form.controls[this.key].valid &&
+      this.form.controls[this.key].touched
+    ) {
+      return true;
+    } else {
+      false;
+    }
   }
+
+  placeholder: string
 
   constructor(private formService: FormControlService) {
     super();
@@ -27,6 +36,7 @@ export class FfInputComponent
   ngOnInit() {
     const control = this.formService.initControl(this.value, this.required);
     this.form.addControl(this.key, control);
+    this.placeholder = this.touchedAndNotValid ? `Поле ${this.label} обязательно к заполнению` : this.label
   }
 
   ngAfterViewInit() {}

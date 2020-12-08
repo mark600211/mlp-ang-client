@@ -25,6 +25,16 @@ export class FfManySelectComponent implements FormComponent, OnInit {
   @Input() deletable: boolean;
   @Input() optionFieldsService: Type<OptionFormFieldsAbstractService>;
   @ViewChild("select") _select: MatSelect;
+  get touchedActNotValid() {
+    if (
+      !this.form.controls[this.key].valid &&
+      this.form.controls[this.key].touched
+    ) {
+      return true;
+    } else {
+      false;
+    }
+  }
 
   optionsList: OptionsBaseModel[] = [];
   _openControl: boolean = false;
@@ -41,8 +51,6 @@ export class FfManySelectComponent implements FormComponent, OnInit {
     this.form.addControl(this.key, control);
     this.subscriptions$.add(
       this.actsFormControlService.getOptionsForOption().subscribe((items) => {
-        console.log("this is item" + items);
-
         this.optionsList = this.formService.createItemsForOption(items);
       })
     );
@@ -58,7 +66,6 @@ export class FfManySelectComponent implements FormComponent, OnInit {
 
             const option = this.formService.createItemForOption(item);
             this.optionsList = [...this.optionsList, option];
-            // this.form.controls[this.key].patchValue(item.id);
           });
         }
       });

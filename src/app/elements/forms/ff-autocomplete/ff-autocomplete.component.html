@@ -1,7 +1,7 @@
 <mat-form-field fxFlexFill [formGroup]="form">
   <input
     type="text"
-    [placeholder]="label"
+    [placeholder]="placeholder"
     matInput
     [formControlName]="key"
     [matAutocomplete]="auto"
@@ -11,7 +11,6 @@
       <mat-option
         appLookUp
         (onChangeButtonCondition)="buttonCondition($event, option)"
-        [value]="!populate ? option.value : option.key"
         ><div fxLayout="row">
           {{ option.value }}
           <app-edit-button

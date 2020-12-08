@@ -1,8 +1,5 @@
-<p *ngIf="!form.controls[key].valid && form.controls[key].touched">
-  Поле {{ label }} обязательно к заполнению
-</p>
 <div [formGroup]="form">
   <mat-form-field fxFlexFill>
-    <input matInput placeholder="{{ label }}" [formControlName]="key" />
+    <input matInput placeholder="{{ placeholder }}" [formControlName]="key" />
   </mat-form-field>
 </div>

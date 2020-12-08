@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
-import { FormGroup, FormGroupName } from "@angular/forms";
+import { FormGroup, FormGroupName, FormBuilder } from "@angular/forms";
 import { ActFormService } from "src/app/services/forms/act-form.service";
 import { ActFormFieldsService } from "src/app/services/forms/act-form-fields.service";
+import { DateTimeFields } from './datetime-fields.service';
+import { FormControlService } from '../services/form-control.service';
 
 @Component({
   selector: "app-ff-date-time",
@@ -15,21 +17,17 @@ export class FfDateTimeComponent implements OnInit {
   @Input() item: any;
 
   fields: any[];
-  newControl: FormGroup;
+
+  formGroup: FormGroup;
 
   constructor(
-    private AFS: ActFormService,
-    private AFFS: ActFormFieldsService,
-    private cdr: ChangeDetectorRef
+    private fieldsService: DateTimeFields,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.fields = this.AFFS.getFields(this.key, "act");
-    this.newControl = this.AFS.initForm(
-      this.key,
-      "act",
-      this.item ? this.item : null
-    );
+    this.fields = this.fieldsService.getFields()
+    const control = this.fb.grou
     this.form.setControl(this.key, this.newControl);
   }
 }
