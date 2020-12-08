@@ -1,8 +1,0 @@
-<mat-tab-group *ngIf="customers">
-  <mat-tab *ngFor="let customer of customers.getCustomers">
-    <ng-template mat-tab-label>
-      {{ customer.label }}
-    </ng-template>
-    <app-dating-list [customer]="customer" class="container"></app-dating-list>
-  </mat-tab>
-</mat-tab-group>

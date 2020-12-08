@@ -1,9 +1,9 @@
-import { ActBase } from './act-base';
+import { ActBase } from "./act-base";
 
 export class InputAct extends ActBase<string> {
-    controlType = 'input'
+  controlType = "input";
 
-    constructor(options: {} = {}) {
-        super(options);
-    }
+  constructor(options: {} = {}) {
+    super(options);
+  }
 }

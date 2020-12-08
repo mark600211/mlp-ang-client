@@ -53,40 +53,8 @@ import { FileUploadModule } from "ng2-file-upload";
 import { Md2Module, NoConflictStyleCompatibilityMode } from "angular-md2";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 
-import { AutocompleteComponent } from "./components/autocomplete/autocomplete.component";
-import { AddingItemComponent } from "./adding-item/adding-item.component";
-import { LookUpDirective } from "./directives/look-up.directive";
-import { AddressComponent } from "./components/address/address.component";
-import { FfSelectComponent } from "./components/forms/ff-select/ff-select.component";
-import { EditButtonComponent } from "./components/buttons/edit-button.component";
-import { DeleteButtonComponent } from "./components/buttons/delete-button.component";
-import { ClearButtonComponent } from "./components/buttons/clear-button.component";
-import { FfManySelectComponent } from "./components/forms/ff-many-select/ff-many-select.component";
-import { FfGroupSelectComponent } from "./components/forms/ff-group-select/ff-group-select.component";
-import { FfAutocompleteComponent } from "./components/forms/ff-autocomplete/ff-autocomplete.component";
-import { FfCheapAutocompleteComponent } from "./components/forms/ff-cheap-autocomplete/ff-cheap-autocomplete.component";
-import { FileDeleteConfirmComponent } from "./components/dialogs/file-delete-confirm/file-delete-confirm.component";
-import { TemplatesComponent } from "./components/dialogs/templates/templates.component";
-import { PdfViewComponent } from "./components/dialogs/templates/pdf-view/pdf-view.component";
-
 @NgModule({
-  declarations: [
-    AutocompleteComponent,
-    AddingItemComponent,
-    LookUpDirective,
-    AddressComponent,
-    FfSelectComponent,
-    EditButtonComponent,
-    DeleteButtonComponent,
-    ClearButtonComponent,
-    FfManySelectComponent,
-    FfGroupSelectComponent,
-    FfAutocompleteComponent,
-    FfCheapAutocompleteComponent,
-    FileDeleteConfirmComponent,
-    TemplatesComponent,
-    PdfViewComponent,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -96,6 +64,7 @@ import { PdfViewComponent } from "./components/dialogs/templates/pdf-view/pdf-vi
     MatButtonModule,
     FormsModule,
     MatIconModule,
+    MatListModule,
     MatAutocompleteModule,
     MatDialogModule,
     MatSelectModule,
@@ -108,6 +77,7 @@ import { PdfViewComponent } from "./components/dialogs/templates/pdf-view/pdf-vi
     CommonModule,
     DragDropModule,
     HttpClientModule,
+    MatAutocompleteModule,
     MatButtonToggleModule,
     MatRadioModule,
     MatToolbarModule,
@@ -139,19 +109,9 @@ import { PdfViewComponent } from "./components/dialogs/templates/pdf-view/pdf-vi
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    AutocompleteComponent,
     FileUploadModule,
     Md2Module,
     NoConflictStyleCompatibilityMode,
-    LookUpDirective,
-    AddressComponent,
-    FfSelectComponent,
-    FfManySelectComponent,
-    FfGroupSelectComponent,
-    ClearButtonComponent,
-    FfAutocompleteComponent,
-    FfCheapAutocompleteComponent,
-    TemplatesComponent,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },

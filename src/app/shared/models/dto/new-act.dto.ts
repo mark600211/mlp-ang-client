@@ -5,15 +5,12 @@ export class NewActDto {
   public customer: string;
   public generalCustomer: string;
   public lab: string;
-  public typeOfSample: {
-    habitan: string;
-    htype: string;
-  };
+  public typeOfSample: string;
   public objectName?: string;
   public place?: string;
-  public datetime?: {
-    date?: Date;
-    time?: string;
+  public datetime: {
+    date: Date;
+    time: string;
   };
   public method?: string;
   public toolType?: string;
@@ -37,15 +34,12 @@ export class NewActDto {
     customer: string;
     generalCustomer: string;
     lab: string;
-    typeOfSample: {
-      habitan: string;
-      htype: string;
-    };
+    typeOfSample: string;
     objectName?: string;
     place?: string;
     datetime?: {
-      date?: Date;
-      time?: string;
+      date: Date;
+      time: string;
     };
     method?: string;
     toolType?: string;

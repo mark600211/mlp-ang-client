@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
-import {
-  CreateLabTosRuleGQL,
-  CreateLabTosRuleMutation,
-  GetGeneratePathGQL,
-  GetGeneratePathQuery,
-  UpdateLabTosRuleGQL,
-  UpdateLabTosRuleMutation,
-} from "../../../types/generated";
 import { map, catchError } from "rxjs/operators";
 import { ProcessHTTPMsgService } from "../process-httpmsg.service";
 import { Observable } from "rxjs";
+import {
+  CreateRulesLabTosGQL,
+  CreateRulesLabTosMutation,
+  GetRuleForLabTosGQL,
+  GetRuleForLabTosQuery,
+  PatchRulesLabTosGQL,
+  PatchRulesLabTosMutation,
+} from "src/types/rules/generated";
 
 @Injectable({
   providedIn: "root",
@@ -17,42 +17,49 @@ import { Observable } from "rxjs";
 export class RulesControlService {
   constructor(
     private processHTTPMsgService: ProcessHTTPMsgService,
-    private readonly createRuleLabTos: CreateLabTosRuleGQL,
-    private readonly getGeneratePath: GetGeneratePathGQL,
-    private readonly updateGeneratePath: UpdateLabTosRuleGQL
+    private readonly getRuleForLabTosGQL: GetRuleForLabTosGQL,
+    private readonly createRulesLabTos: CreateRulesLabTosGQL,
+    private readonly patchRulesLabTos: PatchRulesLabTosGQL
   ) {}
 
   getRuleLabTosTemplate(
     labId: string,
     typeId: string
-  ): Observable<GetGeneratePathQuery["getLabTypeOfSampleTemplate"]> {
-    return this.getGeneratePath
-      .watch({ labId, typeId })
-      .valueChanges.pipe(map(({ data }) => data.getLabTypeOfSampleTemplate))
+  ): Observable<
+    GetRuleForLabTosQuery["findOneWhereLabTypeOfSampleTemplateModel"]
+  > {
+    return this.getRuleForLabTosGQL
+      .watch({ data: { customerId: labId, generalCustomerId: typeId } })
+      .valueChanges.pipe(
+        map(({ data }) => data.findOneWhereLabTypeOfSampleTemplateModel)
+      )
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   postRuleLabTOSTemplate(
     labId: string,
-    typeId: string,
+    typeOfSampleId: string,
     path: string
-  ): Observable<CreateLabTosRuleMutation["createLabTypeOfSampleTemplate"]> {
-    console.log(labId, typeId, path);
+  ): Observable<
+    CreateRulesLabTosMutation["createLabTypeOfSampleTemplateModel"]
+  > {
+    console.log(labId, typeOfSampleId, path);
 
-    return this.createRuleLabTos
-      .mutate({ data: { labId, typeId, path } })
-      .pipe(map(({ data }) => data.createLabTypeOfSampleTemplate))
+    return this.createRulesLabTos
+      .mutate({ data: { labId, typeOfSampleId, path } })
+      .pipe(map(({ data }) => data.createLabTypeOfSampleTemplateModel))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   patchRuleLabTOSTemplate(
-    labId: string,
-    typeId: string,
+    id: string,
     path: string
-  ): Observable<UpdateLabTosRuleMutation["updateLabTypeOfSampleTemplate"]> {
-    return this.updateGeneratePath
-      .mutate({ data: { labId, typeId, path } })
-      .pipe(map(({ data }) => data.updateLabTypeOfSampleTemplate))
+  ): Observable<
+    PatchRulesLabTosMutation["updateLabTypeOfSampleTemplateModel"]
+  > {
+    return this.patchRulesLabTos
+      .mutate({ id, data: path })
+      .pipe(map(({ data }) => data.updateLabTypeOfSampleTemplateModel))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

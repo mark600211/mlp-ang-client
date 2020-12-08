@@ -11,19 +11,43 @@
 
 generates:
   "src/types/acts/generated.ts":
-    schema: '../portal/apps/acts/shema.gql'
+    schema: "../mlp-ts-back-end/apps/acts/shema.gql"
     documents: "src/app/services/controls/acts/graphql/**/*.graphql.ts"
+    config:
+      namedClient: "ActsClient"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-apollo-angular"
 
+  "src/types/consumers/generated.ts":
+    schema: "../mlp-ts-back-end/apps/consumers/shema.gql"
+    documents: "src/app/services/controls/consumers/graphql/**/*.graphql.ts"
+    config:
+      namedClient: "ConsumersClient"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-apollo-angular"
 
-
-
-
-
-
+  "src/types/options/generated.ts":
+    schema: "../mlp-ts-back-end/apps/options/shema.gql"
+    documents: "src/app/services/controls/options/graphql/**/*.graphql.ts"
+    config:
+      namedClient: "OptionsClient"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-apollo-angular"
+  # "src/types/rules/generated.ts":
+  #   schema: "../mlp-ts-back-end/apps/rules/shema.gql"
+  #   documents: "src/app/services/controls/rules/graphql/**/*.graphql.ts"
+  #   config:
+  #     namedClient: "RulesClient"
+  #   plugins:
+  #     - "typescript"
+  #     - "typescript-operations"
+  #     - "typescript-apollo-angular"
   # "src/types/sub-generated.ts":
   #   schema: "http://localhost:3060/graphql"
   #   documents: "src/app/services/controls/graphql/subscriptions/*.graphql.ts"

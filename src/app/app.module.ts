@@ -4,43 +4,33 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { SharedModule } from "./shared/shared.module";
-import { ApolloFilesModule } from "./shared/apollo/apollo-files.module";
+import { ApolloClientsModule } from "./apollo/apollo.module";
 
 import { AppComponent } from "./app.component";
 
-import { HeaderComponent } from "./header/header.component";
-import { LoginComponent } from "./login/login.component";
-
-import { ActControlService } from "./services/controls/act-control.service";
-import { CustomerControlService } from "./services/controls/customer-control.service";
-import { GeneralCustomerControlService } from "./services/controls/general-custromer-control.service";
-import { LabsControlService } from "./services/controls/labs-control.service";
+import { ActControlService } from "./services/controls/acts/act-control.service";
 import { ProcessHTTPMsgService } from "./services/process-httpmsg.service";
 
-import { environment } from "../environments/environment";
 import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/google-maps-autocomplete";
 import { AgmCoreModule } from "@agm/core";
+import { LoginComponent } from "./components/login/login.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { FFModule } from "./elements/forms/ff.module";
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, LoginComponent],
   imports: [
+    ApolloClientsModule.register(),
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     SharedModule,
+    FFModule,
     MatGoogleMapsAutocompleteModule,
     AgmCoreModule.forRoot(),
-    ApolloFilesModule,
   ],
   entryComponents: [LoginComponent],
-  providers: [
-    ActControlService,
-    CustomerControlService,
-    GeneralCustomerControlService,
-    LabsControlService,
-    ProcessHTTPMsgService,
-    { provide: "BaseURL", useValue: environment.baseURL },
-  ],
+  providers: [ActControlService, ProcessHTTPMsgService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

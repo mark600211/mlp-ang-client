@@ -2,10 +2,10 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", redirectTo: "acts", pathMatch: "full" },
   {
-    path: "acts",
-    loadChildren: () => import("./acts/acts.module").then((m) => m.ActsModule),
+    path: "",
+    loadChildren: () =>
+      import("./components/components.module").then((m) => m.ComponentsModule),
   },
 ];
 
