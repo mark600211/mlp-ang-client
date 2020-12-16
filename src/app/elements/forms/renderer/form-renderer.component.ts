@@ -123,5 +123,7 @@ export class FormRendererComponent<T> implements OnInit, RendererComponent {
     componentRef.instance.required = this.field.required;
     componentRef.instance.optionFieldsService = this.field.optionFieldsService;
     componentRef.instance.value = this.field.value;
+    componentRef.instance.isDepended = this.field.isDepened;
+    componentRef.instance.dependedFrom = this.field.dependFrom;
   }
 }

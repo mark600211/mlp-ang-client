@@ -27,15 +27,6 @@ export class GeneralCustomerControlService {
     private processHTTPMsgService: ProcessHTTPMsgService
   ) {}
 
-  getGeneralCustomersForOption(): Observable<
-    GetGeneralCustomersForOptionQuery["findAllGeneralCustomer"]
-  > {
-    return this.getGeneralCustomersForOptionGQL
-      .watch()
-      .valueChanges.pipe(map(({ data }) => data.findAllGeneralCustomer))
-      .pipe(catchError(this.processHTTPMsgService.handleError));
-  }
-
   getWholeCustomer(
     id: string
   ): Observable<GetWholeGeneralCustomerQuery["findByIdGeneralCustomer"]> {

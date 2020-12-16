@@ -18,6 +18,7 @@ import { UpdateActDto } from "src/app/shared/models/dto/update-act.dto";
 import { ActControlService } from "src/app/services/controls/acts/act-control.service";
 import { FieldBase } from "./models/fields/field-base.model";
 import { ActFormFieldsService } from "./services/act-form-fields.service";
+import { PatchActModel } from "./models/patch-act.model";
 
 const moment = _moment || _rollupMoment;
 
@@ -69,10 +70,9 @@ export class ActFormComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.acts = this.AFFS.getFields("act", "act");
-    // this.formAct = this.AFS.initForm("act", "act", this.act);
     this.formAct = this.fb.group({});
     this.fields = this.fieldsService.getFields();
+    this.formAct.valueChanges.subscribe((val) => {});
   }
 
   ngAfterContentInit() {
@@ -107,11 +107,13 @@ export class ActFormComponent implements OnInit, AfterContentInit, OnDestroy {
         ();
     } else {
       this.subscriptions$.add(
-        this.acs.postAct(this.formAct.value).subscribe((act) => {
-          this._snackBar.open(`Акт ${act.createAct.name}`, "Создан", {
-            duration: 2000,
-          });
-        })
+        this.acs
+          .postAct(new PatchActModel(this.formAct.value))
+          .subscribe((act) => {
+            this._snackBar.open(`Акт ${act.createAct.name}`, "Создан", {
+              duration: 2000,
+            });
+          })
       );
     }
   }

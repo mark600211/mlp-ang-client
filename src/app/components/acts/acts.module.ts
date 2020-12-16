@@ -20,6 +20,8 @@ import { DetailsPdfComponent } from "./act-details/details-pdf/details-pdf.compo
 import { FilterOptionsPipe } from "./acts-table/pipes/filter-options.pipe";
 import { DirectivesModule } from "src/app/directives/directives.module";
 import { FFModule } from "src/app/elements/forms/ff.module";
+import { ColumnFileterComponent } from "./acts-table/filters/column-filter.component";
+import { TableFilterComponent } from "./acts-table/filters/table-filter.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { FFModule } from "src/app/elements/forms/ff.module";
     DocsComponent,
     DetailsPdfComponent,
     FilterOptionsPipe,
+    ColumnFileterComponent,
+    TableFilterComponent,
   ],
   imports: [
     SharedModule,

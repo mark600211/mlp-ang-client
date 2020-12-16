@@ -1,21 +1,24 @@
 <mat-form-field fxFlexFill [formGroup]="form">
-  <mat-label *ngIf="!touchedAndNotValid">{{ label }}</mat-label>
-  <mat-label *ngIf="touchedAndNotValid"
+  <mat-label *ngIf="!touchedAndNotValid && !isDisbaled()">{{
+    label
+  }}</mat-label>
+  <mat-label *ngIf="touchedAndNotValid && !isDisbaled()"
     >Поле {{ label }} обязательно к заполнению</mat-label
   >
+  <mat-label *ngIf="isDisbaled()">{{ disabledLabel }}</mat-label>
   <div *ngIf="optionsList.length < 1">
-    <mat-select>
+    <mat-select [disabled]="isDisbaled()">
       <mat-option (click)="addItem()">Добавить</mat-option>
     </mat-select>
   </div>
   <div *ngIf="optionsList.length >= 1">
-    <mat-select [formControlName]="key" multiple #select>
+    <mat-select [formControlName]="key" multiple>
       <div *ngFor="let option of optionsList">
         <mat-option
           (click)="_diselect()"
           appLookUp
           (onChangeButtonCondition)="buttonCondition($event, option)"
-          [value]="option.value"
+          [value]="option.key"
           >{{ option.value }}
           <app-edit-button
             (click)="editOpen(option)"

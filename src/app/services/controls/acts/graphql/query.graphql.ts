@@ -3,30 +3,37 @@ import { WholeActWithIds, WholeApplication } from "./fragments.graphql";
 
 export class getAllActs {
   document = gql`
-    query findAllAct {
-      findAllAct {
-        id
-        name
-        customer {
+    query findAllAct($conditions: TableConditions!) {
+      getTableContent(conditions: $conditions) {
+        acts {
           id
-          label
+          name
+          customer {
+            id
+            label
+          }
+          generalCustomer {
+            id
+            label
+          }
+          lab {
+            id
+            label
+          }
+          typeOfSample {
+            id
+            label
+          }
+          datetime {
+            date
+            time
+          }
         }
-        generalCustomer {
-          id
-          label
-        }
-        lab {
-          id
-          label
-        }
-        typeOfSample {
-          id
-          label
-        }
-        datetime {
-          date
-          time
-        }
+        uniqCustomers
+        uniqGeneralCustomers
+        uniqLabs
+        uniqTypeOfSamples
+        totalCount
       }
     }
   `;

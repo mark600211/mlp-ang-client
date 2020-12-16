@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from "@angular/core";
-import { ActControlService } from "../../services/controls/acts/act-control.service";
 
 import { Params, ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
@@ -8,7 +7,6 @@ import { ActModel } from "src/app/shared/models/act.model";
 import { StatusModel } from "src/app/shared/models/status.model";
 import { RulesControlService } from "src/app/services/controls/rules-control.service";
 import { RulesService } from "src/app/services/data/rules.service";
-import { FilesControlService } from "src/app/services/controls/files-control.service";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -31,13 +29,13 @@ export class ActDetailsComponent {
   confirmDelete: boolean;
 
   constructor(
-    private acs: ActControlService,
+    // private acs: ActControlService,
     private route: ActivatedRoute,
     private location: Location,
     private rulesControlServic: RulesControlService,
-    private readonly rulesService: RulesService,
-    private readonly filesControlService: FilesControlService
-  ) {}
+    private readonly rulesService: RulesService
+  ) // private readonly filesControlService: FilesControlService
+  {}
 }
 
 //   ngOnInit() {

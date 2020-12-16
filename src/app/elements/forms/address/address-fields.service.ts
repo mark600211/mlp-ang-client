@@ -1,50 +1,50 @@
-import { Injectable } from '@angular/core';
-import { InputAct } from '../../models/ff/act-input';
+import { Injectable } from "@angular/core";
+import { FieldBase } from "src/app/components/acts/act-form/models/fields/field-base.model";
+import { InputField } from "src/app/components/acts/act-form/models/fields/input-field.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AddressFieldsService {
+  constructor() {}
 
-  constructor() { }
-
-  getFields() {
+  getFields(): FieldBase<any>[] {
     let fields = [
-      new InputAct({
+      new InputField({
         visible: true,
         key: "country",
-        label: "Страна"
+        label: "Страна",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "region",
-        label: "Область"
+        label: "Область",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "city",
-        label: "Город"
+        label: "Город",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "street",
-        label: "Улица"
+        label: "Улица",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "building",
-        label: "Строение"
+        label: "Строение",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "room",
-        label: "Офис/Квартира"
+        label: "Офис/Квартира",
       }),
-      new InputAct({
+      new InputField({
         visible: true,
         key: "zip",
-        label: "Индекс"
-      })
+        label: "Индекс",
+      }),
     ];
     return fields;
   }

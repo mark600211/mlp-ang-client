@@ -18,18 +18,6 @@ export type Scalars = {
 
 
 
-export type Addition = {
-  __typename?: 'Addition';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type AdditionAct = {
-  __typename?: 'AdditionAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type AddresInput = {
   building?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
@@ -60,18 +48,11 @@ export type Application = {
 
 export type ClimaticEnvironmental = {
   __typename?: 'ClimaticEnvironmental';
-  id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type ClimaticEnvironmentalAct = {
-  __typename?: 'ClimaticEnvironmentalAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type CustomerAct = {
-  __typename?: 'CustomerAct';
+export type Customer = {
+  __typename?: 'Customer';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -98,26 +79,14 @@ export type DefinedIndicator = {
   label: Scalars['String'];
 };
 
-export type DefinedIndicatorsAct = {
-  __typename?: 'DefinedIndicatorsAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type EnvironmentalEngineer = {
   __typename?: 'EnvironmentalEngineer';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type EnvironmentalEngineerAct = {
-  __typename?: 'EnvironmentalEngineerAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type GeneralCustomerAct = {
-  __typename?: 'GeneralCustomerAct';
+export type GeneralCustomer = {
+  __typename?: 'GeneralCustomer';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -132,26 +101,8 @@ export type Goal = {
   label: Scalars['String'];
 };
 
-export type GoalAct = {
-  __typename?: 'GoalAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type InformationAboutSelection = {
-  __typename?: 'InformationAboutSelection';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type InformationAboutSelectionAct = {
-  __typename?: 'InformationAboutSelectionAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type LabAct = {
-  __typename?: 'LabAct';
+export type Lab = {
+  __typename?: 'Lab';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -166,20 +117,12 @@ export type Method = {
   label: Scalars['String'];
 };
 
-export type MethodAct = {
-  __typename?: 'MethodAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  createAddition: Addition;
   createClimaticEnvironmental: ClimaticEnvironmental;
   createDefinedIndicator: DefinedIndicator;
   createEnvironmentalEngineer: EnvironmentalEngineer;
   createGoal: Goal;
-  createInformationAboutSelection: InformationAboutSelection;
   createMethod: Method;
   createNormativeDocument: NormativeDocument;
   createObjectName: ObjectName;
@@ -192,12 +135,10 @@ export type Mutation = {
   createSampleType: SampleType;
   createToolType: ToolType;
   createTypeOfSample: TypeOfSample;
-  deleteByIdAddition?: Maybe<Addition>;
   deleteByIdClimaticEnvironmental?: Maybe<ClimaticEnvironmental>;
   deleteByIdDefinedIndicator?: Maybe<DefinedIndicator>;
   deleteByIdEnvironmentalEngineer?: Maybe<EnvironmentalEngineer>;
   deleteByIdGoal?: Maybe<Goal>;
-  deleteByIdInformationAboutSelection?: Maybe<InformationAboutSelection>;
   deleteByIdMethod?: Maybe<Method>;
   deleteByIdNormativeDocument?: Maybe<NormativeDocument>;
   deleteByIdObjectName?: Maybe<ObjectName>;
@@ -210,12 +151,10 @@ export type Mutation = {
   deleteByIdSampleType?: Maybe<SampleType>;
   deleteByIdToolType?: Maybe<ToolType>;
   deleteByIdTypeOfSample?: Maybe<TypeOfSample>;
-  updateAddition: Addition;
   updateClimaticEnvironmental: ClimaticEnvironmental;
   updateDefinedIndicator: DefinedIndicator;
   updateEnvironmentalEngineer: EnvironmentalEngineer;
   updateGoal: Goal;
-  updateInformationAboutSelection: InformationAboutSelection;
   updateMethod: Method;
   updateNormativeDocument: NormativeDocument;
   updateObjectName: ObjectName;
@@ -228,12 +167,10 @@ export type Mutation = {
   updateSampleType: SampleType;
   updateToolType: ToolType;
   updateTypeOfSample: TypeOfSample;
-  updateWhereAddition: Addition;
   updateWhereClimaticEnvironmental: ClimaticEnvironmental;
   updateWhereDefinedIndicator: DefinedIndicator;
   updateWhereEnvironmentalEngineer: EnvironmentalEngineer;
   updateWhereGoal: Goal;
-  updateWhereInformationAboutSelection: InformationAboutSelection;
   updateWhereMethod: Method;
   updateWhereNormativeDocument: NormativeDocument;
   updateWhereObjectName: ObjectName;
@@ -249,13 +186,8 @@ export type Mutation = {
 };
 
 
-export type MutationCreateAdditionArgs = {
-  data: NewOption;
-};
-
-
 export type MutationCreateClimaticEnvironmentalArgs = {
-  data: NewOption;
+  data: Scalars['String'];
 };
 
 
@@ -274,11 +206,6 @@ export type MutationCreateGoalArgs = {
 };
 
 
-export type MutationCreateInformationAboutSelectionArgs = {
-  data: NewOption;
-};
-
-
 export type MutationCreateMethodArgs = {
   data: NewOption;
 };
@@ -290,7 +217,7 @@ export type MutationCreateNormativeDocumentArgs = {
 
 
 export type MutationCreateObjectNameArgs = {
-  data: NewOption;
+  data: Scalars['String'];
 };
 
 
@@ -305,7 +232,7 @@ export type MutationCreatePlaceArgs = {
 
 
 export type MutationCreatePlanningArgs = {
-  data: NewOption;
+  data: Scalars['String'];
 };
 
 
@@ -320,7 +247,7 @@ export type MutationCreateRepresentativeArgs = {
 
 
 export type MutationCreateSampleArgs = {
-  data: NewOption;
+  data: Scalars['String'];
 };
 
 
@@ -336,11 +263,6 @@ export type MutationCreateToolTypeArgs = {
 
 export type MutationCreateTypeOfSampleArgs = {
   data: NewOption;
-};
-
-
-export type MutationDeleteByIdAdditionArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -360,11 +282,6 @@ export type MutationDeleteByIdEnvironmentalEngineerArgs = {
 
 
 export type MutationDeleteByIdGoalArgs = {
-  id: Scalars['String'];
-};
-
-
-export type MutationDeleteByIdInformationAboutSelectionArgs = {
   id: Scalars['String'];
 };
 
@@ -429,14 +346,8 @@ export type MutationDeleteByIdTypeOfSampleArgs = {
 };
 
 
-export type MutationUpdateAdditionArgs = {
-  data: PatchOption;
-  id: Scalars['String'];
-};
-
-
 export type MutationUpdateClimaticEnvironmentalArgs = {
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -459,12 +370,6 @@ export type MutationUpdateGoalArgs = {
 };
 
 
-export type MutationUpdateInformationAboutSelectionArgs = {
-  data: PatchOption;
-  id: Scalars['String'];
-};
-
-
 export type MutationUpdateMethodArgs = {
   data: PatchOption;
   id: Scalars['String'];
@@ -478,7 +383,7 @@ export type MutationUpdateNormativeDocumentArgs = {
 
 
 export type MutationUpdateObjectNameArgs = {
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -496,7 +401,7 @@ export type MutationUpdatePlaceArgs = {
 
 
 export type MutationUpdatePlanningArgs = {
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -514,7 +419,7 @@ export type MutationUpdateRepresentativeArgs = {
 
 
 export type MutationUpdateSampleArgs = {
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -537,12 +442,6 @@ export type MutationUpdateTypeOfSampleArgs = {
 };
 
 
-export type MutationUpdateWhereAdditionArgs = {
-  data: Scalars['String'];
-  where: Scalars['String'];
-};
-
-
 export type MutationUpdateWhereClimaticEnvironmentalArgs = {
   data: Scalars['String'];
   where: Scalars['String'];
@@ -562,12 +461,6 @@ export type MutationUpdateWhereEnvironmentalEngineerArgs = {
 
 
 export type MutationUpdateWhereGoalArgs = {
-  data: Scalars['String'];
-  where: Scalars['String'];
-};
-
-
-export type MutationUpdateWhereInformationAboutSelectionArgs = {
   data: Scalars['String'];
   where: Scalars['String'];
 };
@@ -646,8 +539,8 @@ export type MutationUpdateWhereTypeOfSampleArgs = {
 
 export type NewDefinedIndicator = {
   lab: Scalars['String'];
-  lable: Scalars['String'];
-  tos: Scalars['String'];
+  label: Scalars['String'];
+  typeOfSample: Scalars['String'];
 };
 
 export type NewOption = {
@@ -660,21 +553,8 @@ export type NormativeDocument = {
   label: Scalars['String'];
 };
 
-export type NormativeDocumentAct = {
-  __typename?: 'NormativeDocumentAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type ObjectName = {
   __typename?: 'ObjectName';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type ObjectNameAct = {
-  __typename?: 'ObjectNameAct';
-  id: Scalars['ID'];
   label: Scalars['String'];
 };
 
@@ -684,22 +564,16 @@ export type PassedSample = {
   label: Scalars['String'];
 };
 
-export type PassedSampleAct = {
-  __typename?: 'PassedSampleAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type PatchDefinedIndicator = {
   id: Scalars['String'];
   lab: Scalars['String'];
-  lable: Scalars['String'];
-  tos: Scalars['String'];
+  label: Scalars['String'];
+  typeOfSample: Scalars['String'];
 };
 
 export type PatchOption = {
   id: Scalars['String'];
-  lable: Scalars['String'];
+  label: Scalars['String'];
 };
 
 export type Place = {
@@ -708,21 +582,8 @@ export type Place = {
   label: Scalars['String'];
 };
 
-export type PlaceAct = {
-  __typename?: 'PlaceAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type Planning = {
   __typename?: 'Planning';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type PlanningAct = {
-  __typename?: 'PlanningAct';
-  id: Scalars['ID'];
   label: Scalars['String'];
 };
 
@@ -732,20 +593,12 @@ export type Preparation = {
   label: Scalars['String'];
 };
 
-export type PreparationAct = {
-  __typename?: 'PreparationAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
-  findAllAddition: Array<Addition>;
   findAllClimaticEnvironmental: Array<ClimaticEnvironmental>;
   findAllDefinedIndicator: Array<DefinedIndicator>;
   findAllEnvironmentalEngineer: Array<EnvironmentalEngineer>;
   findAllGoal: Array<Goal>;
-  findAllInformationAboutSelection: Array<InformationAboutSelection>;
   findAllMethod: Array<Method>;
   findAllNormativeDocument: Array<NormativeDocument>;
   findAllObjectName: Array<ObjectName>;
@@ -758,12 +611,10 @@ export type Query = {
   findAllSampleType: Array<SampleType>;
   findAllToolType: Array<ToolType>;
   findAllTypeOfSample: Array<TypeOfSample>;
-  findByIdAddition: Addition;
   findByIdClimaticEnvironmental: ClimaticEnvironmental;
   findByIdDefinedIndicator: DefinedIndicator;
   findByIdEnvironmentalEngineer: EnvironmentalEngineer;
   findByIdGoal: Goal;
-  findByIdInformationAboutSelection: InformationAboutSelection;
   findByIdMethod: Method;
   findByIdNormativeDocument: NormativeDocument;
   findByIdObjectName: ObjectName;
@@ -776,12 +627,10 @@ export type Query = {
   findByIdSampleType: SampleType;
   findByIdToolType: ToolType;
   findByIdTypeOfSample: TypeOfSample;
-  findManyWhereAddition: Array<Addition>;
   findManyWhereClimaticEnvironmental: Array<ClimaticEnvironmental>;
   findManyWhereDefinedIndicator: Array<DefinedIndicator>;
   findManyWhereEnvironmentalEngineer: Array<EnvironmentalEngineer>;
   findManyWhereGoal: Array<Goal>;
-  findManyWhereInformationAboutSelection: Array<InformationAboutSelection>;
   findManyWhereMethod: Array<Method>;
   findManyWhereNormativeDocument: Array<NormativeDocument>;
   findManyWhereObjectName: Array<ObjectName>;
@@ -794,12 +643,10 @@ export type Query = {
   findManyWhereSampleType: Array<SampleType>;
   findManyWhereToolType: Array<ToolType>;
   findManyWhereTypeOfSample: Array<TypeOfSample>;
-  findOneWhereAddition: Addition;
   findOneWhereClimaticEnvironmental: ClimaticEnvironmental;
   findOneWhereDefinedIndicator: DefinedIndicator;
   findOneWhereEnvironmentalEngineer: EnvironmentalEngineer;
   findOneWhereGoal: Goal;
-  findOneWhereInformationAboutSelection: InformationAboutSelection;
   findOneWhereMethod: Method;
   findOneWhereNormativeDocument: NormativeDocument;
   findOneWhereObjectName: ObjectName;
@@ -815,8 +662,99 @@ export type Query = {
 };
 
 
-export type QueryFindByIdAdditionArgs = {
-  id: Scalars['String'];
+export type QueryFindAllClimaticEnvironmentalArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllDefinedIndicatorArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllEnvironmentalEngineerArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllGoalArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllMethodArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllNormativeDocumentArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllObjectNameArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllPassedSampleArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllPlaceArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllPlanningArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllPreparationArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllRepresentativeArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllSampleArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllSampleTypeArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllToolTypeArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllTypeOfSampleArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
@@ -836,11 +774,6 @@ export type QueryFindByIdEnvironmentalEngineerArgs = {
 
 
 export type QueryFindByIdGoalArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryFindByIdInformationAboutSelectionArgs = {
   id: Scalars['String'];
 };
 
@@ -905,18 +838,13 @@ export type QueryFindByIdTypeOfSampleArgs = {
 };
 
 
-export type QueryFindManyWhereAdditionArgs = {
-  where: Scalars['String'];
-};
-
-
 export type QueryFindManyWhereClimaticEnvironmentalArgs = {
   where: Scalars['String'];
 };
 
 
 export type QueryFindManyWhereDefinedIndicatorArgs = {
-  where: Scalars['String'];
+  where: WhereDefinedIndicator;
 };
 
 
@@ -926,11 +854,6 @@ export type QueryFindManyWhereEnvironmentalEngineerArgs = {
 
 
 export type QueryFindManyWhereGoalArgs = {
-  where: Scalars['String'];
-};
-
-
-export type QueryFindManyWhereInformationAboutSelectionArgs = {
   where: Scalars['String'];
 };
 
@@ -995,11 +918,6 @@ export type QueryFindManyWhereTypeOfSampleArgs = {
 };
 
 
-export type QueryFindOneWhereAdditionArgs = {
-  where: Scalars['String'];
-};
-
-
 export type QueryFindOneWhereClimaticEnvironmentalArgs = {
   where: Scalars['String'];
 };
@@ -1016,11 +934,6 @@ export type QueryFindOneWhereEnvironmentalEngineerArgs = {
 
 
 export type QueryFindOneWhereGoalArgs = {
-  where: Scalars['String'];
-};
-
-
-export type QueryFindOneWhereInformationAboutSelectionArgs = {
   where: Scalars['String'];
 };
 
@@ -1090,32 +1003,13 @@ export type Representative = {
   label: Scalars['String'];
 };
 
-export type RepresentativeAct = {
-  __typename?: 'RepresentativeAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type Sample = {
   __typename?: 'Sample';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type SampleAct = {
-  __typename?: 'SampleAct';
-  id: Scalars['ID'];
   label: Scalars['String'];
 };
 
 export type SampleType = {
   __typename?: 'SampleType';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type SampleTypeAct = {
-  __typename?: 'SampleTypeAct';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -1126,22 +1020,15 @@ export type ToolType = {
   label: Scalars['String'];
 };
 
-export type ToolTypeAct = {
-  __typename?: 'ToolTypeAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type TypeOfSample = {
   __typename?: 'TypeOfSample';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type TypeOfSampleAct = {
-  __typename?: 'TypeOfSampleAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
+export type WhereDefinedIndicator = {
+  lab: Scalars['String'];
+  typeOfSample: Scalars['String'];
 };
 
 export type CreateTypeOfSampleMutationVariables = Exact<{
@@ -1172,7 +1059,7 @@ export type PatchTypeOfSampleMutation = (
 );
 
 export type CreateObjectNameMutationVariables = Exact<{
-  data: NewOption;
+  data: Scalars['String'];
 }>;
 
 
@@ -1180,12 +1067,12 @@ export type CreateObjectNameMutation = (
   { __typename?: 'Mutation' }
   & { createObjectName: (
     { __typename?: 'ObjectName' }
-    & Pick<ObjectName, 'id' | 'label'>
+    & Pick<ObjectName, 'label'>
   ) }
 );
 
 export type PatchObjectNameMutationVariables = Exact<{
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 }>;
 
@@ -1194,7 +1081,7 @@ export type PatchObjectNameMutation = (
   { __typename?: 'Mutation' }
   & { updateObjectName: (
     { __typename?: 'ObjectName' }
-    & Pick<ObjectName, 'id' | 'label'>
+    & Pick<ObjectName, 'label'>
   ) }
 );
 
@@ -1280,7 +1167,7 @@ export type PatchToolTypeMutation = (
 );
 
 export type CreateClimaticEnvironmentalMutationVariables = Exact<{
-  data: NewOption;
+  data: Scalars['String'];
 }>;
 
 
@@ -1288,12 +1175,12 @@ export type CreateClimaticEnvironmentalMutation = (
   { __typename?: 'Mutation' }
   & { createClimaticEnvironmental: (
     { __typename?: 'ClimaticEnvironmental' }
-    & Pick<ClimaticEnvironmental, 'id' | 'label'>
+    & Pick<ClimaticEnvironmental, 'label'>
   ) }
 );
 
 export type PatchClimaticEnvironmentalMutationVariables = Exact<{
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 }>;
 
@@ -1302,12 +1189,12 @@ export type PatchClimaticEnvironmentalMutation = (
   { __typename?: 'Mutation' }
   & { updateClimaticEnvironmental: (
     { __typename?: 'ClimaticEnvironmental' }
-    & Pick<ClimaticEnvironmental, 'id' | 'label'>
+    & Pick<ClimaticEnvironmental, 'label'>
   ) }
 );
 
 export type CreatePlanningMutationVariables = Exact<{
-  data: NewOption;
+  data: Scalars['String'];
 }>;
 
 
@@ -1315,12 +1202,12 @@ export type CreatePlanningMutation = (
   { __typename?: 'Mutation' }
   & { createPlanning: (
     { __typename?: 'Planning' }
-    & Pick<Planning, 'id' | 'label'>
+    & Pick<Planning, 'label'>
   ) }
 );
 
 export type PatchPlanningMutationVariables = Exact<{
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 }>;
 
@@ -1329,7 +1216,7 @@ export type PatchPlanningMutation = (
   { __typename?: 'Mutation' }
   & { updatePlanning: (
     { __typename?: 'Planning' }
-    & Pick<Planning, 'id' | 'label'>
+    & Pick<Planning, 'label'>
   ) }
 );
 
@@ -1388,7 +1275,7 @@ export type PatchSampleTypeMutation = (
 );
 
 export type CreateSampleMutationVariables = Exact<{
-  data: NewOption;
+  data: Scalars['String'];
 }>;
 
 
@@ -1396,12 +1283,12 @@ export type CreateSampleMutation = (
   { __typename?: 'Mutation' }
   & { createSample: (
     { __typename?: 'Sample' }
-    & Pick<Sample, 'id' | 'label'>
+    & Pick<Sample, 'label'>
   ) }
 );
 
 export type PatchSampleMutationVariables = Exact<{
-  data: PatchOption;
+  data: Scalars['String'];
   id: Scalars['String'];
 }>;
 
@@ -1410,7 +1297,7 @@ export type PatchSampleMutation = (
   { __typename?: 'Mutation' }
   & { updateSample: (
     { __typename?: 'Sample' }
-    & Pick<Sample, 'id' | 'label'>
+    & Pick<Sample, 'label'>
   ) }
 );
 
@@ -1492,60 +1379,6 @@ export type PatchDefinedIndicatorMutation = (
   & { updateDefinedIndicator: (
     { __typename?: 'DefinedIndicator' }
     & Pick<DefinedIndicator, 'id' | 'label'>
-  ) }
-);
-
-export type CreateAdditionMutationVariables = Exact<{
-  data: NewOption;
-}>;
-
-
-export type CreateAdditionMutation = (
-  { __typename?: 'Mutation' }
-  & { createAddition: (
-    { __typename?: 'Addition' }
-    & Pick<Addition, 'id' | 'label'>
-  ) }
-);
-
-export type PatchAdditionMutationVariables = Exact<{
-  data: PatchOption;
-  id: Scalars['String'];
-}>;
-
-
-export type PatchAdditionMutation = (
-  { __typename?: 'Mutation' }
-  & { updateAddition: (
-    { __typename?: 'Addition' }
-    & Pick<Addition, 'id' | 'label'>
-  ) }
-);
-
-export type CreateInformationAboutSelectionMutationVariables = Exact<{
-  data: NewOption;
-}>;
-
-
-export type CreateInformationAboutSelectionMutation = (
-  { __typename?: 'Mutation' }
-  & { createInformationAboutSelection: (
-    { __typename?: 'InformationAboutSelection' }
-    & Pick<InformationAboutSelection, 'id' | 'label'>
-  ) }
-);
-
-export type PatchInformationAboutSelectionMutationVariables = Exact<{
-  data: PatchOption;
-  id: Scalars['String'];
-}>;
-
-
-export type PatchInformationAboutSelectionMutation = (
-  { __typename?: 'Mutation' }
-  & { updateInformationAboutSelection: (
-    { __typename?: 'InformationAboutSelection' }
-    & Pick<InformationAboutSelection, 'id' | 'label'>
   ) }
 );
 
@@ -1641,14 +1474,16 @@ export type GetTypeOfSamplesForOptionQuery = (
   )> }
 );
 
-export type GetObjectNamesForOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetObjectNamesForOptionQueryVariables = Exact<{
+  field?: Maybe<Scalars['String']>;
+}>;
 
 
 export type GetObjectNamesForOptionQuery = (
   { __typename?: 'Query' }
   & { findAllObjectName: Array<(
     { __typename?: 'ObjectName' }
-    & Pick<ObjectName, 'id' | 'label'>
+    & Pick<ObjectName, 'label'>
   )> }
 );
 
@@ -1685,25 +1520,29 @@ export type GetToolTypesForOptionQuery = (
   )> }
 );
 
-export type GetClimaticEnvironmentalsForOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetClimaticEnvironmentalsForOptionQueryVariables = Exact<{
+  field?: Maybe<Scalars['String']>;
+}>;
 
 
 export type GetClimaticEnvironmentalsForOptionQuery = (
   { __typename?: 'Query' }
   & { findAllClimaticEnvironmental: Array<(
     { __typename?: 'ClimaticEnvironmental' }
-    & Pick<ClimaticEnvironmental, 'id' | 'label'>
+    & Pick<ClimaticEnvironmental, 'label'>
   )> }
 );
 
-export type GetPlanningsForOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPlanningsForOptionQueryVariables = Exact<{
+  field?: Maybe<Scalars['String']>;
+}>;
 
 
 export type GetPlanningsForOptionQuery = (
   { __typename?: 'Query' }
   & { findAllPlanning: Array<(
     { __typename?: 'Planning' }
-    & Pick<Planning, 'id' | 'label'>
+    & Pick<Planning, 'label'>
   )> }
 );
 
@@ -1729,14 +1568,16 @@ export type GetSampleTypesForOptionQuery = (
   )> }
 );
 
-export type GetSamplesForOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSamplesForOptionQueryVariables = Exact<{
+  field?: Maybe<Scalars['String']>;
+}>;
 
 
 export type GetSamplesForOptionQuery = (
   { __typename?: 'Query' }
   & { findAllSample: Array<(
     { __typename?: 'Sample' }
-    & Pick<Sample, 'id' | 'label'>
+    & Pick<Sample, 'label'>
   )> }
 );
 
@@ -1762,36 +1603,16 @@ export type GetGoalForOptionQuery = (
   )> }
 );
 
-export type GetDefinedIndicatorsForOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetDefinedIndicatorsForOptionQueryVariables = Exact<{
+  where: WhereDefinedIndicator;
+}>;
 
 
 export type GetDefinedIndicatorsForOptionQuery = (
   { __typename?: 'Query' }
-  & { findAllDefinedIndicator: Array<(
+  & { findManyWhereDefinedIndicator: Array<(
     { __typename?: 'DefinedIndicator' }
     & Pick<DefinedIndicator, 'id' | 'label'>
-  )> }
-);
-
-export type GetAdditionsForOptionQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAdditionsForOptionQuery = (
-  { __typename?: 'Query' }
-  & { findAllAddition: Array<(
-    { __typename?: 'Addition' }
-    & Pick<Addition, 'id' | 'label'>
-  )> }
-);
-
-export type GetInformationAboutSelectionsForOptionQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetInformationAboutSelectionsForOptionQuery = (
-  { __typename?: 'Query' }
-  & { findAllInformationAboutSelection: Array<(
-    { __typename?: 'InformationAboutSelection' }
-    & Pick<InformationAboutSelection, 'id' | 'label'>
   )> }
 );
 
@@ -1850,7 +1671,7 @@ export type GetObjectNameQuery = (
   { __typename?: 'Query' }
   & { findByIdObjectName: (
     { __typename?: 'ObjectName' }
-    & Pick<ObjectName, 'id' | 'label'>
+    & Pick<ObjectName, 'label'>
   ) }
 );
 
@@ -1902,7 +1723,7 @@ export type GetClimaticEnvironmentalQuery = (
   { __typename?: 'Query' }
   & { findByIdClimaticEnvironmental: (
     { __typename?: 'ClimaticEnvironmental' }
-    & Pick<ClimaticEnvironmental, 'id' | 'label'>
+    & Pick<ClimaticEnvironmental, 'label'>
   ) }
 );
 
@@ -1915,7 +1736,7 @@ export type GetPlanningQuery = (
   { __typename?: 'Query' }
   & { findByIdPlanning: (
     { __typename?: 'Planning' }
-    & Pick<Planning, 'id' | 'label'>
+    & Pick<Planning, 'label'>
   ) }
 );
 
@@ -1954,7 +1775,7 @@ export type GetSampleQuery = (
   { __typename?: 'Query' }
   & { findByIdSample: (
     { __typename?: 'Sample' }
-    & Pick<Sample, 'id' | 'label'>
+    & Pick<Sample, 'label'>
   ) }
 );
 
@@ -1994,32 +1815,6 @@ export type GetDefinedIndicatorQuery = (
   & { findByIdDefinedIndicator: (
     { __typename?: 'DefinedIndicator' }
     & Pick<DefinedIndicator, 'id' | 'label'>
-  ) }
-);
-
-export type GetAdditionQueryVariables = Exact<{
-  data: Scalars['String'];
-}>;
-
-
-export type GetAdditionQuery = (
-  { __typename?: 'Query' }
-  & { findByIdAddition: (
-    { __typename?: 'Addition' }
-    & Pick<Addition, 'id' | 'label'>
-  ) }
-);
-
-export type GetInformationAboutSelectionQueryVariables = Exact<{
-  data: Scalars['String'];
-}>;
-
-
-export type GetInformationAboutSelectionQuery = (
-  { __typename?: 'Query' }
-  & { findByIdInformationAboutSelection: (
-    { __typename?: 'InformationAboutSelection' }
-    & Pick<InformationAboutSelection, 'id' | 'label'>
   ) }
 );
 
@@ -2095,9 +1890,8 @@ export const PatchTypeOfSampleDocument = gql`
     client = 'OptionsClient';
   }
 export const CreateObjectNameDocument = gql`
-    mutation CreateObjectName($data: NewOption!) {
+    mutation CreateObjectName($data: String!) {
   createObjectName(data: $data) {
-    id
     label
   }
 }
@@ -2111,9 +1905,8 @@ export const CreateObjectNameDocument = gql`
     client = 'OptionsClient';
   }
 export const PatchObjectNameDocument = gql`
-    mutation PatchObjectName($data: PatchOption!, $id: String!) {
+    mutation PatchObjectName($data: String!, $id: String!) {
   updateObjectName(data: $data, id: $id) {
-    id
     label
   }
 }
@@ -2223,9 +2016,8 @@ export const PatchToolTypeDocument = gql`
     client = 'OptionsClient';
   }
 export const CreateClimaticEnvironmentalDocument = gql`
-    mutation CreateClimaticEnvironmental($data: NewOption!) {
+    mutation CreateClimaticEnvironmental($data: String!) {
   createClimaticEnvironmental(data: $data) {
-    id
     label
   }
 }
@@ -2239,9 +2031,8 @@ export const CreateClimaticEnvironmentalDocument = gql`
     client = 'OptionsClient';
   }
 export const PatchClimaticEnvironmentalDocument = gql`
-    mutation PatchClimaticEnvironmental($data: PatchOption!, $id: String!) {
+    mutation PatchClimaticEnvironmental($data: String!, $id: String!) {
   updateClimaticEnvironmental(data: $data, id: $id) {
-    id
     label
   }
 }
@@ -2255,9 +2046,8 @@ export const PatchClimaticEnvironmentalDocument = gql`
     client = 'OptionsClient';
   }
 export const CreatePlanningDocument = gql`
-    mutation CreatePlanning($data: NewOption!) {
+    mutation CreatePlanning($data: String!) {
   createPlanning(data: $data) {
-    id
     label
   }
 }
@@ -2271,9 +2061,8 @@ export const CreatePlanningDocument = gql`
     client = 'OptionsClient';
   }
 export const PatchPlanningDocument = gql`
-    mutation PatchPlanning($data: PatchOption!, $id: String!) {
+    mutation PatchPlanning($data: String!, $id: String!) {
   updatePlanning(data: $data, id: $id) {
-    id
     label
   }
 }
@@ -2351,9 +2140,8 @@ export const PatchSampleTypeDocument = gql`
     client = 'OptionsClient';
   }
 export const CreateSampleDocument = gql`
-    mutation CreateSample($data: NewOption!) {
+    mutation CreateSample($data: String!) {
   createSample(data: $data) {
-    id
     label
   }
 }
@@ -2367,9 +2155,8 @@ export const CreateSampleDocument = gql`
     client = 'OptionsClient';
   }
 export const PatchSampleDocument = gql`
-    mutation PatchSample($data: PatchOption!, $id: String!) {
+    mutation PatchSample($data: String!, $id: String!) {
   updateSample(data: $data, id: $id) {
-    id
     label
   }
 }
@@ -2476,70 +2263,6 @@ export const PatchDefinedIndicatorDocument = gql`
   })
   export class PatchDefinedIndicatorGQL extends Apollo.Mutation<PatchDefinedIndicatorMutation, PatchDefinedIndicatorMutationVariables> {
     document = PatchDefinedIndicatorDocument;
-    client = 'OptionsClient';
-  }
-export const CreateAdditionDocument = gql`
-    mutation CreateAddition($data: NewOption!) {
-  createAddition(data: $data) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateAdditionGQL extends Apollo.Mutation<CreateAdditionMutation, CreateAdditionMutationVariables> {
-    document = CreateAdditionDocument;
-    client = 'OptionsClient';
-  }
-export const PatchAdditionDocument = gql`
-    mutation PatchAddition($data: PatchOption!, $id: String!) {
-  updateAddition(data: $data, id: $id) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class PatchAdditionGQL extends Apollo.Mutation<PatchAdditionMutation, PatchAdditionMutationVariables> {
-    document = PatchAdditionDocument;
-    client = 'OptionsClient';
-  }
-export const CreateInformationAboutSelectionDocument = gql`
-    mutation CreateInformationAboutSelection($data: NewOption!) {
-  createInformationAboutSelection(data: $data) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateInformationAboutSelectionGQL extends Apollo.Mutation<CreateInformationAboutSelectionMutation, CreateInformationAboutSelectionMutationVariables> {
-    document = CreateInformationAboutSelectionDocument;
-    client = 'OptionsClient';
-  }
-export const PatchInformationAboutSelectionDocument = gql`
-    mutation PatchInformationAboutSelection($data: PatchOption!, $id: String!) {
-  updateInformationAboutSelection(data: $data, id: $id) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class PatchInformationAboutSelectionGQL extends Apollo.Mutation<PatchInformationAboutSelectionMutation, PatchInformationAboutSelectionMutationVariables> {
-    document = PatchInformationAboutSelectionDocument;
     client = 'OptionsClient';
   }
 export const CreateEnvironmentalEngineerDocument = gql`
@@ -2655,9 +2378,8 @@ export const GetTypeOfSamplesForOptionDocument = gql`
     client = 'OptionsClient';
   }
 export const GetObjectNamesForOptionDocument = gql`
-    query getObjectNamesForOption {
-  findAllObjectName {
-    id
+    query getObjectNamesForOption($field: String) {
+  findAllObjectName(field: $field) {
     label
   }
 }
@@ -2719,9 +2441,8 @@ export const GetToolTypesForOptionDocument = gql`
     client = 'OptionsClient';
   }
 export const GetClimaticEnvironmentalsForOptionDocument = gql`
-    query getClimaticEnvironmentalsForOption {
-  findAllClimaticEnvironmental {
-    id
+    query getClimaticEnvironmentalsForOption($field: String) {
+  findAllClimaticEnvironmental(field: $field) {
     label
   }
 }
@@ -2735,9 +2456,8 @@ export const GetClimaticEnvironmentalsForOptionDocument = gql`
     client = 'OptionsClient';
   }
 export const GetPlanningsForOptionDocument = gql`
-    query getPlanningsForOption {
-  findAllPlanning {
-    id
+    query getPlanningsForOption($field: String) {
+  findAllPlanning(field: $field) {
     label
   }
 }
@@ -2783,9 +2503,8 @@ export const GetSampleTypesForOptionDocument = gql`
     client = 'OptionsClient';
   }
 export const GetSamplesForOptionDocument = gql`
-    query getSamplesForOption {
-  findAllSample {
-    id
+    query getSamplesForOption($field: String) {
+  findAllSample(field: $field) {
     label
   }
 }
@@ -2831,8 +2550,8 @@ export const GetGoalForOptionDocument = gql`
     client = 'OptionsClient';
   }
 export const GetDefinedIndicatorsForOptionDocument = gql`
-    query getDefinedIndicatorsForOption {
-  findAllDefinedIndicator {
+    query getDefinedIndicatorsForOption($where: WhereDefinedIndicator!) {
+  findManyWhereDefinedIndicator(where: $where) {
     id
     label
   }
@@ -2844,38 +2563,6 @@ export const GetDefinedIndicatorsForOptionDocument = gql`
   })
   export class GetDefinedIndicatorsForOptionGQL extends Apollo.Query<GetDefinedIndicatorsForOptionQuery, GetDefinedIndicatorsForOptionQueryVariables> {
     document = GetDefinedIndicatorsForOptionDocument;
-    client = 'OptionsClient';
-  }
-export const GetAdditionsForOptionDocument = gql`
-    query getAdditionsForOption {
-  findAllAddition {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetAdditionsForOptionGQL extends Apollo.Query<GetAdditionsForOptionQuery, GetAdditionsForOptionQueryVariables> {
-    document = GetAdditionsForOptionDocument;
-    client = 'OptionsClient';
-  }
-export const GetInformationAboutSelectionsForOptionDocument = gql`
-    query getInformationAboutSelectionsForOption {
-  findAllInformationAboutSelection {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetInformationAboutSelectionsForOptionGQL extends Apollo.Query<GetInformationAboutSelectionsForOptionQuery, GetInformationAboutSelectionsForOptionQueryVariables> {
-    document = GetInformationAboutSelectionsForOptionDocument;
     client = 'OptionsClient';
   }
 export const GetEnvironmentalEngineersForOptionDocument = gql`
@@ -2945,7 +2632,6 @@ export const GetTypeOfSampleDocument = gql`
 export const GetObjectNameDocument = gql`
     query getObjectName($data: String!) {
   findByIdObjectName(id: $data) {
-    id
     label
   }
 }
@@ -3009,7 +2695,6 @@ export const GetToolTypeDocument = gql`
 export const GetClimaticEnvironmentalDocument = gql`
     query getClimaticEnvironmental($data: String!) {
   findByIdClimaticEnvironmental(id: $data) {
-    id
     label
   }
 }
@@ -3025,7 +2710,6 @@ export const GetClimaticEnvironmentalDocument = gql`
 export const GetPlanningDocument = gql`
     query getPlanning($data: String!) {
   findByIdPlanning(id: $data) {
-    id
     label
   }
 }
@@ -3073,7 +2757,6 @@ export const GetSampleTypeDocument = gql`
 export const GetSampleDocument = gql`
     query getSample($data: String!) {
   findByIdSample(id: $data) {
-    id
     label
   }
 }
@@ -3132,38 +2815,6 @@ export const GetDefinedIndicatorDocument = gql`
   })
   export class GetDefinedIndicatorGQL extends Apollo.Query<GetDefinedIndicatorQuery, GetDefinedIndicatorQueryVariables> {
     document = GetDefinedIndicatorDocument;
-    client = 'OptionsClient';
-  }
-export const GetAdditionDocument = gql`
-    query getAddition($data: String!) {
-  findByIdAddition(id: $data) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetAdditionGQL extends Apollo.Query<GetAdditionQuery, GetAdditionQueryVariables> {
-    document = GetAdditionDocument;
-    client = 'OptionsClient';
-  }
-export const GetInformationAboutSelectionDocument = gql`
-    query getInformationAboutSelection($data: String!) {
-  findByIdInformationAboutSelection(id: $data) {
-    id
-    label
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetInformationAboutSelectionGQL extends Apollo.Query<GetInformationAboutSelectionQuery, GetInformationAboutSelectionQueryVariables> {
-    document = GetInformationAboutSelectionDocument;
     client = 'OptionsClient';
   }
 export const GetEnvironmentalEngineerDocument = gql`

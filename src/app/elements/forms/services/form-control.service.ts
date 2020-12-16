@@ -44,19 +44,14 @@ export class FormControlService {
     return this.fb.control(value ? value : "", {
       validators: required ? Validators.required : [],
     });
-    // if (required) {
-    //   form.controls[key].setValidators(Validators.required);
-    // }
   }
 
-  editItemOption<T>(
+  editItemOption(
     key: string,
     label: string,
     optionsFieldService: Type<OptionFormFieldsAbstractService>,
     item?: any
-  ): Observable<T> {
-    console.log(item);
-
+  ): Observable<any> {
     const dialogRef = this.dialog.open(FormOptionDialogComponent, {
       data: new OptionDialogData(label, key, optionsFieldService, item),
     });

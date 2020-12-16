@@ -1,5 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -8,111 +13,115 @@ import { DataTableService } from "./data-table.service";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ActControlService } from "src/app/services/controls/acts/act-control.service";
 import { DataSourceModel } from "./models/datasource.model";
-import { FilterItem, Item } from "./models/fileter.item.modle";
-import { FormControl, FormGroup } from "@angular/forms";
-import { Moment } from "moment";
-import { FindAllActQuery } from "src/types/acts/generated";
+import { FilterItem } from "./models/fileter.item.modle";
+import { FindAllActQuery, Where } from "src/types/acts/generated";
+import { map, startWith, switchMap } from "rxjs/operators";
+import { merge } from "rxjs";
+import { Uniqs } from "./models/uniqs.model";
+import { DateRange } from "./models/date-range.model";
 
 @Component({
   selector: "app-acts-table",
-  templateUrl: "./new-acts-table.component.html",
+  templateUrl: "./acts-table.component.html",
   styleUrls: ["./acts-table.component.scss"],
 })
-export class ActsTableComponent implements OnInit {
+export class ActsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns: string[];
   columnsToDisplay: ColumnModel[];
-  allColumnActive: boolean = false;
+
+  pagLength: number;
+  wheres: Where[];
+  dateRange: DateRange;
+
   dataSource = new MatTableDataSource<DataSourceModel>([]);
   selection = new SelectionModel(true, []);
-  filterOptions: FilterItem[];
-  data: FindAllActQuery["findAllAct"];
-  _data: FindAllActQuery["findAllAct"];
-  filteredData: FindAllActQuery["findAllAct"];
-  _filteredData: { [key: string]: FindAllActQuery["findAllAct"] }[] = [];
 
-  rangeFilter: FormGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
+  data: FindAllActQuery["getTableContent"]["acts"];
 
   constructor(
     private readonly dataTableService: DataTableService,
-    private readonly acs: ActControlService
+    private readonly acs: ActControlService,
+    private cdf: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.acs.getActs().subscribe((data: FindAllActQuery["findAllAct"]) => {
-      this._data = data;
-      this.data = this._data;
-      this.filteredData = this.data;
-      this.initDataSource(this._data);
-      this.filterOptions = this.initFileterOptions(data);
-    });
-    this.columnsToDisplay = this.dataTableService.getColumns();
-    this.initDisplayedColumns();
-    this.updateAllComponent();
-    this.rangeFilter.valueChanges.subscribe(() => this.filteringDate());
+    this.dataTableService.columnSource
+      .pipe(map((columns) => columns.filter((colunm) => colunm.isActive)))
+      .subscribe((columns) => {
+        this.columnsToDisplay = columns;
+        this.initDisplayedColumns();
+      });
   }
 
-  initDataSource(data: FindAllActQuery["findAllAct"]) {
+  ngAfterViewInit() {
+    this.cdf.detectChanges();
+
+    merge(
+      this.paginator.page,
+      this.sort.sortChange,
+      this.dataTableService.wheresSource.pipe(
+        map((data) => {
+          this.wheres = data;
+        })
+      ),
+      this.dataTableService.dateSource.pipe(
+        map((data) => {
+          this.dateRange = data;
+        })
+      )
+    )
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          const skip = this.paginator.pageSize * this.paginator.pageIndex;
+
+          return this.acs.getActs(
+            skip,
+            this.paginator.pageSize,
+            this.dateRange?.dateRangeStart,
+            this.dateRange?.dateRangeEnd,
+            this.sort.active ? `${this.sort.active}.label` : undefined,
+            this.sort.direction
+              ? (this.sort.direction.toUpperCase() as "ASC" | "DESC")
+              : undefined,
+            this.wheres
+          );
+        }),
+        map((data) => {
+          this.pagLength = data.totalCount;
+
+          const uniqs: Uniqs = {
+            uniqCustomers: data.uniqCustomers,
+            uniqGeneralCustomers: data.uniqGeneralCustomers,
+            uniqLabs: data.uniqLabs,
+            uniqTypeOfSamples: data.uniqTypeOfSamples,
+          };
+
+          this.dataTableService.initUniqSubject(uniqs);
+
+          return data.acts;
+        })
+      )
+      .subscribe((data) => {
+        this.data = data;
+        this.initDataSource(this.data);
+      });
+  }
+
+  initDataSource(data: FindAllActQuery["getTableContent"]["acts"]) {
     this.dataSource = new MatTableDataSource([
       ...data.map((d) => new DataSourceModel(d)),
     ]);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   initDisplayedColumns() {
     this.displayedColumns = [
       "select",
-      ...this.columnsToDisplay
-        .filter((column) => column.isActive)
-        .map((row) => row.key),
+      ...this.columnsToDisplay.map((row) => row.key),
     ];
-  }
-
-  drop(event: CdkDragDrop<DataSourceModel[]>) {
-    moveItemInArray(
-      this.columnsToDisplay,
-      event.previousIndex,
-      event.currentIndex
-    );
-    this.displayedColumns = [
-      "select",
-      ...this.columnsToDisplay
-        .filter((column) => column.isActive)
-        .map((row) => row.key),
-    ];
-  }
-
-  updateAllComponent(): void {
-    this.initDisplayedColumns();
-    this.allColumnActive =
-      this.columnsToDisplay != null &&
-      this.columnsToDisplay.every((c) => c.isActive);
-  }
-
-  someActive(): boolean {
-    if (this.columnsToDisplay == null) {
-      return false;
-    }
-
-    return (
-      this.columnsToDisplay.filter((c) => c.isActive).length > 0 &&
-      !this.allColumnActive
-    );
-  }
-
-  setAll(active: boolean): void {
-    this.allColumnActive = active;
-    if (this.columnsToDisplay == null) {
-      return;
-    }
-    this.columnsToDisplay.forEach((c) => (c.isActive = active));
-    this.initDisplayedColumns();
   }
 
   isAllSelected(): boolean {
@@ -122,304 +131,18 @@ export class ActsTableComponent implements OnInit {
   }
 
   masterToggle() {
-    console.log(this.selection);
-
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  checkboxLabel(row?): string {
-    if (!row) {
+  checkboxLabel(raw?): string {
+    if (!raw) {
       return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
-      row.position + 1
+
+    return `${this.selection.isSelected(raw) ? "deselect" : "select"} row ${
+      raw.position + 1
     }`;
-  }
-
-  initFileterOptions(data: FindAllActQuery["findAllAct"]): FilterItem[] {
-    const filterOptions = this.dataTableService.getFileters();
-
-    return filterOptions.map((d) => {
-      let keyItems: Item[] = [];
-
-      switch (d.controlType) {
-        case "Date":
-          keyItems = [];
-          break;
-        default:
-          data.forEach((data) => {
-            const newItem = new Item(
-              data[d.key].id,
-              data[d.key].label,
-              false,
-              false
-            );
-            keyItems.push(newItem);
-          });
-      }
-
-      const uniqueItems = [
-        ...keyItems.filter(
-          (v, i, a) => a.findIndex((d) => d.id === v.id) === i
-        ),
-      ];
-
-      let controlType: string;
-
-      if (d.controlType === "Date") {
-        controlType = "Date";
-      } else {
-        controlType = "Consumer";
-      }
-
-      return new FilterItem(
-        d.label,
-        d.key,
-        true,
-        controlType,
-        false,
-        uniqueItems
-      );
-    });
-  }
-
-  removeFilter(option: FilterItem) {
-    switch (option.controlType) {
-      case "Date":
-        this.rangeFilter.reset();
-        option.isActive = false;
-        break;
-      default:
-        option.items.forEach((item) => {
-          item.isChecked = false;
-        });
-
-        this.updateFilter(false, option.key);
-    }
-  }
-
-  updateFilter(event: boolean, key: string) {
-    const filter = this.filterOptions.find((d) => d.key === key);
-
-    const alone: boolean = this.filterOptions.find(
-      (fd) => fd.key !== key && fd.isActive && fd.controlType !== "Date"
-    )
-      ? false
-      : true;
-
-    if (event && !filter.isActive && alone) {
-      const activeCheckbox = this.toggleActiveCheckboxes(filter);
-
-      const filteredData = this.filteringData(key, activeCheckbox, this.data);
-
-      this.set_FilteredData(key, filteredData);
-
-      this.filteredData = filteredData;
-
-      this.initDataSource([...this.filteredData]);
-
-      filter.isActive = true;
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.filteredData);
-    }
-    if (event && !filter.isActive && !alone) {
-      const activeCheckbox = this.toggleActiveCheckboxes(filter);
-
-      const filteredData = this.filteringData(
-        key,
-        activeCheckbox,
-        this.filteredData
-      );
-
-      this.filteredData = filteredData;
-
-      this.set_FilteredData(key, filteredData);
-
-      this.initDataSource([...this.filteredData]);
-
-      filter.isActive = true;
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.filteredData);
-    }
-    if (!event && filter.isActive && !alone) {
-      filter.isActive = false;
-
-      const filteringData = this.filteringAllData(this.data);
-
-      this.filteredData = filteringData;
-
-      this.initDataSource([...this.filteredData]);
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.filteredData);
-    }
-
-    if (!event && filter.isActive && alone) {
-      filter.isActive = false;
-
-      this.initDataSource([...this.data]);
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.data, true);
-    }
-  }
-
-  toggleActiveCheckboxes(filter: FilterItem): string[] {
-    let activeCheckbox: string[] = [];
-    filter.items.forEach((item) => {
-      if (!item.isChecked) {
-        item.disabled = true;
-      } else {
-        activeCheckbox.push(item.id);
-      }
-    });
-    return activeCheckbox;
-  }
-
-  checkActivefilter;
-
-  disablingNoActiveCheckboxesAndFilteringData(
-    data: FindAllActQuery["findAllAct"],
-    dateControl: boolean = false
-  ) {
-    const noActiveFilters = dateControl
-      ? this.filterOptions
-      : this.getNotActiveFilters();
-
-    noActiveFilters
-      .filter((v) => v.controlType !== "Date")
-      .forEach((filter, i) => {
-        let filteredData: FindAllActQuery["findAllAct"] = [];
-        data.forEach((d) => {
-          if (filter.items.map((v) => v.id).includes(d[filter.key].id)) {
-            filteredData.push(d);
-          }
-        });
-
-        const uniqueOptionsItems = [
-          ...new Set(filteredData.map((data) => data[filter.key].id)),
-        ];
-
-        let activeCheckbox: string[] = [];
-        filter.items.forEach((item) => {
-          if (!uniqueOptionsItems.includes(item.id)) {
-            if (item.isChecked) {
-              item.isChecked = false;
-            }
-            item.disabled = true;
-          } else {
-            activeCheckbox.push(item.id);
-            item.disabled = false;
-          }
-        });
-        this.set_FilteredData(
-          filter.key,
-          this.filteringData(filter.key, activeCheckbox, this.data)
-        );
-
-        if (filter.items.every((item) => !item.isChecked)) {
-          filter.isActive = false;
-        }
-      });
-  }
-
-  getNotActiveFilters(): FilterItem[] {
-    return this.filterOptions.filter(
-      (f) => !f.isActive && f.controlType !== "Date"
-    );
-  }
-
-  set_FilteredData(key: string, data: FindAllActQuery["findAllAct"]) {
-    const arrFD = this._filteredData.find((fd) => {
-      if (Object.keys(fd)[0] === key) return fd;
-    });
-    if (!arrFD) {
-      const ob: { [key: string]: FindAllActQuery["findAllAct"] } = {};
-      ob[`${key}`] = data;
-      this._filteredData.push(ob);
-    } else {
-      arrFD[`${key}`] = data;
-    }
-  }
-
-  filteringData(
-    key: string,
-    options: string[],
-    data: FindAllActQuery["findAllAct"]
-  ): FindAllActQuery["findAllAct"] {
-    return [
-      ...data.filter((data) => {
-        if (options.includes(data[key].id)) {
-          return data;
-        }
-      }),
-    ];
-  }
-
-  filteringAllData(
-    data: FindAllActQuery["findAllAct"]
-  ): FindAllActQuery["findAllAct"] {
-    const activeFilters = this.filterOptions.filter(
-      (f) => f.isActive && f.controlType !== "Date"
-    );
-
-    const getFileteredData = (): FindAllActQuery["findAllAct"] => {
-      let filData: FindAllActQuery["findAllAct"] = [...data];
-
-      const filtering = (key: string) => {
-        const itemsId = this._filteredData
-          .find((fd) => {
-            if (Object.keys(fd)[0] === key) {
-              return fd;
-            }
-          })
-          [`${key}`].map((_fd) => _fd.id);
-        filData = [
-          ...filData.filter((data) => {
-            if (itemsId.includes(data.id)) {
-              return data;
-            }
-          }),
-        ];
-      };
-
-      activeFilters.forEach((v) => {
-        filtering(v.key);
-      });
-      return filData;
-    };
-
-    return getFileteredData();
-  }
-
-  filteringDate() {
-    let startValue: Moment = this.rangeFilter.controls["start"].value;
-    let endValue: Moment = this.rangeFilter.controls["end"].value;
-
-    const start = startValue ? startValue.valueOf() : null;
-    const end = endValue ? endValue.valueOf() : null;
-
-    if (!start && !end) {
-      this.data = [...this._data];
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.data, true);
-
-      this.initDataSource(this.data);
-    }
-
-    if (end) {
-      this.filterOptions.find((v) => v.key === "date").isActive = true;
-
-      this.data = [
-        ...this._data.filter((data) => {
-          const d = new Date(data.datetime.date).valueOf();
-          if (start <= d && d <= end) return d;
-        }),
-      ];
-
-      this.disablingNoActiveCheckboxesAndFilteringData(this.data, true);
-
-      this.initDataSource(this.data);
-    }
   }
 }

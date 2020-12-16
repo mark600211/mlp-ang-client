@@ -1,24 +1,24 @@
-import { Component, OnInit, Input, Type } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { OptionFormFieldsAbstractService } from 'src/app/components/acts/act-form/services/option-form-field-abstract.service';
-import { ActsFormControlService } from 'src/app/services/controls/acts-form-control.service';
-import { FormControlService } from '../services/form-control.service';
+import { Component, OnInit, Input, Type } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { OptionFormFieldsAbstractService } from "src/app/components/acts/act-form/services/option-form-field-abstract.service";
+import { ActsFormControlService } from "src/app/services/controls/acts-form-control.service";
+import { FormControlService } from "../services/form-control.service";
 import { Subscription } from "rxjs";
+import { FormComponent } from "../models/form.component";
 
 @Component({
-  selector: 'app-ff-textarea',
-  templateUrl: './ff-textarea.component.html',
-  styleUrls: ['./ff-textarea.component.scss']
+  selector: "app-ff-textarea",
+  templateUrl: "./ff-textarea.component.html",
+  styleUrls: ["./ff-textarea.component.scss"],
 })
-export class FfTextareaComponent implements OnInit {
-  @Input() value: string
+export class FfTextareaComponent implements OnInit, FormComponent {
+  @Input() value: string;
   @Input() label: string;
   @Input() key: string;
   @Input() form: FormGroup;
-  @Input() required: boolean
-  @Input() editable: boolean;
-  @Input() deletable: boolean;
-  @Input() optionFieldsService: Type<OptionFormFieldsAbstractService>;
+  @Input() required: boolean;
+  //   @Input() editable: boolean;
+  //   @Input() optionFieldsService: Type<OptionFormFieldsAbstractService>;
   get touchedAndNotValid() {
     if (
       !this.form.controls[this.key].valid &&
@@ -30,23 +30,14 @@ export class FfTextareaComponent implements OnInit {
     }
   }
 
-  placeholder: string
-  private subscriptions$: Subscription = new Subscription()
-
-  constructor(
-    private formService: FormControlService,
-    private actsFormControlService: ActsFormControlService
-  ) { }
+  placeholder: string;
+  constructor(private formService: FormControlService) {}
 
   ngOnInit() {
     const control = this.formService.initControl(this.value, this.required);
     this.form.addControl(this.key, control);
-    this.subscriptions$.add(
-      this.actsFormControlService.getOptionsForOption().subscribe((items) => {
-        this.optionsList = this.formService.createItemsForOption(items);
-      })
-    );
-    this.placeholder = this.touchedAndNotValid ? `Поле ${this.label} обязательно к заполнению` : this.label
+    this.placeholder = this.touchedAndNotValid
+      ? `Поле ${this.label} обязательно к заполнению`
+      : this.label;
   }
-
 }

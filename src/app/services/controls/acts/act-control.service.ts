@@ -14,6 +14,7 @@ import {
   PostActGQL,
   PostActMutation,
 } from "src/types/acts/generated";
+import { ACT_FORM_FIELDS } from "src/app/components/acts/act-form/models/enum/act-form-fields.enum";
 
 @Injectable({
   providedIn: "root",
@@ -27,10 +28,44 @@ export class ActControlService {
     private readonly updateAct: PatchActGQL
   ) {}
 
-  getActs(): Observable<FindAllActQuery["findAllAct"]> {
+  getActs(
+    skip = 0,
+    take = 50,
+    dateRangeStart: Date,
+    dateRangeEnd: Date,
+    sort?: string,
+    sortDirection: "ASC" | "DESC" = "DESC",
+    wheres?: {
+      relation: string;
+      ids: string[];
+    }[]
+  ): Observable<FindAllActQuery["getTableContent"]> {
+    console.log(sort);
+
+    console.log(sortDirection);
+
     return this.getAllActs
-      .watch()
-      .valueChanges.pipe(map(({ data }) => data.findAllAct))
+      .watch(
+        {
+          conditions: {
+            skip,
+            take,
+            sort,
+            sortDirection,
+            wheres,
+            dateRangeStart,
+            dateRangeEnd,
+          },
+        },
+        { fetchPolicy: "no-cache" }
+      )
+      .valueChanges.pipe(
+        map(({ data }) => {
+          console.log(data.getTableContent);
+
+          return data.getTableContent;
+        })
+      )
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 

@@ -6,8 +6,8 @@ import { OptionFormFieldsAbstractService } from "src/app/components/acts/act-for
 @Component({
   selector: "app-form-option",
   template: `
-    <div *ngIf="!value || isDataReady">
-      <div *ngFor="let field of fields" fxFlex>
+    <div *ngIf="!value || isDataReady" fxFlex>
+      <div *ngFor="let field of fields" fxLayout="column">
         <div *ngIf="field.visible">
           <app-form-renderer [field]="field" [form]="form"></app-form-renderer>
         </div>
@@ -33,15 +33,9 @@ export class FormOptionComponent implements OnInit {
 
     if (this.value) {
       this.fields.map((field) => {
-        console.log(this.value);
-
         field.value = this.value[field.key];
       });
-      console.log(this.fields);
-
       this.isDataReady = true;
     }
-
-    console.log(this.fields);
   }
 }

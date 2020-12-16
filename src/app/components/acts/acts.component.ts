@@ -1,8 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-acts",
-  template: ` <mat-toolbar fxLayout="row" fxLayoutGap="10px">
+  styleUrls: ["acts.component.scss"],
+  template: `
+    <mat-toolbar
+      fxLayout="row"
+      fxLayoutGap="10px"
+      [ngClass]="{ 'sticky-toolbar': true, sticky: isSticky }"
+    >
       <h2>Акты</h2>
       <span fxFlex class="flex-spacer"></span>
       <a
@@ -12,9 +18,19 @@ import { Component, OnInit } from "@angular/core";
         >Новый Акт</a
       >
     </mat-toolbar>
-    <router-outlet> </router-outlet>`,
+    <div [ngClass]="{ outlet: true, sticky: isSticky }">
+      <router-outlet> </router-outlet>
+    </div>
+  `,
 })
 export class ActsComponent implements OnInit {
+  isSticky: boolean = false;
+
+  @HostListener("window:scroll", ["$event"])
+  checkScroll() {
+    this.isSticky = window.pageYOffset >= 65;
+  }
+
   constructor() {}
 
   ngOnInit() {}

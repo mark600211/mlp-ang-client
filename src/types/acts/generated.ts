@@ -20,39 +20,33 @@ export type Scalars = {
 
 export type Act = {
   __typename?: 'Act';
-  additions: AdditionAct;
+  additions: Scalars['String'];
   applications: Array<Application>;
-  climaticEnvironmental: ClimaticEnvironmentalAct;
-  customer: CustomerAct;
+  climaticEnvironmental: Scalars['String'];
+  customer: Customer;
   datetime: DateAndTime;
-  definedIndicators: Array<DefinedIndicatorsAct>;
-  environmentalEngineer: EnvironmentalEngineerAct;
-  generalCustomer: GeneralCustomerAct;
-  goal: GoalAct;
+  definedIndicators: Array<DefinedIndicator>;
+  environmentalEngineer: EnvironmentalEngineer;
+  generalCustomer: GeneralCustomer;
+  goal: Goal;
   id: Scalars['ID'];
-  informationAboutSelection: InformationAboutSelectionAct;
+  informationAboutSelection: Scalars['String'];
   isCorrect: Scalars['Boolean'];
-  lab: LabAct;
-  method: MethodAct;
+  lab: Lab;
+  method: Method;
   name: Scalars['String'];
-  normativeDocuments: Array<NormativeDocumentAct>;
-  objectName: ObjectNameAct;
-  passedSample: PassedSampleAct;
-  place: PlaceAct;
-  planning: PlanningAct;
-  preparation: Array<PreparationAct>;
-  representative: RepresentativeAct;
-  sample: Array<SampleAct>;
-  sampleType: SampleTypeAct;
+  normativeDocuments: Array<NormativeDocument>;
+  objectName: Scalars['String'];
+  passedSample: PassedSample;
+  place: Place;
+  planning: Scalars['String'];
+  preparation: Array<Preparation>;
+  representative: Representative;
+  sample: Scalars['String'];
+  sampleType: SampleType;
   status: Scalars['String'];
-  toolType: ToolTypeAct;
-  typeOfSample: TypeOfSampleAct;
-};
-
-export type AdditionAct = {
-  __typename?: 'AdditionAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
+  toolType: ToolType;
+  typeOfSample: TypeOfSample;
 };
 
 export type AddresInput = {
@@ -89,14 +83,8 @@ export type ApplicationInput = {
   place: Scalars['String'];
 };
 
-export type ClimaticEnvironmentalAct = {
-  __typename?: 'ClimaticEnvironmentalAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type CustomerAct = {
-  __typename?: 'CustomerAct';
+export type Customer = {
+  __typename?: 'Customer';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -117,20 +105,20 @@ export type DateTimeInput = {
   time: Scalars['String'];
 };
 
-export type DefinedIndicatorsAct = {
-  __typename?: 'DefinedIndicatorsAct';
+export type DefinedIndicator = {
+  __typename?: 'DefinedIndicator';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type EnvironmentalEngineerAct = {
-  __typename?: 'EnvironmentalEngineerAct';
+export type EnvironmentalEngineer = {
+  __typename?: 'EnvironmentalEngineer';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type GeneralCustomerAct = {
-  __typename?: 'GeneralCustomerAct';
+export type GeneralCustomer = {
+  __typename?: 'GeneralCustomer';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -139,20 +127,14 @@ export type GeneralCustomerAct = {
   tel?: Maybe<Scalars['String']>;
 };
 
-export type GoalAct = {
-  __typename?: 'GoalAct';
+export type Goal = {
+  __typename?: 'Goal';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type InformationAboutSelectionAct = {
-  __typename?: 'InformationAboutSelectionAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type LabAct = {
-  __typename?: 'LabAct';
+export type Lab = {
+  __typename?: 'Lab';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -161,8 +143,8 @@ export type LabAct = {
   tel?: Maybe<Scalars['String']>;
 };
 
-export type MethodAct = {
-  __typename?: 'MethodAct';
+export type Method = {
+  __typename?: 'Method';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -171,16 +153,12 @@ export type Mutation = {
   __typename?: 'Mutation';
   createAct: Act;
   createApplication: Application;
-  createTest: Test;
   deleteByIdAct?: Maybe<Act>;
   deleteByIdApplication?: Maybe<Application>;
-  deleteByIdTest?: Maybe<Test>;
   updateAct: Act;
   updateApplication: Application;
-  updateTest: Test;
   updateWhereAct: Act;
   updateWhereApplication: Application;
-  updateWhereTest: Test;
 };
 
 
@@ -194,22 +172,12 @@ export type MutationCreateApplicationArgs = {
 };
 
 
-export type MutationCreateTestArgs = {
-  data: Scalars['String'];
-};
-
-
 export type MutationDeleteByIdActArgs = {
   id: Scalars['String'];
 };
 
 
 export type MutationDeleteByIdApplicationArgs = {
-  id: Scalars['String'];
-};
-
-
-export type MutationDeleteByIdTestArgs = {
   id: Scalars['String'];
 };
 
@@ -226,12 +194,6 @@ export type MutationUpdateApplicationArgs = {
 };
 
 
-export type MutationUpdateTestArgs = {
-  data: Scalars['String'];
-  id: Scalars['String'];
-};
-
-
 export type MutationUpdateWhereActArgs = {
   data: Scalars['String'];
   where: Scalars['String'];
@@ -239,12 +201,6 @@ export type MutationUpdateWhereActArgs = {
 
 
 export type MutationUpdateWhereApplicationArgs = {
-  data: Scalars['String'];
-  where: Scalars['String'];
-};
-
-
-export type MutationUpdateWhereTestArgs = {
   data: Scalars['String'];
   where: Scalars['String'];
 };
@@ -270,26 +226,20 @@ export type NewActDto = {
   planning?: Maybe<Scalars['String']>;
   preparation?: Maybe<Array<Scalars['String']>>;
   representative?: Maybe<Scalars['String']>;
-  sample?: Maybe<Array<Scalars['String']>>;
+  sample?: Maybe<Scalars['String']>;
   sampleType?: Maybe<Scalars['String']>;
   toolType?: Maybe<Scalars['String']>;
   typeOfSample: Scalars['String'];
 };
 
-export type NormativeDocumentAct = {
-  __typename?: 'NormativeDocumentAct';
+export type NormativeDocument = {
+  __typename?: 'NormativeDocument';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type ObjectNameAct = {
-  __typename?: 'ObjectNameAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type PassedSampleAct = {
-  __typename?: 'PassedSampleAct';
+export type PassedSample = {
+  __typename?: 'PassedSample';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -316,7 +266,7 @@ export type PatchActDto = {
   planning?: Maybe<Scalars['String']>;
   preparation?: Maybe<Array<Scalars['String']>>;
   representative?: Maybe<Scalars['String']>;
-  sample?: Maybe<Array<Scalars['String']>>;
+  sample?: Maybe<Scalars['String']>;
   sampleType?: Maybe<Scalars['String']>;
   toolType?: Maybe<Scalars['String']>;
   typeOfSample?: Maybe<Scalars['String']>;
@@ -327,20 +277,14 @@ export type PatchAppDto = {
   place: Scalars['String'];
 };
 
-export type PlaceAct = {
-  __typename?: 'PlaceAct';
+export type Place = {
+  __typename?: 'Place';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type PlanningAct = {
-  __typename?: 'PlanningAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type PreparationAct = {
-  __typename?: 'PreparationAct';
+export type Preparation = {
+  __typename?: 'Preparation';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -349,16 +293,25 @@ export type Query = {
   __typename?: 'Query';
   findAllAct: Array<Act>;
   findAllApplication: Array<Application>;
-  findAllTest: Array<Test>;
   findByIdAct: Act;
   findByIdApplication: Application;
-  findByIdTest: Test;
   findManyWhereAct: Array<Act>;
   findManyWhereApplication: Array<Application>;
-  findManyWhereTest: Array<Test>;
   findOneWhereAct: Act;
   findOneWhereApplication: Application;
-  findOneWhereTest: Test;
+  getTableContent: TableContent;
+};
+
+
+export type QueryFindAllActArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllApplicationArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
@@ -368,11 +321,6 @@ export type QueryFindByIdActArgs = {
 
 
 export type QueryFindByIdApplicationArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryFindByIdTestArgs = {
   id: Scalars['String'];
 };
 
@@ -387,11 +335,6 @@ export type QueryFindManyWhereApplicationArgs = {
 };
 
 
-export type QueryFindManyWhereTestArgs = {
-  where: Scalars['String'];
-};
-
-
 export type QueryFindOneWhereActArgs = {
   where: Scalars['String'];
 };
@@ -402,115 +345,110 @@ export type QueryFindOneWhereApplicationArgs = {
 };
 
 
-export type QueryFindOneWhereTestArgs = {
-  where: Scalars['String'];
+export type QueryGetTableContentArgs = {
+  conditions: TableConditions;
 };
 
-export type RepresentativeAct = {
-  __typename?: 'RepresentativeAct';
+export type Representative = {
+  __typename?: 'Representative';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type SampleAct = {
-  __typename?: 'SampleAct';
+export type SampleType = {
+  __typename?: 'SampleType';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type SampleTypeAct = {
-  __typename?: 'SampleTypeAct';
+export type TableConditions = {
+  dateRangeEnd?: Maybe<Scalars['DateTime']>;
+  dateRangeStart?: Maybe<Scalars['DateTime']>;
+  skip: Scalars['Int'];
+  sort?: Maybe<Scalars['String']>;
+  sortDirection?: Maybe<Scalars['String']>;
+  take: Scalars['Int'];
+  wheres?: Maybe<Array<Where>>;
+};
+
+export type TableContent = {
+  __typename?: 'TableContent';
+  acts: Array<Act>;
+  totalCount: Scalars['Int'];
+  uniqCustomers: Array<Scalars['ID']>;
+  uniqGeneralCustomers: Array<Scalars['ID']>;
+  uniqLabs: Array<Scalars['ID']>;
+  uniqTypeOfSamples: Array<Scalars['ID']>;
+};
+
+export type ToolType = {
+  __typename?: 'ToolType';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type Test = {
-  __typename?: 'Test';
-  id: Scalars['ID'];
-  test: Scalars['String'];
-};
-
-export type ToolTypeAct = {
-  __typename?: 'ToolTypeAct';
+export type TypeOfSample = {
+  __typename?: 'TypeOfSample';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type TypeOfSampleAct = {
-  __typename?: 'TypeOfSampleAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
+export type Where = {
+  ids: Array<Scalars['ID']>;
+  relation: Scalars['String'];
 };
 
 export type WholeActWithIdsFragment = (
   { __typename?: 'Act' }
-  & Pick<Act, 'id' | 'name'>
+  & Pick<Act, 'id' | 'name' | 'objectName' | 'climaticEnvironmental' | 'planning' | 'sample' | 'additions' | 'informationAboutSelection'>
   & { customer: (
-    { __typename?: 'CustomerAct' }
-    & Pick<CustomerAct, 'id'>
+    { __typename?: 'Customer' }
+    & Pick<Customer, 'id'>
   ), generalCustomer: (
-    { __typename?: 'GeneralCustomerAct' }
-    & Pick<GeneralCustomerAct, 'id'>
+    { __typename?: 'GeneralCustomer' }
+    & Pick<GeneralCustomer, 'id'>
   ), lab: (
-    { __typename?: 'LabAct' }
-    & Pick<LabAct, 'id'>
+    { __typename?: 'Lab' }
+    & Pick<Lab, 'id'>
   ), typeOfSample: (
-    { __typename?: 'TypeOfSampleAct' }
-    & Pick<TypeOfSampleAct, 'id'>
-  ), objectName: (
-    { __typename?: 'ObjectNameAct' }
-    & Pick<ObjectNameAct, 'id'>
+    { __typename?: 'TypeOfSample' }
+    & Pick<TypeOfSample, 'id'>
   ), place: (
-    { __typename?: 'PlaceAct' }
-    & Pick<PlaceAct, 'id'>
+    { __typename?: 'Place' }
+    & Pick<Place, 'id'>
   ), datetime: (
     { __typename?: 'DateAndTime' }
     & Pick<DateAndTime, 'date' | 'time'>
   ), method: (
-    { __typename?: 'MethodAct' }
-    & Pick<MethodAct, 'id'>
+    { __typename?: 'Method' }
+    & Pick<Method, 'id'>
   ), toolType: (
-    { __typename?: 'ToolTypeAct' }
-    & Pick<ToolTypeAct, 'id'>
-  ), climaticEnvironmental: (
-    { __typename?: 'ClimaticEnvironmentalAct' }
-    & Pick<ClimaticEnvironmentalAct, 'id'>
-  ), planning: (
-    { __typename?: 'PlanningAct' }
-    & Pick<PlanningAct, 'id'>
+    { __typename?: 'ToolType' }
+    & Pick<ToolType, 'id'>
   ), normativeDocuments: Array<(
-    { __typename?: 'NormativeDocumentAct' }
-    & Pick<NormativeDocumentAct, 'id'>
+    { __typename?: 'NormativeDocument' }
+    & Pick<NormativeDocument, 'id'>
   )>, sampleType: (
-    { __typename?: 'SampleTypeAct' }
-    & Pick<SampleTypeAct, 'id'>
-  ), sample: Array<(
-    { __typename?: 'SampleAct' }
-    & Pick<SampleAct, 'id'>
-  )>, preparation: Array<(
-    { __typename?: 'PreparationAct' }
-    & Pick<PreparationAct, 'id'>
+    { __typename?: 'SampleType' }
+    & Pick<SampleType, 'id'>
+  ), preparation: Array<(
+    { __typename?: 'Preparation' }
+    & Pick<Preparation, 'id'>
   )>, goal: (
-    { __typename?: 'GoalAct' }
-    & Pick<GoalAct, 'id'>
+    { __typename?: 'Goal' }
+    & Pick<Goal, 'id'>
   ), definedIndicators: Array<(
-    { __typename?: 'DefinedIndicatorsAct' }
-    & Pick<DefinedIndicatorsAct, 'id'>
-  )>, additions: (
-    { __typename?: 'AdditionAct' }
-    & Pick<AdditionAct, 'id'>
-  ), informationAboutSelection: (
-    { __typename?: 'InformationAboutSelectionAct' }
-    & Pick<InformationAboutSelectionAct, 'id'>
-  ), environmentalEngineer: (
-    { __typename?: 'EnvironmentalEngineerAct' }
-    & Pick<EnvironmentalEngineerAct, 'id'>
+    { __typename?: 'DefinedIndicator' }
+    & Pick<DefinedIndicator, 'id'>
+  )>, environmentalEngineer: (
+    { __typename?: 'EnvironmentalEngineer' }
+    & Pick<EnvironmentalEngineer, 'id'>
   ), representative: (
-    { __typename?: 'RepresentativeAct' }
-    & Pick<RepresentativeAct, 'id'>
+    { __typename?: 'Representative' }
+    & Pick<Representative, 'id'>
   ), passedSample: (
-    { __typename?: 'PassedSampleAct' }
-    & Pick<PassedSampleAct, 'id'>
+    { __typename?: 'PassedSample' }
+    & Pick<PassedSample, 'id'>
   ), applications: Array<(
     { __typename?: 'Application' }
     & Pick<Application, 'id' | 'place'>
@@ -570,31 +508,37 @@ export type CreatAppMutation = (
   ) }
 );
 
-export type FindAllActQueryVariables = Exact<{ [key: string]: never; }>;
+export type FindAllActQueryVariables = Exact<{
+  conditions: TableConditions;
+}>;
 
 
 export type FindAllActQuery = (
   { __typename?: 'Query' }
-  & { findAllAct: Array<(
-    { __typename?: 'Act' }
-    & Pick<Act, 'id' | 'name'>
-    & { customer: (
-      { __typename?: 'CustomerAct' }
-      & Pick<CustomerAct, 'id' | 'label'>
-    ), generalCustomer: (
-      { __typename?: 'GeneralCustomerAct' }
-      & Pick<GeneralCustomerAct, 'id' | 'label'>
-    ), lab: (
-      { __typename?: 'LabAct' }
-      & Pick<LabAct, 'id' | 'label'>
-    ), typeOfSample: (
-      { __typename?: 'TypeOfSampleAct' }
-      & Pick<TypeOfSampleAct, 'id' | 'label'>
-    ), datetime: (
-      { __typename?: 'DateAndTime' }
-      & Pick<DateAndTime, 'date' | 'time'>
-    ) }
-  )> }
+  & { getTableContent: (
+    { __typename?: 'TableContent' }
+    & Pick<TableContent, 'uniqCustomers' | 'uniqGeneralCustomers' | 'uniqLabs' | 'uniqTypeOfSamples' | 'totalCount'>
+    & { acts: Array<(
+      { __typename?: 'Act' }
+      & Pick<Act, 'id' | 'name'>
+      & { customer: (
+        { __typename?: 'Customer' }
+        & Pick<Customer, 'id' | 'label'>
+      ), generalCustomer: (
+        { __typename?: 'GeneralCustomer' }
+        & Pick<GeneralCustomer, 'id' | 'label'>
+      ), lab: (
+        { __typename?: 'Lab' }
+        & Pick<Lab, 'id' | 'label'>
+      ), typeOfSample: (
+        { __typename?: 'TypeOfSample' }
+        & Pick<TypeOfSample, 'id' | 'label'>
+      ), datetime: (
+        { __typename?: 'DateAndTime' }
+        & Pick<DateAndTime, 'date' | 'time'>
+      ) }
+    )> }
+  ) }
 );
 
 export type GetWholeActWithIdsQueryVariables = Exact<{
@@ -639,9 +583,7 @@ export const WholeActWithIdsFragmentDoc = gql`
   typeOfSample {
     id
   }
-  objectName {
-    id
-  }
+  objectName
   place {
     id
   }
@@ -655,21 +597,15 @@ export const WholeActWithIdsFragmentDoc = gql`
   toolType {
     id
   }
-  climaticEnvironmental {
-    id
-  }
-  planning {
-    id
-  }
+  climaticEnvironmental
+  planning
   normativeDocuments {
     id
   }
   sampleType {
     id
   }
-  sample {
-    id
-  }
+  sample
   preparation {
     id
   }
@@ -679,12 +615,8 @@ export const WholeActWithIdsFragmentDoc = gql`
   definedIndicators {
     id
   }
-  additions {
-    id
-  }
-  informationAboutSelection {
-    id
-  }
+  additions
+  informationAboutSelection
   environmentalEngineer {
     id
   }
@@ -762,30 +694,37 @@ export const CreatAppDocument = gql`
     client = 'ActsClient';
   }
 export const FindAllActDocument = gql`
-    query findAllAct {
-  findAllAct {
-    id
-    name
-    customer {
+    query findAllAct($conditions: TableConditions!) {
+  getTableContent(conditions: $conditions) {
+    acts {
       id
-      label
+      name
+      customer {
+        id
+        label
+      }
+      generalCustomer {
+        id
+        label
+      }
+      lab {
+        id
+        label
+      }
+      typeOfSample {
+        id
+        label
+      }
+      datetime {
+        date
+        time
+      }
     }
-    generalCustomer {
-      id
-      label
-    }
-    lab {
-      id
-      label
-    }
-    typeOfSample {
-      id
-      label
-    }
-    datetime {
-      date
-      time
-    }
+    uniqCustomers
+    uniqGeneralCustomers
+    uniqLabs
+    uniqTypeOfSamples
+    totalCount
   }
 }
     `;

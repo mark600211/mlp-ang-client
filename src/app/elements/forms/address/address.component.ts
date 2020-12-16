@@ -3,49 +3,47 @@ import {
   FormBuilder,
   Validators,
   FormGroup,
-  FormControl
+  FormControl,
 } from "@angular/forms";
-import { AddressModel } from "../../models/address.model";
+import { FieldBase } from "src/app/components/acts/act-form/models/fields/field-base.model";
+import { FormComponent } from "../models/form.component";
+import { FormControlService } from "../services/form-control.service";
 import { AddressFieldsService } from "./address-fields.service";
+import { AddressModel } from "./models/address.model";
 
 @Component({
   selector: "app-address",
   templateUrl: "./address.component.html",
-  styleUrls: ["./address.component.scss"]
+  styleUrls: ["./address.component.scss"],
 })
-export class AddressComponent implements OnInit {
-  @Input() item: AddressModel;
+export class AddressComponent implements OnInit, FormComponent {
+  @Input() value: AddressModel;
+  @Input() label: string;
   @Input() form: FormGroup;
   @Input() key: string;
-  control: FormGroup;
+  @Input() required: boolean;
+
+  group: FormGroup;
+
   address: Object;
   formattedAddress: string;
-  fields: Array<any>;
+  fields: Array<FieldBase<any>>;
 
   constructor(
     private fb: FormBuilder,
-    private afs: AddressFieldsService,
+    private addressFieldsService: AddressFieldsService,
     private zone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.fields = this.afs.getFields();
-    this.control = this.initForm(this.afs.getFields(), this.item);
-    this.form.setControl(this.key, this.control);
-  }
-
-  initForm(fields: any[], item?: AddressModel): FormGroup {
-    let group = {};
-
-    fields.forEach(field => {
-      if (item && !field.nestedGroup) {
-        field.value = item[field.key];
-      }
-      group[field.key] = field.required
-        ? [field.value || "", Validators.required]
-        : [field.value || ""];
-    });
-    return this.fb.group(group);
+    this.fields = this.addressFieldsService.getFields();
+    this.group = this.fb.group({});
+    this.form.addControl(this.key, this.group);
+    if (this.value) {
+      this.fields.map((field) => {
+        field.value = this.value[`${field.key}`];
+      });
+    }
   }
 
   getAddress(place: object) {
@@ -60,7 +58,7 @@ export class AddressComponent implements OnInit {
         region: this.getState(place) || "",
         city: this.getCity(place) || "",
         street: this.getStreet(place) || "",
-        building: this.getStreetNumber(place) || ""
+        building: this.getStreetNumber(place) || "",
       };
       this.form.get(this.key).patchValue(new AddressModel(options));
     });
@@ -129,7 +127,7 @@ export class AddressComponent implements OnInit {
 
   getPhone(place) {
     const COMPONENT_TEMPLATE = {
-        formatted_phone_number: "formatted_phone_number"
+        formatted_phone_number: "formatted_phone_number",
       },
       phone = this.getAddrComponent(place, COMPONENT_TEMPLATE);
     return phone;

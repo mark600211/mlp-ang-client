@@ -13,9 +13,8 @@ export class getTypeOfSamplesForOption {
 
 export class getObjectNamesForOption {
   document = gql`
-    query getObjectNamesForOption {
-      findAllObjectName {
-        id
+    query getObjectNamesForOption($field: String) {
+      findAllObjectName(field: $field) {
         label
       }
     }
@@ -57,9 +56,8 @@ export class getToolTypesForOption {
 
 export class getClimaticEnvironmentalsForOption {
   document = gql`
-    query getClimaticEnvironmentalsForOption {
-      findAllClimaticEnvironmental {
-        id
+    query getClimaticEnvironmentalsForOption($field: String) {
+      findAllClimaticEnvironmental(field: $field) {
         label
       }
     }
@@ -68,9 +66,8 @@ export class getClimaticEnvironmentalsForOption {
 
 export class getPlanningsForOption {
   document = gql`
-    query getPlanningsForOption {
-      findAllPlanning {
-        id
+    query getPlanningsForOption($field: String) {
+      findAllPlanning(field: $field) {
         label
       }
     }
@@ -101,9 +98,8 @@ export class getSampleTypesForOption {
 
 export class getSamplesForOption {
   document = gql`
-    query getSamplesForOption {
-      findAllSample {
-        id
+    query getSamplesForOption($field: String) {
+      findAllSample(field: $field) {
         label
       }
     }
@@ -134,8 +130,8 @@ export class getGoalsForOption {
 
 export class getDefinedIndicatorsForOption {
   document = gql`
-    query getDefinedIndicatorsForOption {
-      findAllDefinedIndicator {
+    query getDefinedIndicatorsForOption($where: WhereDefinedIndicator!) {
+      findManyWhereDefinedIndicator(where: $where) {
         id
         label
       }
@@ -143,27 +139,27 @@ export class getDefinedIndicatorsForOption {
   `;
 }
 
-export class getAdditionsForOption {
-  document = gql`
-    query getAdditionsForOption {
-      findAllAddition {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class getAdditionsForOption {
+//   document = gql`
+//     query getAdditionsForOption {
+//       findAllAddition {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
-export class getInformationAboutSelectionsForOption {
-  document = gql`
-    query getInformationAboutSelectionsForOption {
-      findAllInformationAboutSelection {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class getInformationAboutSelectionsForOption {
+//   document = gql`
+//     query getInformationAboutSelectionsForOption {
+//       findAllInformationAboutSelection {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
 export class getEnvironmentalEngineersForOption {
   document = gql`
@@ -213,7 +209,6 @@ export class getObjectName {
   document = gql`
     query getObjectName($data: String!) {
       findByIdObjectName(id: $data) {
-        id
         label
       }
     }
@@ -257,7 +252,6 @@ export class getClimaticEnvironmental {
   document = gql`
     query getClimaticEnvironmental($data: String!) {
       findByIdClimaticEnvironmental(id: $data) {
-        id
         label
       }
     }
@@ -268,7 +262,6 @@ export class getPlanning {
   document = gql`
     query getPlanning($data: String!) {
       findByIdPlanning(id: $data) {
-        id
         label
       }
     }
@@ -301,7 +294,6 @@ export class getSample {
   document = gql`
     query getSample($data: String!) {
       findByIdSample(id: $data) {
-        id
         label
       }
     }
@@ -341,27 +333,27 @@ export class getDefinedIndicator {
   `;
 }
 
-export class getAddition {
-  document = gql`
-    query getAddition($data: String!) {
-      findByIdAddition(id: $data) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class getAddition {
+//   document = gql`
+//     query getAddition($data: String!) {
+//       findByIdAddition(id: $data) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
-export class getInformationAboutSelection {
-  document = gql`
-    query getInformationAboutSelection($data: String!) {
-      findByIdInformationAboutSelection(id: $data) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class getInformationAboutSelection {
+//   document = gql`
+//     query getInformationAboutSelection($data: String!) {
+//       findByIdInformationAboutSelection(id: $data) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
 export class getEnvironmentalEngineer {
   document = gql`

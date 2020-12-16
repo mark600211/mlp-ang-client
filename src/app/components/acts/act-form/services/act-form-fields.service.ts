@@ -14,12 +14,10 @@ import {
   PatchLabGQL,
 } from "src/types/consumers/generated";
 import {
-  CreateAdditionGQL,
   CreateClimaticEnvironmentalGQL,
   CreateDefinedIndicatorGQL,
   CreateEnvironmentalEngineerGQL,
   CreateGoalGQL,
-  CreateInformationAboutSelectionGQL,
   CreateMethodGQL,
   CreateNormativeDocumentGQL,
   CreateObjectNameGQL,
@@ -32,8 +30,6 @@ import {
   CreateSampleTypeGQL,
   CreateToolTypeGQL,
   CreateTypeOfSampleGQL,
-  GetAdditionGQL,
-  GetAdditionsForOptionGQL,
   GetClimaticEnvironmentalGQL,
   GetClimaticEnvironmentalsForOptionGQL,
   GetDefinedIndicatorGQL,
@@ -42,8 +38,6 @@ import {
   GetEnvironmentalEngineersForOptionGQL,
   GetGoalForOptionGQL,
   GetGoalGQL,
-  GetInformationAboutSelectionGQL,
-  GetInformationAboutSelectionsForOptionGQL,
   GetMethodGQL,
   GetMethodsForOptionGQL,
   GetNormativeDocumentGQL,
@@ -68,12 +62,10 @@ import {
   GetToolTypesForOptionGQL,
   GetTypeOfSampleGQL,
   GetTypeOfSamplesForOptionGQL,
-  PatchAdditionGQL,
   PatchClimaticEnvironmentalGQL,
   PatchDefinedIndicatorGQL,
   PatchEnvironmentalEngineerGQL,
   PatchGoalGQL,
-  PatchInformationAboutSelectionGQL,
   PatchMethodGQL,
   PatchNormativeDocumentGQL,
   PatchObjectNameGQL,
@@ -88,12 +80,14 @@ import {
   PatchTypeOfSampleGQL,
 } from "src/types/options/generated";
 import { ACT_FORM_FIELDS } from "../models/enum/act-form-fields.enum";
-import { AutocompleteField } from '../models/fields/autocomplete-filed.model';
+import { AutocompleteField } from "../models/fields/autocomplete-filed.model";
+import { DateTimeField } from "../models/fields/date-time.model";
 import { FieldBase } from "../models/fields/field-base.model";
 import { InputField } from "../models/fields/input-field.model";
 import { ManySelectField } from "../models/fields/many-select-filed.model";
 import { SelectField } from "../models/fields/select-filed.model";
-import { TextField } from '../models/fields/text-filed.model';
+import { TextField } from "../models/fields/text-filed.model";
+import { OptionFormFieldsAddressService } from "./option-form-fields-addres.service";
 import { OptionFormFieldsGeneralService } from "./option-form-fields-general.service";
 
 @Injectable({
@@ -124,7 +118,7 @@ export class ActFormFieldsService {
         postType: "createCustomer",
         patchOptionService: PatchCustomerGQL,
         patchType: "updateCustomer",
-        optionFieldsService: OptionFormFieldsGeneralService,
+        optionFieldsService: OptionFormFieldsAddressService,
       }),
       new SelectField({
         required: true,
@@ -140,7 +134,7 @@ export class ActFormFieldsService {
         postType: "createGeneralCustomer",
         patchOptionService: PatchGeneralCustomerGQL,
         patchType: "updateGeneralCustomer",
-        optionFieldsService: OptionFormFieldsGeneralService,
+        optionFieldsService: OptionFormFieldsAddressService,
       }),
 
       new SelectField({
@@ -157,12 +151,12 @@ export class ActFormFieldsService {
         postType: "createLab",
         patchOptionService: PatchLabGQL,
         patchType: "updateLab",
-        optionFieldsService: OptionFormFieldsGeneralService,
+        optionFieldsService: OptionFormFieldsAddressService,
       }),
 
       new SelectField({
         visible: true,
-        required: false,
+        required: true,
         key: ACT_FORM_FIELDS.TYPE_OF_SAMPLE,
         label: "Тип отбираемой Среды",
         editable: true,
@@ -177,7 +171,7 @@ export class ActFormFieldsService {
         optionFieldsService: OptionFormFieldsGeneralService,
       }),
 
-      new InputField({
+      new AutocompleteField({
         visible: true,
         key: ACT_FORM_FIELDS.OBJECT_NAME,
         label: "Наименование объекта",
@@ -208,12 +202,11 @@ export class ActFormFieldsService {
         optionFieldsService: OptionFormFieldsGeneralService,
       }),
 
-      //   new NestedAct({
-      //     controlType: "datetime",
-      //     required: true,
-      //     visible: true,
-      //     key: "datetime",
-      //   }),
+      new DateTimeField({
+        required: true,
+        visible: true,
+        key: "datetime",
+      }),
 
       new SelectField({
         visible: true,
@@ -247,7 +240,7 @@ export class ActFormFieldsService {
         optionFieldsService: OptionFormFieldsGeneralService,
       }),
 
-      new InputField({
+      new AutocompleteField({
         visible: true,
         key: ACT_FORM_FIELDS.CLIMATIC_ENVIRONMENTAL,
         label: "Климатические условия окружающей среды при отборе проб",
@@ -262,7 +255,7 @@ export class ActFormFieldsService {
         optionFieldsService: OptionFormFieldsGeneralService,
       }),
 
-      new InputField({
+      new AutocompleteField({
         visible: true,
         key: ACT_FORM_FIELDS.PLANNING,
         label: "План (программа) отбора",
@@ -309,12 +302,12 @@ export class ActFormFieldsService {
         optionFieldsService: OptionFormFieldsGeneralService,
       }),
 
-        new AutocompleteField({
-          visible: true,
-          key: ACT_FORM_FIELDS.SAMPLE,
-          label: "Объем отобранной пробы, материал тары",
-          editable: true,
-          getOptionsService: GetSamplesForOptionGQL,
+      new AutocompleteField({
+        visible: true,
+        key: ACT_FORM_FIELDS.SAMPLE,
+        label: "Объем отобранной пробы, материал тары",
+        editable: true,
+        getOptionsService: GetSamplesForOptionGQL,
         getsType: "findAllSample",
         getOptionService: GetSampleGQL,
         getType: "findByIdSample",
@@ -323,7 +316,7 @@ export class ActFormFieldsService {
         patchOptionService: PatchSampleGQL,
         patchType: "updateSample",
         optionFieldsService: OptionFormFieldsGeneralService,
-        }),
+      }),
 
       new ManySelectField({
         visible: true,
@@ -359,11 +352,11 @@ export class ActFormFieldsService {
 
       new ManySelectField({
         visible: true,
-        key: "definedIndicators",
+        key: ACT_FORM_FIELDS.DEFINED_INDICATORS,
         label: "Определяемые показатели",
         editable: true,
         getOptionsService: GetDefinedIndicatorsForOptionGQL,
-        getsType: "findAllDefinedIndicator",
+        getsType: "findManyWhereDefinedIndicator",
         getOptionService: GetDefinedIndicatorGQL,
         getType: "findByIdDefinedIndicator",
         postOptionService: CreateDefinedIndicatorGQL,
@@ -371,37 +364,45 @@ export class ActFormFieldsService {
         patchOptionService: PatchDefinedIndicatorGQL,
         patchType: "updateDefinedIndicator",
         optionFieldsService: OptionFormFieldsGeneralService,
+        isDepened: true,
+        dependFrom: [
+          { field: ACT_FORM_FIELDS.LAB, label: "Лаборатория" },
+          {
+            field: ACT_FORM_FIELDS.TYPE_OF_SAMPLE,
+            label: "Тип отбираемой пробы",
+          },
+        ],
       }),
 
-        new TextField({
-          visible: true,
-          key: ACT_FORM_FIELDS.ADDITIONS,
-          label: "Дополнительные сведения",
-          getOptionsService: GetAdditionsForOptionGQL,
-          getsType: "findAllAddition",
-          getOptionService: GetAdditionGQL,
-          getType: "findByIdAddition",
-          postOptionService: CreateAdditionGQL,
-          postType: "createAddition",
-          patchOptionService: PatchAdditionGQL,
-          patchType: "updateAddition",
-          optionFieldsService: OptionFormFieldsGeneralService,
-        }),
+      new TextField({
+        visible: true,
+        key: ACT_FORM_FIELDS.ADDITIONS,
+        label: "Дополнительные сведения",
+        // getOptionsService: GetAdditionsForOptionGQL,
+        // getsType: "findAllAddition",
+        // getOptionService: GetAdditionGQL,
+        // getType: "findByIdAddition",
+        // postOptionService: CreateAdditionGQL,
+        // postType: "createAddition",
+        // patchOptionService: PatchAdditionGQL,
+        // patchType: "updateAddition",
+        // optionFieldsService: OptionFormFieldsGeneralService,
+      }),
 
-        new TextField({
-          visible: true,
-          key: ACT_FORM_FIELDS.INFORMATION_ABOUT_SELECTION,
-          label: "Сведения о проведенных при отборе измерениях",
-          getOptionsService: GetInformationAboutSelectionsForOptionGQL,
-          getsType: "findAllInformtionAboutSelection",
-          getOptionService: GetInformationAboutSelectionGQL,
-          getType: "findByIdInformtionAboutSelection",
-          postOptionService: CreateInformationAboutSelectionGQL,
-          postType: "createInformtionAboutSelection",
-          patchOptionService: PatchInformationAboutSelectionGQL,
-          patchType: "updateInformtionAboutSelection",
-          optionFieldsService: OptionFormFieldsGeneralService,
-        }),
+      new TextField({
+        visible: true,
+        key: ACT_FORM_FIELDS.INFORMATION_ABOUT_SELECTION,
+        label: "Сведения о проведенных при отборе измерениях",
+        // getOptionsService: GetInformationAboutSelectionsForOptionGQL,
+        // getsType: "findAllInformtionAboutSelection",
+        // getOptionService: GetInformationAboutSelectionGQL,
+        // getType: "findByIdInformtionAboutSelection",
+        // postOptionService: CreateInformationAboutSelectionGQL,
+        // postType: "createInformtionAboutSelection",
+        // patchOptionService: PatchInformationAboutSelectionGQL,
+        // patchType: "updateInformtionAboutSelection",
+        // optionFieldsService: OptionFormFieldsGeneralService,
+      }),
 
       new SelectField({
         visible: true,

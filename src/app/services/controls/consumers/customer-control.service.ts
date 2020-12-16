@@ -20,21 +20,11 @@ import { ProcessHTTPMsgService } from "../../process-httpmsg.service";
 })
 export class CustomerControlService {
   constructor(
-    private readonly getCustomersForOptionGQL: GetCustomersForOptionGQL,
     private readonly getWholeCustomerGQL: GetWholeCustomerGQL,
     private readonly postCustomerGQL: CreateCustomerGQL,
     private readonly patchCustomerGQL: PatchCustomerGQL,
     private processHTTPMsgService: ProcessHTTPMsgService
   ) {}
-
-  getCustomersForOption(): Observable<
-    GetCustomersForOptionQuery["findAllCustomer"]
-  > {
-    return this.getCustomersForOptionGQL
-      .watch()
-      .valueChanges.pipe(map(({ data }) => data.findAllCustomer))
-      .pipe(catchError(this.processHTTPMsgService.handleError));
-  }
 
   getWholeCustomer(
     id: string

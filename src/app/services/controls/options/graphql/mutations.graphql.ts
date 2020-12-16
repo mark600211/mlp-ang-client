@@ -24,9 +24,8 @@ export class PatchTypeOfSample {
 
 export class CreateObjectName {
   document = gql`
-    mutation CreateObjectName($data: NewOption!) {
+    mutation CreateObjectName($data: String!) {
       createObjectName(data: $data) {
-        id
         label
       }
     }
@@ -35,9 +34,8 @@ export class CreateObjectName {
 
 export class PatchObjectName {
   document = gql`
-    mutation PatchObjectName($data: PatchOption!, $id: String!) {
+    mutation PatchObjectName($data: String!, $id: String!) {
       updateObjectName(data: $data, id: $id) {
-        id
         label
       }
     }
@@ -112,9 +110,8 @@ export class PatchToolType {
 
 export class CreateClimaticEnvironmental {
   document = gql`
-    mutation CreateClimaticEnvironmental($data: NewOption!) {
+    mutation CreateClimaticEnvironmental($data: String!) {
       createClimaticEnvironmental(data: $data) {
-        id
         label
       }
     }
@@ -123,9 +120,8 @@ export class CreateClimaticEnvironmental {
 
 export class PatchClimaticEnvironmental {
   document = gql`
-    mutation PatchClimaticEnvironmental($data: PatchOption!, $id: String!) {
+    mutation PatchClimaticEnvironmental($data: String!, $id: String!) {
       updateClimaticEnvironmental(data: $data, id: $id) {
-        id
         label
       }
     }
@@ -134,9 +130,8 @@ export class PatchClimaticEnvironmental {
 
 export class CreatePlanning {
   document = gql`
-    mutation CreatePlanning($data: NewOption!) {
+    mutation CreatePlanning($data: String!) {
       createPlanning(data: $data) {
-        id
         label
       }
     }
@@ -145,9 +140,8 @@ export class CreatePlanning {
 
 export class PatchPlanning {
   document = gql`
-    mutation PatchPlanning($data: PatchOption!, $id: String!) {
+    mutation PatchPlanning($data: String!, $id: String!) {
       updatePlanning(data: $data, id: $id) {
-        id
         label
       }
     }
@@ -200,9 +194,8 @@ export class PatchSampleType {
 
 export class CreateSample {
   document = gql`
-    mutation CreateSample($data: NewOption!) {
+    mutation CreateSample($data: String!) {
       createSample(data: $data) {
-        id
         label
       }
     }
@@ -211,9 +204,8 @@ export class CreateSample {
 
 export class PatchSample {
   document = gql`
-    mutation PatchSample($data: PatchOption!, $id: String!) {
+    mutation PatchSample($data: String!, $id: String!) {
       updateSample(data: $data, id: $id) {
-        id
         label
       }
     }
@@ -289,49 +281,49 @@ export class PatchDefinedIndicator {
   `;
 }
 
-export class CreateAddition {
-  document = gql`
-    mutation CreateAddition($data: NewOption!) {
-      createAddition(data: $data) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class CreateAddition {
+//   document = gql`
+//     mutation CreateAddition($data: NewOption!) {
+//       createAddition(data: $data) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
-export class PatchAddition {
-  document = gql`
-    mutation PatchAddition($data: PatchOption!, $id: String!) {
-      updateAddition(data: $data, id: $id) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class PatchAddition {
+//   document = gql`
+//     mutation PatchAddition($data: PatchOption!, $id: String!) {
+//       updateAddition(data: $data, id: $id) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
-export class CreateInformationAboutSelection {
-  document = gql`
-    mutation CreateInformationAboutSelection($data: NewOption!) {
-      createInformationAboutSelection(data: $data) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class CreateInformationAboutSelection {
+//   document = gql`
+//     mutation CreateInformationAboutSelection($data: NewOption!) {
+//       createInformationAboutSelection(data: $data) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
-export class PatchInformationAboutSelection {
-  document = gql`
-    mutation PatchInformationAboutSelection($data: PatchOption!, $id: String!) {
-      updateInformationAboutSelection(data: $data, id: $id) {
-        id
-        label
-      }
-    }
-  `;
-}
+// export class PatchInformationAboutSelection {
+//   document = gql`
+//     mutation PatchInformationAboutSelection($data: PatchOption!, $id: String!) {
+//       updateInformationAboutSelection(data: $data, id: $id) {
+//         id
+//         label
+//       }
+//     }
+//   `;
+// }
 
 export class CreateEnvironmentalEngineer {
   document = gql`

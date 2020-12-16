@@ -20,10 +20,19 @@ export class ActsFormControlService {
     private processHTTPMsgService: ProcessHTTPMsgService
   ) {}
 
-  getOptionsForOption<O extends Array<any>>(): Observable<O> {
+  getOptionsForOption<O extends Array<any>>(
+    where?: { [K in string]: string },
+    field?: string
+  ): Observable<O> {
     return this.getOptionsForOptionGQL
-      .watch()
-      .valueChanges.pipe(map(({ data }) => data[`${this.getsType}`] as O))
+      .watch({ where, field })
+      .valueChanges.pipe(
+        map(({ data }) => {
+          console.log(data);
+
+          return data[`${this.getsType}`] as O;
+        })
+      )
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 

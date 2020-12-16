@@ -13,8 +13,9 @@ import { FormComponent } from "../models/form.component";
 import { ActsFormControlService } from "src/app/services/controls/acts-form-control.service";
 import { FormControlService } from "../services/form-control.service";
 import { OptionFormFieldsAbstractService } from "src/app/components/acts/act-form/services/option-form-field-abstract.service";
-import { filter, switchMap, take } from "rxjs/operators";
+import { filter, map, switchMap, take } from "rxjs/operators";
 import { Subscription } from "rxjs";
+import { ACT_FORM_FIELDS } from "src/app/components/acts/act-form/models/enum/act-form-fields.enum";
 
 @Component({
   selector: "app-ff-select",
@@ -65,17 +66,19 @@ export class FfSelectComponent implements OnInit, FormComponent, OnDestroy {
   }
 
   addItem(): void {
-    this.subscriptions$.add(this.formService
-      .editItemOption(this.key, this.label, this.optionFieldsService)
-      .subscribe((value) => {
-        if (value) {
-          this.actsFormControlService.postOption(value).subscribe((item) => {
-            const option = this.formService.createItemForOption(item);
-            this.optionsList = [...this.optionsList, option];
-            this.form.controls[this.key].patchValue(item.id);
-          });
-        }
-      }));
+    this.subscriptions$.add(
+      this.formService
+        .editItemOption(this.key, this.label, this.optionFieldsService)
+        .subscribe((value) => {
+          if (value) {
+            this.actsFormControlService.postOption(value).subscribe((item) => {
+              const option = this.formService.createItemForOption(item);
+              this.optionsList = [...this.optionsList, option];
+              this.form.controls[this.key].patchValue(item.id);
+            });
+          }
+        })
+    );
   }
 
   editOpen(item: any) {

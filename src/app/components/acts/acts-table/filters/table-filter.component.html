@@ -1,0 +1,79 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Фильтры </mat-panel-title>
+    <mat-panel-description>
+      <div class="descriptions">
+        <div class="rawFileters" *ngIf="filterOptions">
+          <div>
+            <mat-chip-list #filtersChipList aria-label="Отфильтровано по...">
+              <mat-chip
+                *ngFor="let option of filterOptions | filterOptions"
+                [selectable]="true"
+                [removable]="option.removable"
+                (removed)="removeFilter(option)"
+              >
+                {{ option.label }}
+                <mat-icon matChipRemove *ngIf="option.removable"
+                  >cancel</mat-icon
+                >
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="rawMenu">
+    <app-column-filter></app-column-filter>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Фильтры </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card-content>
+          <section class="rawFileters" *ngIf="filterOptions">
+            <div
+              *ngFor="let option of filterOptions"
+              class="fileterItem"
+              [ngSwitch]="option.controlType"
+            >
+              <p>{{ option.label }}</p>
+              <div *ngSwitchCase="'Consumer'">
+                <div *ngFor="let item of option.items">
+                  <mat-checkbox
+                    [(ngModel)]="item.isChecked"
+                    (ngModelChange)="updateFilter($event, option)"
+                    [disabled]="item.disabled"
+                  >
+                    {{ item.lable }}
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div *ngSwitchCase="'Date'">
+                <mat-form-field appearance="fill">
+                  <mat-lable>Введите дату</mat-lable>
+                  <mat-date-range-input
+                    [rangePicker]="picker"
+                    [formGroup]="rangeFilter"
+                  >
+                    <input
+                      matStartDate
+                      formControlName="start"
+                      placeholder="От"
+                    />
+                    <input matEndDate formControlName="end" placeholder="До" />
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+            </div>
+          </section>
+        </mat-card-content>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-expansion-panel>

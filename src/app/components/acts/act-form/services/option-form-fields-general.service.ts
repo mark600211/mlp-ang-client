@@ -14,7 +14,7 @@ export class OptionFormFieldsGeneralService
         required: true,
         visible: true,
         key: "label",
-        label: " Название",
+        label: "Название",
       }),
     ];
     return fields;

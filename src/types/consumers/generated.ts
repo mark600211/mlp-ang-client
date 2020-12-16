@@ -18,12 +18,6 @@ export type Scalars = {
 
 
 
-export type AdditionAct = {
-  __typename?: 'AdditionAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type AddresInput = {
   building?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
@@ -52,12 +46,6 @@ export type Application = {
   place: Scalars['String'];
 };
 
-export type ClimaticEnvironmentalAct = {
-  __typename?: 'ClimaticEnvironmentalAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
 export type CreateConsumerDto = {
   address?: Maybe<AddresInput>;
   email?: Maybe<Scalars['String']>;
@@ -68,16 +56,6 @@ export type CreateConsumerDto = {
 
 export type Customer = {
   __typename?: 'Customer';
-  address: Address;
-  email?: Maybe<Scalars['String']>;
-  fullname: Scalars['String'];
-  id: Scalars['ID'];
-  label: Scalars['String'];
-  tel?: Maybe<Scalars['String']>;
-};
-
-export type CustomerAct = {
-  __typename?: 'CustomerAct';
   address: Address;
   email?: Maybe<Scalars['String']>;
   fullname: Scalars['String'];
@@ -98,14 +76,14 @@ export type DateTimeInput = {
   time: Scalars['String'];
 };
 
-export type DefinedIndicatorsAct = {
-  __typename?: 'DefinedIndicatorsAct';
+export type DefinedIndicator = {
+  __typename?: 'DefinedIndicator';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type EnvironmentalEngineerAct = {
-  __typename?: 'EnvironmentalEngineerAct';
+export type EnvironmentalEngineer = {
+  __typename?: 'EnvironmentalEngineer';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -120,24 +98,8 @@ export type GeneralCustomer = {
   tel?: Maybe<Scalars['String']>;
 };
 
-export type GeneralCustomerAct = {
-  __typename?: 'GeneralCustomerAct';
-  address: Address;
-  email?: Maybe<Scalars['String']>;
-  fullname: Scalars['String'];
-  id: Scalars['ID'];
-  label: Scalars['String'];
-  tel?: Maybe<Scalars['String']>;
-};
-
-export type GoalAct = {
-  __typename?: 'GoalAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type InformationAboutSelectionAct = {
-  __typename?: 'InformationAboutSelectionAct';
+export type Goal = {
+  __typename?: 'Goal';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -152,18 +114,8 @@ export type Lab = {
   tel?: Maybe<Scalars['String']>;
 };
 
-export type LabAct = {
-  __typename?: 'LabAct';
-  address: Address;
-  email?: Maybe<Scalars['String']>;
-  fullname: Scalars['String'];
-  id: Scalars['ID'];
-  label: Scalars['String'];
-  tel?: Maybe<Scalars['String']>;
-};
-
-export type MethodAct = {
-  __typename?: 'MethodAct';
+export type Method = {
+  __typename?: 'Method';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -250,20 +202,14 @@ export type MutationUpdateWhereLabArgs = {
   where: Scalars['String'];
 };
 
-export type NormativeDocumentAct = {
-  __typename?: 'NormativeDocumentAct';
+export type NormativeDocument = {
+  __typename?: 'NormativeDocument';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type ObjectNameAct = {
-  __typename?: 'ObjectNameAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type PassedSampleAct = {
-  __typename?: 'PassedSampleAct';
+export type PassedSample = {
+  __typename?: 'PassedSample';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -277,20 +223,14 @@ export type PatchConsumerDto = {
   tel?: Maybe<Scalars['String']>;
 };
 
-export type PlaceAct = {
-  __typename?: 'PlaceAct';
+export type Place = {
+  __typename?: 'Place';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type PlanningAct = {
-  __typename?: 'PlanningAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type PreparationAct = {
-  __typename?: 'PreparationAct';
+export type Preparation = {
+  __typename?: 'Preparation';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
@@ -309,6 +249,24 @@ export type Query = {
   findOneWhereCustomer: Customer;
   findOneWhereGeneralCustomer: GeneralCustomer;
   findOneWhereLab: Lab;
+};
+
+
+export type QueryFindAllCustomerArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllGeneralCustomerArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindAllLabArgs = {
+  field?: Maybe<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
@@ -356,32 +314,26 @@ export type QueryFindOneWhereLabArgs = {
   where: Scalars['String'];
 };
 
-export type RepresentativeAct = {
-  __typename?: 'RepresentativeAct';
+export type Representative = {
+  __typename?: 'Representative';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type SampleAct = {
-  __typename?: 'SampleAct';
+export type SampleType = {
+  __typename?: 'SampleType';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type SampleTypeAct = {
-  __typename?: 'SampleTypeAct';
+export type ToolType = {
+  __typename?: 'ToolType';
   id: Scalars['ID'];
   label: Scalars['String'];
 };
 
-export type ToolTypeAct = {
-  __typename?: 'ToolTypeAct';
-  id: Scalars['ID'];
-  label: Scalars['String'];
-};
-
-export type TypeOfSampleAct = {
-  __typename?: 'TypeOfSampleAct';
+export type TypeOfSample = {
+  __typename?: 'TypeOfSample';
   id: Scalars['ID'];
   label: Scalars['String'];
 };

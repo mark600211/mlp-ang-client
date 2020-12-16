@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { OptionsBaseModel } from "src/app/shared/models/interface/options-base.model";
-import { ActFormControlService } from "../../components/acts/act-form/act-form-control.service";
 import { MatDialog } from "@angular/material/dialog";
 import { FormGroup } from "@angular/forms";
 import { filter, switchMap, map } from "rxjs/operators";
@@ -24,7 +23,6 @@ import { OptionsEditDataModel } from "src/app/components/acts/act-form/edit-act-
 })
 export class ActFormDataService {
   constructor(
-    private AFCS: ActFormControlService,
     private dialog: MatDialog,
     private gcustomerControl: GeneralCustomerControlService,
     private customerControl: CustomerControlService

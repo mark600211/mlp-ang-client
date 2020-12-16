@@ -15,7 +15,6 @@ import {
   filter,
 } from "rxjs/operators";
 import { ActFormDataService } from "src/app/services/data/act-form-data.service";
-import { ActFormControlService } from "src/app/components/acts/act-form/act-form-control.service";
 import {
   MatChipInputEvent,
   MatChipEvent,
@@ -56,10 +55,7 @@ export class FfCheapAutocompleteComponent implements OnInit {
   items: string[] = [];
   inputForm = new FormControl();
 
-  constructor(
-    private AFDs: ActFormDataService,
-    private AFCs: ActFormControlService
-  ) {}
+  constructor(private AFDs: ActFormDataService) {}
 
   ngOnInit() {
     let options: string[] = this.form.controls[this.key].value;

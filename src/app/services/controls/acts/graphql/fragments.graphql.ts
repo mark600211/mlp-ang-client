@@ -17,9 +17,7 @@ export const WholeActWithIds = {
       typeOfSample {
         id
       }
-      objectName {
-        id
-      }
+      objectName
       place {
         id
       }
@@ -33,21 +31,15 @@ export const WholeActWithIds = {
       toolType {
         id
       }
-      climaticEnvironmental {
-        id
-      }
-      planning {
-        id
-      }
+      climaticEnvironmental
+      planning
       normativeDocuments {
         id
       }
       sampleType {
         id
       }
-      sample {
-        id
-      }
+      sample
       preparation {
         id
       }
@@ -57,12 +49,8 @@ export const WholeActWithIds = {
       definedIndicators {
         id
       }
-      additions {
-        id
-      }
-      informationAboutSelection {
-        id
-      }
+      additions
+      informationAboutSelection
       environmentalEngineer {
         id
       }

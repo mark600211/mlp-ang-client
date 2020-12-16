@@ -9,6 +9,8 @@ import { ActsFormControlService } from "src/app/services/controls/acts-form-cont
 import { Subscription } from "rxjs";
 import { filter, switchMap, take } from "rxjs/operators";
 import { OptionFormFieldsGeneralService } from "src/app/components/acts/act-form/services/option-form-fields-general.service";
+import { ACT_FORM_FIELDS } from "src/app/components/acts/act-form/models/enum/act-form-fields.enum";
+import { ActFormFieldsService } from "src/app/components/acts/act-form/services/act-form-fields.service";
 
 @Component({
   selector: "app-ff-many-select",
@@ -24,8 +26,9 @@ export class FfManySelectComponent implements FormComponent, OnInit {
   @Input() editable: boolean;
   @Input() deletable: boolean;
   @Input() optionFieldsService: Type<OptionFormFieldsAbstractService>;
-  @ViewChild("select") _select: MatSelect;
-  get touchedActNotValid() {
+  @Input() isDepended: boolean;
+  @Input() dependedFrom: Array<{ field: ACT_FORM_FIELDS; label: string }>;
+  get touchedAndNotValid() {
     if (
       !this.form.controls[this.key].valid &&
       this.form.controls[this.key].touched
@@ -36,6 +39,7 @@ export class FfManySelectComponent implements FormComponent, OnInit {
     }
   }
 
+  disabledLabel: string;
   optionsList: OptionsBaseModel[] = [];
   _openControl: boolean = false;
 
@@ -43,16 +47,70 @@ export class FfManySelectComponent implements FormComponent, OnInit {
 
   constructor(
     private formService: FormControlService,
-    private actsFormControlService: ActsFormControlService
+    private actsFormControlService: ActsFormControlService // private actFieldsService: ActFormFieldsService
   ) {}
 
   ngOnInit() {
     const control = this.formService.initControl(this.value, this.required);
     this.form.addControl(this.key, control);
+    this.initDisabledLabel();
+    if (this.isDepended) {
+      this.form.controls[this.key].disable();
+      this.dependedFrom.forEach(({ field }) => {
+        this.subscriptions$.add(
+          this.form.controls[field].valueChanges.subscribe((val) => {
+            console.log(field);
+
+            this.chekingDependency();
+          })
+        );
+      });
+    } else this.initOptionList();
+  }
+
+  initDisabledLabel() {
+    this.disabledLabel = `Введите значение для полей: ${this.dependedFrom
+      .map(({ label }) => label)
+      .join(", ")}`;
+  }
+
+  isDisbaled(): boolean {
+    return this.form.controls[this.key].disabled;
+  }
+
+  initWhere(): { [K in string]: string } {
+    let where = {};
+    this.dependedFrom.forEach(({ field }) => {
+      where[field] = this.form.controls[field].value;
+    });
+    return where;
+  }
+
+  chekingDependency() {
+    if (
+      this.dependedFrom
+        .map(({ field }) => {
+          return this.form.controls[field].valid;
+        })
+        .every((val) => val)
+    ) {
+      this.form.controls[this.key].enable();
+      this.initOptionList(this.initWhere());
+    } else {
+      console.log("dis");
+      this.form.controls[this.key].disable();
+    }
+  }
+
+  initOptionList(where?: { [K in string]: string }): void {
     this.subscriptions$.add(
-      this.actsFormControlService.getOptionsForOption().subscribe((items) => {
-        this.optionsList = this.formService.createItemsForOption(items);
-      })
+      this.actsFormControlService
+        .getOptionsForOption(where)
+        .subscribe((items) => {
+          console.log(items);
+
+          this.optionsList = this.formService.createItemsForOption(items);
+        })
     );
   }
 
@@ -61,12 +119,25 @@ export class FfManySelectComponent implements FormComponent, OnInit {
       .editItemOption(this.key, this.label, this.optionFieldsService)
       .subscribe((value) => {
         if (value) {
-          this.actsFormControlService.postOption(value).subscribe((item) => {
-            console.log(item);
+          let populateValue: any = {};
 
-            const option = this.formService.createItemForOption(item);
-            this.optionsList = [...this.optionsList, option];
-          });
+          if (this.isDepended) {
+            this.dependedFrom.forEach(({ field }) => {
+              populateValue[`${field}`] = this.form.controls[field].value;
+            });
+            populateValue["label"] = value.label;
+          } else {
+            populateValue = value;
+          }
+
+          this.actsFormControlService
+            .postOption(populateValue)
+            .subscribe((item) => {
+              console.log(item);
+
+              const option = this.formService.createItemForOption(item);
+              this.optionsList = [...this.optionsList, option];
+            });
         }
       });
   }

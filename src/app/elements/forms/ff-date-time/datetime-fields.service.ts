@@ -1,24 +1,41 @@
+import { Injectable } from "@angular/core";
+
 @Injectable({
-    provideIn: 'root'
+  providedIn: "root",
 })
 export class DateTimeFields {
-    getFields(): Array<{}> {
-        let fields: Array<{}> = [
-            {
-                controlType: 'date',
-              required: true,
-              key: "date",
-              label: "Дата",
-            },
-    
-            {
-                controlType: 'time',
-              required: true,
-              key: "time",
-              label: "Время",
-            },
-          ];
-    
-          return fields;
-    }
+  getFields(): {
+    value?: any;
+    controlType: string;
+    required: boolean;
+    key: string;
+    label: string;
+    visible: boolean;
+  }[] {
+    let fields: {
+      value?: any;
+      controlType: string;
+      required: boolean;
+      key: string;
+      label: string;
+      visible: boolean;
+    }[] = [
+      {
+        controlType: "date",
+        required: true,
+        key: "date",
+        label: "Дата",
+        visible: true,
+      },
+      {
+        controlType: "time",
+        required: true,
+        key: "time",
+        label: "Время",
+        visible: true,
+      },
+    ];
+
+    return fields;
+  }
 }

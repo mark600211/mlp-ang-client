@@ -20,19 +20,11 @@ import { ProcessHTTPMsgService } from "../../process-httpmsg.service";
 })
 export class LabControlService {
   constructor(
-    private readonly getLabForOptionGQL: GetLabsForOptionGQL,
     private readonly getWholeLabGQL: GetWholeLabGQL,
     private readonly postLabGQL: CreateLabGQL,
     private readonly patchLabGQL: PatchLabGQL,
     private processHTTPMsgService: ProcessHTTPMsgService
   ) {}
-
-  getLabsForOption(): Observable<GetLabsForOptionQuery["findAllLab"]> {
-    return this.getLabForOptionGQL
-      .watch()
-      .valueChanges.pipe(map(({ data }) => data.findAllLab))
-      .pipe(catchError(this.processHTTPMsgService.handleError));
-  }
 
   getWholeLab(id: string): Observable<GetWholeLabQuery["findByIdLab"]> {
     return this.getWholeLabGQL

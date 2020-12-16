@@ -8,20 +8,9 @@
   />
   <mat-autocomplete #auto="matAutocomplete">
     <div *ngFor="let option of filteredOptions | async">
-      <mat-option
-        appLookUp
-        (onChangeButtonCondition)="buttonCondition($event, option)"
+      <mat-option [value]="option"
         ><div fxLayout="row">
-          {{ option.value }}
-          <app-edit-button
-            (click)="editOpen(option.key)"
-            *ngIf="option.buttonController && editable"
-          ></app-edit-button>
-          <app-delete-button
-            (click)="deleteItem(option.key)"
-            *ngIf="option.buttonController && deletable"
-          >
-          </app-delete-button>
+          {{ option }}
         </div>
       </mat-option>
     </div>

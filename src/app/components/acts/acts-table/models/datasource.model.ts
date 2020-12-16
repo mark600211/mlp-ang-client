@@ -10,7 +10,7 @@ export class DataSourceModel {
   //   public act_pdf: FindAllActQuery["findAllAct"][0]["docs"][0];
   //   public protocol: FindAllActQuery["findAllAct"][0]["docs"][0];
 
-  constructor(options: FindAllActQuery["findAllAct"][0]) {
+  constructor(options: FindAllActQuery["getTableContent"]["acts"][0]) {
     this.name = options.name;
     this.customer = options.customer.label;
     this.generalCustomer = options.generalCustomer.label;

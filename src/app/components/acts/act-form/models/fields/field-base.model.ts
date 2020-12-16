@@ -23,6 +23,8 @@ export class FieldBase<T> {
   required: boolean;
   editable: boolean;
   deletable: boolean;
+  isDepened: boolean;
+  dependFrom: { field: ACT_FORM_FIELDS; label: string }[];
 
   constructor(options: {
     value?: T;
@@ -43,6 +45,8 @@ export class FieldBase<T> {
     required?: boolean;
     editable?: boolean;
     deletable?: boolean;
+    isDepened?: boolean;
+    dependFrom?: { field: ACT_FORM_FIELDS; label: string }[];
   }) {
     this.value = options.value;
     this.key = options.key;
@@ -62,5 +66,7 @@ export class FieldBase<T> {
     this.visible = !!options.visible;
     this.editable = options.editable || false;
     this.deletable = options.deletable || false;
+    this.isDepened = options.isDepened || false;
+    this.dependFrom = options.dependFrom || [];
   }
 }
