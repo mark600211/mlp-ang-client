@@ -1,0 +1,17 @@
+<div class="descriptions">
+  <div class="rawFileters">
+    <div>
+      <mat-chip-list #filtersChipList aria-label="Отфильтровано по...">
+        <mat-chip
+          *ngFor="let option of filterOptions"
+          [selectable]="true"
+          [removable]="option.removable"
+          (removed)="removeFilter(option)"
+        >
+          {{ option.label }}
+          <mat-icon matChipRemove *ngIf="option.removable">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+</div>
