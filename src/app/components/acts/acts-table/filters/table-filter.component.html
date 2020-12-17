@@ -1,27 +1,6 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title> Фильтры </mat-panel-title>
-    <mat-panel-description>
-      <div class="descriptions">
-        <div class="rawFileters" *ngIf="filterOptions">
-          <div>
-            <mat-chip-list #filtersChipList aria-label="Отфильтровано по...">
-              <mat-chip
-                *ngFor="let option of filterOptions | filterOptions"
-                [selectable]="true"
-                [removable]="option.removable"
-                (removed)="removeFilter(option)"
-              >
-                {{ option.label }}
-                <mat-icon matChipRemove *ngIf="option.removable"
-                  >cancel</mat-icon
-                >
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-        </div>
-      </div>
-    </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="rawMenu">
     <app-column-filter></app-column-filter>
