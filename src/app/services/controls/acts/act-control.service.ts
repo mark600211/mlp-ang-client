@@ -61,8 +61,6 @@ export class ActControlService {
       )
       .valueChanges.pipe(
         map(({ data }) => {
-          console.log(data.getTableContent);
-
           return data.getTableContent;
         })
       )
