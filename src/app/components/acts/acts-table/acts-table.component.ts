@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from "@angular/core";
@@ -16,7 +17,7 @@ import { DataSourceModel } from "./models/datasource.model";
 import { FilterItem } from "./models/fileter.item.modle";
 import { FindAllActQuery, Where } from "src/types/acts/generated";
 import { map, startWith, switchMap } from "rxjs/operators";
-import { merge } from "rxjs";
+import { merge, Subscription } from "rxjs";
 import { Uniqs } from "./models/uniqs.model";
 import { DateRange } from "./models/date-range.model";
 
@@ -25,7 +26,7 @@ import { DateRange } from "./models/date-range.model";
   templateUrl: "./acts-table.component.html",
   styleUrls: ["./acts-table.component.scss"],
 })
-export class ActsTableComponent implements OnInit, AfterViewInit {
+export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -47,68 +48,74 @@ export class ActsTableComponent implements OnInit, AfterViewInit {
     private cdf: ChangeDetectorRef
   ) {}
 
+  private subscription$ = new Subscription();
+
   ngOnInit(): void {
-    this.dataTableService.columnSource
-      .pipe(map((columns) => columns.filter((colunm) => colunm.isActive)))
-      .subscribe((columns) => {
-        this.columnsToDisplay = columns;
-        this.initDisplayedColumns();
-      });
+    this.subscription$.add(
+      this.dataTableService.columnSource
+        .pipe(map((columns) => columns.filter((colunm) => colunm.isActive)))
+        .subscribe((columns) => {
+          this.columnsToDisplay = columns;
+          this.initDisplayedColumns();
+        })
+    );
   }
 
   ngAfterViewInit() {
     this.cdf.detectChanges();
 
-    merge(
-      this.paginator.page,
-      this.sort.sortChange,
-      this.dataTableService.wheresSource.pipe(
-        map((data) => {
-          this.wheres = data;
-        })
-      ),
-      this.dataTableService.dateSource.pipe(
-        map((data) => {
-          this.dateRange = data;
-        })
+    this.subscription$.add(
+      merge(
+        this.paginator.page,
+        this.sort.sortChange,
+        this.dataTableService.wheresSource.pipe(
+          map((data) => {
+            this.wheres = data;
+          })
+        ),
+        this.dataTableService.dateSource.pipe(
+          map((data) => {
+            this.dateRange = data;
+          })
+        )
       )
-    )
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          const skip = this.paginator.pageSize * this.paginator.pageIndex;
+        .pipe(
+          startWith({}),
+          switchMap(() => {
+            const skip = this.paginator.pageSize * this.paginator.pageIndex;
 
-          return this.acs.getActs(
-            skip,
-            this.paginator.pageSize,
-            this.dateRange?.dateRangeStart,
-            this.dateRange?.dateRangeEnd,
-            this.sort.active ? `${this.sort.active}.label` : undefined,
-            this.sort.direction
-              ? (this.sort.direction.toUpperCase() as "ASC" | "DESC")
-              : undefined,
-            this.wheres
-          );
-        }),
-        map((data) => {
-          this.pagLength = data.totalCount;
+            return this.acs.getActs(
+              skip,
+              this.paginator.pageSize,
+              this.dateRange?.dateRangeStart,
+              this.dateRange?.dateRangeEnd,
+              this.sort.active ? `${this.sort.active}.label` : undefined,
+              this.sort.direction
+                ? (this.sort.direction.toUpperCase() as "ASC" | "DESC")
+                : undefined,
+              this.wheres
+            );
+          }),
+          map((data) => {
+            this.pagLength = data.totalCount;
 
-          const uniqs: Uniqs = {
-            uniqCustomers: data.uniqCustomers,
-            uniqGeneralCustomers: data.uniqGeneralCustomers,
-            uniqLabs: data.uniqLabs,
-            uniqTypeOfSamples: data.uniqTypeOfSamples,
-          };
+            const uniqs: Uniqs = {
+              uniqCustomers: data.uniqCustomers,
+              uniqGeneralCustomers: data.uniqGeneralCustomers,
+              uniqLabs: data.uniqLabs,
+              uniqTypeOfSamples: data.uniqTypeOfSamples,
+            };
 
-          this.dataTableService.initUniqSubject(uniqs);
+            this.dataTableService.initUniqSubject(uniqs);
 
-          return data.acts;
+            return data.acts;
+          })
+        )
+        .subscribe((data) => {
+          this.data = data;
+          this.initDataSource(this.data);
         })
-      )
-      .subscribe((data) => {
-        this.data = data;
-        this.initDataSource(this.data);
-      });
+    );
   }
 
   initDataSource(data: FindAllActQuery["getTableContent"]["acts"]) {
@@ -144,5 +151,9 @@ export class ActsTableComponent implements OnInit, AfterViewInit {
     return `${this.selection.isSelected(raw) ? "deselect" : "select"} row ${
       raw.position + 1
     }`;
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }
