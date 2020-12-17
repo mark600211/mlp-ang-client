@@ -1,17 +1,36 @@
-import { Component, HostListener, Injector, OnInit } from "@angular/core";
+import {
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  forwardRef,
+  Host,
+  HostListener,
+  Injector,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Self,
+} from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Moment } from "moment";
+import { Subscription } from "rxjs";
+import { FitlterHostDirective } from "src/app/directives/filter-host.directive";
+import { SectionsService } from "../../act-header/sections/sections.service";
 import { DataTableService } from "../data-table.service";
 import { DateRange } from "../models/date-range.model";
 import { FilterItem } from "../models/fileter.item.modle";
 import { Where } from "../models/where.model";
+import { CheapsetService } from "./filter-cheapset/cheapset.service";
+import { FilterCheapsetComponent } from "./filter-cheapset/filter-cheapset.component";
 
 @Component({
   selector: "app-table-filter",
   templateUrl: "./table-filter.component.html",
 })
-export class TableFilterComponent implements OnInit {
+export class TableFilterComponent implements OnInit, OnDestroy {
   isSticky: boolean = false;
+
+  cheapsetComponentRef: ComponentRef<FilterCheapsetComponent>;
 
   @HostListener("window:scroll", ["$event"])
   checkScroll() {
@@ -25,37 +44,54 @@ export class TableFilterComponent implements OnInit {
     end: new FormControl(),
   });
 
-  constructor(private tableService: DataTableService) {}
+  constructor(
+    private tableService: DataTableService,
+    private cheapsetService: CheapsetService,
+    private sectionsService: SectionsService
+  ) {}
+
+  private subscription$: Subscription = new Subscription();
 
   ngOnInit() {
-    this.tableService.getFileters().subscribe((data) => {
-      console.log(data);
+    this.sectionsService.creteCentralSection(FilterCheapsetComponent);
+    this.subscription$.add(
+      this.cheapsetService.removeFilterSource.subscribe((filter) => {
+        console.log(filter);
 
-      this.filterOptions = data;
-
-      console.log(this.filterOptions);
-    });
-    this.tableService.uniqsSource.subscribe((uniqs) => {
-      const keys = Object.keys(uniqs);
-      this.filterOptions
-        .filter((filter) => filter.uniqControlType)
-        .map((filter) => {
-          const key = keys.find((key) => key === filter.uniqControlType);
-          filter.items.map((item) => {
-            if (!(uniqs[`${key}`] as Array<string>).includes(item.id)) {
-              item.disabled = true;
-            } else {
-              item.disabled = false;
-            }
+        this.updateFilter(false, filter);
+      })
+    );
+    this.subscription$.add(
+      this.tableService.getFileters().subscribe((data) => {
+        this.filterOptions = data;
+      })
+    );
+    this.subscription$.add(
+      this.tableService.uniqsSource.subscribe((uniqs) => {
+        const keys = Object.keys(uniqs);
+        this.filterOptions
+          .filter((filter) => filter.uniqControlType)
+          .map((filter) => {
+            const key = keys.find((key) => key === filter.uniqControlType);
+            filter.items.map((item) => {
+              if (!(uniqs[`${key}`] as Array<string>).includes(item.id)) {
+                item.disabled = true;
+              } else {
+                item.disabled = false;
+              }
+            });
+            return filter;
           });
-          return filter;
-        });
-    });
-    this.rangeFilter.valueChanges.subscribe(() => this.filteringDate());
+      })
+    );
+    this.subscription$.add(
+      this.rangeFilter.valueChanges.subscribe(() => this.filteringDate())
+    );
   }
 
   updateFilter(event: boolean, option: FilterItem) {
     option.isActive = event;
+    this.sendFiltersToCheapset();
 
     const where: Where[] = [
       ...this.filterOptions.map((filter) => {
@@ -95,6 +131,15 @@ export class TableFilterComponent implements OnInit {
     }
   }
 
+  sendFiltersToCheapset() {
+    const cheaps = this.filterOptions.filter((filter) => filter.isActive);
+    console.log(cheaps);
+
+    this.cheapsetService.sendCheap(cheaps);
+  }
+
+  createComponent() {}
+
   removeFilter(option: FilterItem) {
     switch (option.controlType) {
       case "Date":
@@ -107,5 +152,10 @@ export class TableFilterComponent implements OnInit {
         });
         this.updateFilter(false, option);
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+    this.sectionsService.destroyCentralSection();
   }
 }
