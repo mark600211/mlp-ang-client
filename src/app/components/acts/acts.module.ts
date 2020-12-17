@@ -22,10 +22,15 @@ import { DirectivesModule } from "src/app/directives/directives.module";
 import { FFModule } from "src/app/elements/forms/ff.module";
 import { ColumnFileterComponent } from "./acts-table/filters/column-filter.component";
 import { TableFilterComponent } from "./acts-table/filters/table-filter.component";
+import { FilterCheapsetComponent } from "./acts-table/filters/filter-cheapset/filter-cheapset.component";
+import { ActHeaderComponent } from "./act-header/act-header.component";
+import { ActHeaderCentralSectionComponent } from "./act-header/sections/central-section.component";
 
 @NgModule({
   declarations: [
     ActsComponent,
+    ActHeaderComponent,
+    ActHeaderCentralSectionComponent,
     ActFormComponent,
     EditActOptionsComponent,
     ActApplitcationComponent,
@@ -35,6 +40,7 @@ import { TableFilterComponent } from "./acts-table/filters/table-filter.componen
     FilterOptionsPipe,
     ColumnFileterComponent,
     TableFilterComponent,
+    FilterCheapsetComponent,
   ],
   imports: [
     SharedModule,
