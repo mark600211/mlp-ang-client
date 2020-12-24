@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { WholeApplication } from "./fragments.graphql";
 
 export class PostAct {
   document = gql`
@@ -24,10 +25,19 @@ export class PatchAct {
 
 export class CreateApp {
   document = gql`
-    mutation CreatApp($data: PatchAppDto!) {
-      createApplication(data: $data) {
-        id
+    mutation CreatApp($data: NewAppDto!) {
+      createApplicationBase(data: $data) {
+        ...WholeApplication
       }
+    }
+    ${WholeApplication.document}
+  `;
+}
+
+export class CopyManyActsByIds {
+  document = gql`
+    mutation CopyManyActsByIds($ids: [String!]!, $num: Float!) {
+      copyManyActsByIds(ids: $ids, num: $num)
     }
   `;
 }
@@ -35,7 +45,7 @@ export class CreateApp {
 // export class DeleteApp {
 //   document = gql`
 //     mutation DeleteApp($data: String!) {
-//       deleteByIdApplication(id: $data) {
+//       deleteByIdApplicationBase(id: $data) {
 //         id
 //       }
 //     }

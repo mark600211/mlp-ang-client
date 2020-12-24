@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { ColumnModel } from "./models/column.model";
 import { DataTableService } from "./data-table.service";
 import { SelectionModel } from "@angular/cdk/collections";
@@ -16,10 +16,21 @@ import { ActControlService } from "src/app/services/controls/acts/act-control.se
 import { DataSourceModel } from "./models/datasource.model";
 import { FilterItem } from "./models/fileter.item.modle";
 import { FindAllActQuery, Where } from "src/types/acts/generated";
-import { map, startWith, switchMap } from "rxjs/operators";
+import {
+  delay,
+  filter,
+  map,
+  startWith,
+  switchMap,
+  take,
+  timeout,
+} from "rxjs/operators";
 import { merge, Subscription } from "rxjs";
 import { Uniqs } from "./models/uniqs.model";
 import { DateRange } from "./models/date-range.model";
+import { SectionsService } from "../act-header/sections/sections.service";
+import { ButtonsSectionComponent } from "./button-section/buttons-section.component";
+import { ButtonsSectionsService } from "./button-section/buttons-section.service";
 
 @Component({
   selector: "app-acts-table",
@@ -29,6 +40,7 @@ import { DateRange } from "./models/date-range.model";
 export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatTable) table: MatTable<any>;
 
   displayedColumns: string[];
   columnsToDisplay: ColumnModel[];
@@ -45,6 +57,8 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private readonly dataTableService: DataTableService,
     private readonly acs: ActControlService,
+    private readonly sectionsService: SectionsService,
+    private readonly buttonService: ButtonsSectionsService,
     private cdf: ChangeDetectorRef
   ) {}
 
@@ -64,9 +78,19 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.cdf.detectChanges();
 
+    this.sectionsService.creteRightSection(ButtonsSectionComponent);
+
     this.subscription$.add(
       merge(
-        this.paginator.page,
+        this.paginator.page.pipe(
+          map((val) => {
+            this.selection.clear();
+            this.buttonService.sentItems(
+              this.selection.selected.map((val) => val.id)
+            );
+            return val;
+          })
+        ),
         this.sort.sortChange,
         this.dataTableService.wheresSource.pipe(
           map((data) => {
@@ -77,6 +101,16 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
           map((data) => {
             this.dateRange = data;
           })
+        ),
+        this.buttonService.copySource.pipe(
+          filter((val) => val === true),
+          map(() => {
+            this.selection.clear();
+            this.buttonService.sentItems(
+              this.selection.selected.map((val) => val.id)
+            );
+          }),
+          delay(1000)
         )
       )
         .pipe(
@@ -112,6 +146,8 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
           })
         )
         .subscribe((data) => {
+          console.log(data.length);
+
           this.data = data;
           this.initDataSource(this.data);
         })
@@ -122,6 +158,7 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource = new MatTableDataSource([
       ...data.map((d) => new DataSourceModel(d)),
     ]);
+    this.table.renderRows();
   }
 
   initDisplayedColumns() {
@@ -141,6 +178,7 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
+    this.buttonService.sentItems(this.selection.selected.map((val) => val.id));
   }
 
   checkboxLabel(raw?): string {
@@ -153,7 +191,26 @@ export class ActsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }`;
   }
 
+  toggleOne(raw) {
+    this.selection.toggle(raw);
+
+    this.buttonService.sentItems(this.selection.selected.map((val) => val.id));
+  }
+
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+    this.sectionsService.destroyRightSection();
   }
 }
+
+@Component({
+  template: `
+    <a
+      class="background-primary text-floral-white"
+      mat-button
+      [routerLink]="['./create']"
+      >Новый Акт</a
+    >
+  `,
+})
+export class NewAct {}

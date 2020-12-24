@@ -18,6 +18,7 @@ import { FormOptionDialogComponent } from "./edit-options/options-dialog.compone
 import { DirectivesModule } from "src/app/directives/directives.module";
 import { AddressComponent } from "./address/address.component";
 import { AutocompleteComponent } from "./address/autocomplete/autocomplete.component";
+import { FfIdComponent } from "./ff-id/ff-id.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AutocompleteComponent } from "./address/autocomplete/autocomplete.compo
     FfManySelectComponent,
     FfTextareaComponent,
     FfTimeComponent,
+    FfIdComponent,
     FormRendererComponent,
     FormOptionComponent,
     FormOptionDialogComponent,

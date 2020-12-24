@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, Type } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Type,
+  AfterViewInit,
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { OptionsBaseModel } from "src/app/shared/models/interface/options-base.model";
 import { MatSelect } from "@angular/material/select";
@@ -17,7 +24,8 @@ import { ActFormFieldsService } from "src/app/components/acts/act-form/services/
   templateUrl: "./ff-many-select.component.html",
   styleUrls: ["./ff-many-select.component.scss"],
 })
-export class FfManySelectComponent implements FormComponent, OnInit {
+export class FfManySelectComponent
+  implements FormComponent, OnInit, AfterViewInit {
   @Input() value: string;
   @Input() label: string;
   @Input() key: string;
@@ -51,6 +59,9 @@ export class FfManySelectComponent implements FormComponent, OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.value);
+    console.log(this.key);
+
     const control = this.formService.initControl(this.value, this.required);
     this.form.addControl(this.key, control);
     this.initDisabledLabel();
@@ -59,13 +70,15 @@ export class FfManySelectComponent implements FormComponent, OnInit {
       this.dependedFrom.forEach(({ field }) => {
         this.subscriptions$.add(
           this.form.controls[field].valueChanges.subscribe((val) => {
-            console.log(field);
-
             this.chekingDependency();
           })
         );
       });
     } else this.initOptionList();
+  }
+
+  ngAfterViewInit() {
+    this.chekingDependency();
   }
 
   initDisabledLabel() {
@@ -97,7 +110,6 @@ export class FfManySelectComponent implements FormComponent, OnInit {
       this.form.controls[this.key].enable();
       this.initOptionList(this.initWhere());
     } else {
-      console.log("dis");
       this.form.controls[this.key].disable();
     }
   }
@@ -107,8 +119,6 @@ export class FfManySelectComponent implements FormComponent, OnInit {
       this.actsFormControlService
         .getOptionsForOption(where)
         .subscribe((items) => {
-          console.log(items);
-
           this.optionsList = this.formService.createItemsForOption(items);
         })
     );

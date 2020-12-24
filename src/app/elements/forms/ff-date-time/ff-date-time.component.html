@@ -3,6 +3,7 @@
     <div *ngIf="field.visible" [ngSwitch]="field.controlType">
       <app-ff-date
         *ngSwitchCase="'date'"
+        [value]="field.value"
         [form]="form"
         [formGroup]="group"
         [label]="field.label"
@@ -11,6 +12,7 @@
       ></app-ff-date>
       <app-ff-time
         *ngSwitchCase="'time'"
+        [value]="field.value"
         [form]="form"
         [formGroup]="group"
         [label]="field.label"

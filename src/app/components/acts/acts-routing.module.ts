@@ -9,32 +9,41 @@ import { ActsComponent } from "./acts.component";
 const routes: Routes = [
   {
     path: "acts",
-    redirectTo: "acts/table",
-    pathMatch: "full",
-  },
-  {
-    path: "acts",
     component: ActsComponent,
+    data: {
+      breadcrumb: "Акты",
+      url: "acts/table",
+    },
     children: [
       {
         path: "table",
         component: ActsTableComponent,
         pathMatch: "full",
+        data: {
+          breadcrumb: "Все Акты",
+        },
       },
-      { path: "create", component: ActFormComponent, pathMatch: "full" },
+      {
+        path: "create",
+        component: ActFormComponent,
+        pathMatch: "full",
+        data: {
+          breadcrumb: "Создать Акт",
+        },
+      },
       {
         path: "update/:id",
         component: ActFormComponent,
         pathMatch: "full",
         resolve: { act: ActResolver },
-        data: { update: true },
+        data: { update: true, breadcrumb: "Изменить Акт" },
       },
       {
         path: "copy/:id",
         component: ActFormComponent,
         pathMatch: "full",
         resolve: { act: ActResolver },
-        data: { copy: true },
+        data: { copy: true, breadcrumb: "Копировать Акт" },
       },
     ],
   },

@@ -1,20 +1,24 @@
 import { FindAllActQuery } from "src/types/acts/generated";
 
 export class DataSourceModel {
+  public id: string;
   public name: string;
   public customer: string;
   public generalCustomer: string;
   public lab: string;
+  public typeOfSample: string;
   public date: string;
   //   public act: FindAllActQuery["findAllAct"][0]["docs"][0];
   //   public act_pdf: FindAllActQuery["findAllAct"][0]["docs"][0];
   //   public protocol: FindAllActQuery["findAllAct"][0]["docs"][0];
 
   constructor(options: FindAllActQuery["getTableContent"]["acts"][0]) {
+    this.id = options.id;
     this.name = options.name;
     this.customer = options.customer.label;
     this.generalCustomer = options.generalCustomer.label;
     this.lab = options.lab.label;
+    this.typeOfSample = options.typeOfSample.label;
     const formatter = new Intl.DateTimeFormat("ru", {
       month: "numeric",
       year: "numeric",

@@ -28,8 +28,6 @@ export class ActsFormControlService {
       .watch({ where, field })
       .valueChanges.pipe(
         map(({ data }) => {
-          console.log(data);
-
           return data[`${this.getsType}`] as O;
         })
       )
@@ -54,8 +52,6 @@ export class ActsFormControlService {
       .mutate({ data })
       .pipe(
         map(({ data }) => {
-          console.log(data);
-
           return data[`${this.postType}`] as O;
         })
       )

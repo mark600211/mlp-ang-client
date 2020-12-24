@@ -39,11 +39,17 @@ export type Address = {
   zip?: Maybe<Scalars['String']>;
 };
 
-export type Application = {
-  __typename?: 'Application';
-  datetime: DateAndTime;
+export type ApplicationBase = {
+  __typename?: 'ApplicationBase';
+  datetime?: Maybe<DateAndTime>;
   id: Scalars['ID'];
-  place: Scalars['String'];
+  place?: Maybe<Place>;
+};
+
+export type ApplicationInput = {
+  datetime?: Maybe<DateTimeInput>;
+  id: Scalars['ID'];
+  place?: Maybe<InputPlace>;
 };
 
 export type CreateConsumerDto = {
@@ -66,14 +72,14 @@ export type Customer = {
 
 export type DateAndTime = {
   __typename?: 'DateAndTime';
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 
 export type DateTimeInput = {
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 export type DefinedIndicator = {
@@ -102,6 +108,10 @@ export type Goal = {
   __typename?: 'Goal';
   id: Scalars['ID'];
   label: Scalars['String'];
+};
+
+export type InputPlace = {
+  id: Scalars['ID'];
 };
 
 export type Lab = {
@@ -243,6 +253,9 @@ export type Query = {
   findByIdCustomer: Customer;
   findByIdGeneralCustomer: GeneralCustomer;
   findByIdLab: Lab;
+  findManyByIdsCustomer: Array<Customer>;
+  findManyByIdsGeneralCustomer: Array<GeneralCustomer>;
+  findManyByIdsLab: Array<Lab>;
   findManyWhereCustomer: Array<Customer>;
   findManyWhereGeneralCustomer: Array<GeneralCustomer>;
   findManyWhereLab: Array<Lab>;
@@ -272,16 +285,37 @@ export type QueryFindAllLabArgs = {
 
 export type QueryFindByIdCustomerArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdGeneralCustomerArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdLabArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsCustomerArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsGeneralCustomerArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsLabArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 

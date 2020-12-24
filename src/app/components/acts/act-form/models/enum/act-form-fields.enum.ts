@@ -1,4 +1,5 @@
 export enum ACT_FORM_FIELDS {
+  ID = "id",
   NAME = "name",
   CUSTOMER = "customer",
   GENERAL_CUSTOMER = "generalCustomer",
@@ -11,10 +12,10 @@ export enum ACT_FORM_FIELDS {
   TOOL_TYPE = "toolType",
   CLIMATIC_ENVIRONMENTAL = "climaticEnvironmental",
   PLANNING = "planning",
-  NORMATIVE_DOCUMENT = "normativeDocument",
+  NORMATIVE_DOCUMENT = "normativeDocuments",
   SAMPLE_TYPE = "sampleType",
   SAMPLE = "sample",
-  PREPARATIONS = "preparation",
+  PREPARATIONS = "preparations",
   GOAL = "goal",
   DEFINED_INDICATORS = "definedIndicators",
   ADDITIONS = "additions",

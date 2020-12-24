@@ -26,6 +26,7 @@ import { FilterCheapsetComponent } from "./filter-cheapset/filter-cheapset.compo
 @Component({
   selector: "app-table-filter",
   templateUrl: "./table-filter.component.html",
+  styleUrls: ["./table-fileter.component.scss"],
 })
 export class TableFilterComponent implements OnInit, OnDestroy {
   isSticky: boolean = false;
@@ -56,9 +57,7 @@ export class TableFilterComponent implements OnInit, OnDestroy {
     this.sectionsService.creteCentralSection(FilterCheapsetComponent);
     this.subscription$.add(
       this.cheapsetService.removeFilterSource.subscribe((filter) => {
-        console.log(filter);
-
-        this.updateFilter(false, filter);
+        this.removeFilter(filter);
       })
     );
     this.subscription$.add(
@@ -128,23 +127,21 @@ export class TableFilterComponent implements OnInit, OnDestroy {
         dateRangeEnd: endValue.toDate(),
       };
       this.tableService.initDateSource(dataRange);
+      this.sendFiltersToCheapset();
     }
   }
 
   sendFiltersToCheapset() {
     const cheaps = this.filterOptions.filter((filter) => filter.isActive);
-    console.log(cheaps);
-
     this.cheapsetService.sendCheap(cheaps);
   }
-
-  createComponent() {}
 
   removeFilter(option: FilterItem) {
     switch (option.controlType) {
       case "Date":
         this.rangeFilter.reset();
         option.isActive = false;
+        this.sendFiltersToCheapset();
         break;
       default:
         option.items.forEach((item) => {

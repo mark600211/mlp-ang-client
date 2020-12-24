@@ -53,7 +53,7 @@ export class DataTableService {
 
   getColumns() {
     return [
-      new ColumnModel(true, "Номер", "name", "String"),
+      new ColumnModel(true, "Номер", "name", "Consumer"),
       new ColumnModel(true, "Заказчик", "customer", "Consumer"),
       new ColumnModel(
         true,

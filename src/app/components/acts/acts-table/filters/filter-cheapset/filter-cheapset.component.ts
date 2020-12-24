@@ -14,12 +14,9 @@ export class FilterCheapsetComponent implements OnInit {
   constructor(private cheapsetServcie: CheapsetService) {}
 
   ngOnInit() {
-    console.log("init");
-
     this.cheapsetServcie.cheapSource
       .pipe(
         map((val) => {
-          console.log(val);
           return val;
         })
       )

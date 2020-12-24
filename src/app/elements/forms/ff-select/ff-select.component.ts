@@ -56,6 +56,8 @@ export class FfSelectComponent implements OnInit, FormComponent, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log(this.value);
+
     const control = this.formService.initControl(this.value, this.required);
     this.form.addControl(this.key, control);
     this.subscriptions$.add(

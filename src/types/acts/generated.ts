@@ -20,32 +20,32 @@ export type Scalars = {
 
 export type Act = {
   __typename?: 'Act';
-  additions: Scalars['String'];
-  applications: Array<Application>;
-  climaticEnvironmental: Scalars['String'];
+  additions?: Maybe<Scalars['String']>;
+  applications: Array<ApplicationBase>;
+  climaticEnvironmental?: Maybe<Scalars['String']>;
   customer: Customer;
   datetime: DateAndTime;
   definedIndicators: Array<DefinedIndicator>;
-  environmentalEngineer: EnvironmentalEngineer;
+  environmentalEngineer?: Maybe<EnvironmentalEngineer>;
   generalCustomer: GeneralCustomer;
-  goal: Goal;
+  goal?: Maybe<Goal>;
   id: Scalars['ID'];
-  informationAboutSelection: Scalars['String'];
+  informationAboutSelection?: Maybe<Scalars['String']>;
   isCorrect: Scalars['Boolean'];
   lab: Lab;
-  method: Method;
+  method?: Maybe<Method>;
   name: Scalars['String'];
   normativeDocuments: Array<NormativeDocument>;
-  objectName: Scalars['String'];
-  passedSample: PassedSample;
-  place: Place;
-  planning: Scalars['String'];
-  preparation: Array<Preparation>;
-  representative: Representative;
-  sample: Scalars['String'];
-  sampleType: SampleType;
+  objectName?: Maybe<Scalars['String']>;
+  passedSample?: Maybe<PassedSample>;
+  place?: Maybe<Place>;
+  planning?: Maybe<Scalars['String']>;
+  preparations: Array<Preparation>;
+  representative?: Maybe<Representative>;
+  sample?: Maybe<Scalars['String']>;
+  sampleType?: Maybe<SampleType>;
   status: Scalars['String'];
-  toolType: ToolType;
+  toolType?: Maybe<ToolType>;
   typeOfSample: TypeOfSample;
 };
 
@@ -70,17 +70,17 @@ export type Address = {
   zip?: Maybe<Scalars['String']>;
 };
 
-export type Application = {
-  __typename?: 'Application';
-  datetime: DateAndTime;
+export type ApplicationBase = {
+  __typename?: 'ApplicationBase';
+  datetime?: Maybe<DateAndTime>;
   id: Scalars['ID'];
-  place: Scalars['String'];
+  place?: Maybe<Place>;
 };
 
 export type ApplicationInput = {
-  datetime: DateTimeInput;
+  datetime?: Maybe<DateTimeInput>;
   id: Scalars['ID'];
-  place: Scalars['String'];
+  place?: Maybe<InputPlace>;
 };
 
 export type Customer = {
@@ -95,14 +95,14 @@ export type Customer = {
 
 export type DateAndTime = {
   __typename?: 'DateAndTime';
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 
 export type DateTimeInput = {
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 export type DefinedIndicator = {
@@ -133,6 +133,10 @@ export type Goal = {
   label: Scalars['String'];
 };
 
+export type InputPlace = {
+  id: Scalars['ID'];
+};
+
 export type Lab = {
   __typename?: 'Lab';
   address: Address;
@@ -151,14 +155,21 @@ export type Method = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  copyManyActsByIds: Scalars['Boolean'];
   createAct: Act;
-  createApplication: Application;
+  createApplicationBase: ApplicationBase;
   deleteByIdAct?: Maybe<Act>;
-  deleteByIdApplication?: Maybe<Application>;
+  deleteByIdApplicationBase?: Maybe<ApplicationBase>;
   updateAct: Act;
-  updateApplication: Application;
+  updateApplicationBase: ApplicationBase;
   updateWhereAct: Act;
-  updateWhereApplication: Application;
+  updateWhereApplicationBase: ApplicationBase;
+};
+
+
+export type MutationCopyManyActsByIdsArgs = {
+  ids: Array<Scalars['String']>;
+  num: Scalars['Float'];
 };
 
 
@@ -167,8 +178,8 @@ export type MutationCreateActArgs = {
 };
 
 
-export type MutationCreateApplicationArgs = {
-  data: PatchAppDto;
+export type MutationCreateApplicationBaseArgs = {
+  data: NewAppDto;
 };
 
 
@@ -177,7 +188,7 @@ export type MutationDeleteByIdActArgs = {
 };
 
 
-export type MutationDeleteByIdApplicationArgs = {
+export type MutationDeleteByIdApplicationBaseArgs = {
   id: Scalars['String'];
 };
 
@@ -188,7 +199,7 @@ export type MutationUpdateActArgs = {
 };
 
 
-export type MutationUpdateApplicationArgs = {
+export type MutationUpdateApplicationBaseArgs = {
   data: PatchAppDto;
   id: Scalars['String'];
 };
@@ -200,14 +211,14 @@ export type MutationUpdateWhereActArgs = {
 };
 
 
-export type MutationUpdateWhereApplicationArgs = {
+export type MutationUpdateWhereApplicationBaseArgs = {
   data: Scalars['String'];
   where: Scalars['String'];
 };
 
 export type NewActDto = {
   additions?: Maybe<Scalars['String']>;
-  applications?: Maybe<Array<ApplicationInput>>;
+  applications?: Maybe<Array<PatchAppDto>>;
   climaticEnvironmental?: Maybe<Scalars['String']>;
   customer: Scalars['String'];
   datetime?: Maybe<DateTimeInput>;
@@ -219,17 +230,22 @@ export type NewActDto = {
   lab: Scalars['String'];
   method?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  normativeDocument?: Maybe<Array<Scalars['String']>>;
+  normativeDocuments?: Maybe<Array<Scalars['String']>>;
   objectName?: Maybe<Scalars['String']>;
   passedSample?: Maybe<Scalars['String']>;
   place?: Maybe<Scalars['String']>;
   planning?: Maybe<Scalars['String']>;
-  preparation?: Maybe<Array<Scalars['String']>>;
+  preparations?: Maybe<Array<Scalars['String']>>;
   representative?: Maybe<Scalars['String']>;
   sample?: Maybe<Scalars['String']>;
   sampleType?: Maybe<Scalars['String']>;
   toolType?: Maybe<Scalars['String']>;
   typeOfSample: Scalars['String'];
+};
+
+export type NewAppDto = {
+  datetime?: Maybe<DateTimeInput>;
+  place?: Maybe<Scalars['String']>;
 };
 
 export type NormativeDocument = {
@@ -246,7 +262,7 @@ export type PassedSample = {
 
 export type PatchActDto = {
   additions?: Maybe<Scalars['String']>;
-  applications?: Maybe<Array<ApplicationInput>>;
+  applications?: Maybe<Array<PatchAppDto>>;
   climaticEnvironmental?: Maybe<Scalars['String']>;
   customer?: Maybe<Scalars['String']>;
   datetime?: Maybe<DateTimeInput>;
@@ -259,12 +275,12 @@ export type PatchActDto = {
   lab?: Maybe<Scalars['String']>;
   method?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  normativeDocument?: Maybe<Array<Scalars['String']>>;
+  normativeDocuments?: Maybe<Array<Scalars['String']>>;
   objectName?: Maybe<Scalars['String']>;
   passedSample?: Maybe<Scalars['String']>;
   place?: Maybe<Scalars['String']>;
   planning?: Maybe<Scalars['String']>;
-  preparation?: Maybe<Array<Scalars['String']>>;
+  preparations?: Maybe<Array<Scalars['String']>>;
   representative?: Maybe<Scalars['String']>;
   sample?: Maybe<Scalars['String']>;
   sampleType?: Maybe<Scalars['String']>;
@@ -274,6 +290,7 @@ export type PatchActDto = {
 
 export type PatchAppDto = {
   datetime: DateTimeInput;
+  id: Scalars['ID'];
   place: Scalars['String'];
 };
 
@@ -292,13 +309,15 @@ export type Preparation = {
 export type Query = {
   __typename?: 'Query';
   findAllAct: Array<Act>;
-  findAllApplication: Array<Application>;
+  findAllApplicationBase: Array<ApplicationBase>;
   findByIdAct: Act;
-  findByIdApplication: Application;
+  findByIdApplicationBase: ApplicationBase;
+  findManyByIdsAct: Array<Act>;
+  findManyByIdsApplicationBase: Array<ApplicationBase>;
   findManyWhereAct: Array<Act>;
-  findManyWhereApplication: Array<Application>;
+  findManyWhereApplicationBase: Array<ApplicationBase>;
   findOneWhereAct: Act;
-  findOneWhereApplication: Application;
+  findOneWhereApplicationBase: ApplicationBase;
   getTableContent: TableContent;
 };
 
@@ -309,7 +328,7 @@ export type QueryFindAllActArgs = {
 };
 
 
-export type QueryFindAllApplicationArgs = {
+export type QueryFindAllApplicationBaseArgs = {
   field?: Maybe<Scalars['String']>;
   relations?: Maybe<Array<Scalars['String']>>;
 };
@@ -317,11 +336,25 @@ export type QueryFindAllApplicationArgs = {
 
 export type QueryFindByIdActArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
-export type QueryFindByIdApplicationArgs = {
+export type QueryFindByIdApplicationBaseArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsActArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsApplicationBaseArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
@@ -330,7 +363,7 @@ export type QueryFindManyWhereActArgs = {
 };
 
 
-export type QueryFindManyWhereApplicationArgs = {
+export type QueryFindManyWhereApplicationBaseArgs = {
   where: Scalars['String'];
 };
 
@@ -340,7 +373,7 @@ export type QueryFindOneWhereActArgs = {
 };
 
 
-export type QueryFindOneWhereApplicationArgs = {
+export type QueryFindOneWhereApplicationBaseArgs = {
   where: Scalars['String'];
 };
 
@@ -413,59 +446,58 @@ export type WholeActWithIdsFragment = (
   ), typeOfSample: (
     { __typename?: 'TypeOfSample' }
     & Pick<TypeOfSample, 'id'>
-  ), place: (
+  ), place?: Maybe<(
     { __typename?: 'Place' }
     & Pick<Place, 'id'>
-  ), datetime: (
+  )>, datetime: (
     { __typename?: 'DateAndTime' }
     & Pick<DateAndTime, 'date' | 'time'>
-  ), method: (
+  ), method?: Maybe<(
     { __typename?: 'Method' }
     & Pick<Method, 'id'>
-  ), toolType: (
+  )>, toolType?: Maybe<(
     { __typename?: 'ToolType' }
     & Pick<ToolType, 'id'>
-  ), normativeDocuments: Array<(
+  )>, normativeDocuments: Array<(
     { __typename?: 'NormativeDocument' }
     & Pick<NormativeDocument, 'id'>
-  )>, sampleType: (
+  )>, sampleType?: Maybe<(
     { __typename?: 'SampleType' }
     & Pick<SampleType, 'id'>
-  ), preparation: Array<(
+  )>, preparations: Array<(
     { __typename?: 'Preparation' }
     & Pick<Preparation, 'id'>
-  )>, goal: (
+  )>, goal?: Maybe<(
     { __typename?: 'Goal' }
     & Pick<Goal, 'id'>
-  ), definedIndicators: Array<(
+  )>, definedIndicators: Array<(
     { __typename?: 'DefinedIndicator' }
     & Pick<DefinedIndicator, 'id'>
-  )>, environmentalEngineer: (
+  )>, environmentalEngineer?: Maybe<(
     { __typename?: 'EnvironmentalEngineer' }
     & Pick<EnvironmentalEngineer, 'id'>
-  ), representative: (
+  )>, representative?: Maybe<(
     { __typename?: 'Representative' }
     & Pick<Representative, 'id'>
-  ), passedSample: (
+  )>, passedSample?: Maybe<(
     { __typename?: 'PassedSample' }
     & Pick<PassedSample, 'id'>
-  ), applications: Array<(
-    { __typename?: 'Application' }
-    & Pick<Application, 'id' | 'place'>
-    & { datetime: (
-      { __typename?: 'DateAndTime' }
-      & Pick<DateAndTime, 'date' | 'time'>
-    ) }
+  )>, applications: Array<(
+    { __typename?: 'ApplicationBase' }
+    & Pick<ApplicationBase, 'id'>
   )> }
 );
 
 export type WholeApplicationFragment = (
-  { __typename?: 'Application' }
-  & Pick<Application, 'id' | 'place'>
-  & { datetime: (
+  { __typename?: 'ApplicationBase' }
+  & Pick<ApplicationBase, 'id'>
+  & { place?: Maybe<(
+    { __typename?: 'Place' }
+    & Pick<Place, 'id'>
+  )>, datetime?: Maybe<(
     { __typename?: 'DateAndTime' }
     & Pick<DateAndTime, 'date' | 'time'>
-  ) }
+  )> }
 );
 
 export type PostActMutationVariables = Exact<{
@@ -496,16 +528,27 @@ export type PatchActMutation = (
 );
 
 export type CreatAppMutationVariables = Exact<{
-  data: PatchAppDto;
+  data: NewAppDto;
 }>;
 
 
 export type CreatAppMutation = (
   { __typename?: 'Mutation' }
-  & { createApplication: (
-    { __typename?: 'Application' }
-    & Pick<Application, 'id'>
+  & { createApplicationBase: (
+    { __typename?: 'ApplicationBase' }
+    & WholeApplicationFragment
   ) }
+);
+
+export type CopyManyActsByIdsMutationVariables = Exact<{
+  ids: Array<Scalars['String']>;
+  num: Scalars['Float'];
+}>;
+
+
+export type CopyManyActsByIdsMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'copyManyActsByIds'>
 );
 
 export type FindAllActQueryVariables = Exact<{
@@ -543,6 +586,7 @@ export type FindAllActQuery = (
 
 export type GetWholeActWithIdsQueryVariables = Exact<{
   data: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 }>;
 
 
@@ -556,15 +600,30 @@ export type GetWholeActWithIdsQuery = (
 
 export type GetAppByIdQueryVariables = Exact<{
   data: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 }>;
 
 
 export type GetAppByIdQuery = (
   { __typename?: 'Query' }
-  & { findByIdApplication: (
-    { __typename?: 'Application' }
+  & { findByIdApplicationBase: (
+    { __typename?: 'ApplicationBase' }
     & WholeApplicationFragment
   ) }
+);
+
+export type GetAppsByIdsQueryVariables = Exact<{
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+}>;
+
+
+export type GetAppsByIdsQuery = (
+  { __typename?: 'Query' }
+  & { findManyByIdsApplicationBase: Array<(
+    { __typename?: 'ApplicationBase' }
+    & WholeApplicationFragment
+  )> }
 );
 
 export const WholeActWithIdsFragmentDoc = gql`
@@ -606,7 +665,7 @@ export const WholeActWithIdsFragmentDoc = gql`
     id
   }
   sample
-  preparation {
+  preparations {
     id
   }
   goal {
@@ -628,18 +687,15 @@ export const WholeActWithIdsFragmentDoc = gql`
   }
   applications {
     id
-    place
-    datetime {
-      date
-      time
-    }
   }
 }
     `;
 export const WholeApplicationFragmentDoc = gql`
-    fragment WholeApplication on Application {
+    fragment WholeApplication on ApplicationBase {
   id
-  place
+  place {
+    id
+  }
   datetime {
     date
     time
@@ -679,18 +735,31 @@ export const PatchActDocument = gql`
     client = 'ActsClient';
   }
 export const CreatAppDocument = gql`
-    mutation CreatApp($data: PatchAppDto!) {
-  createApplication(data: $data) {
-    id
+    mutation CreatApp($data: NewAppDto!) {
+  createApplicationBase(data: $data) {
+    ...WholeApplication
   }
 }
-    `;
+    ${WholeApplicationFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
   export class CreatAppGQL extends Apollo.Mutation<CreatAppMutation, CreatAppMutationVariables> {
     document = CreatAppDocument;
+    client = 'ActsClient';
+  }
+export const CopyManyActsByIdsDocument = gql`
+    mutation CopyManyActsByIds($ids: [String!]!, $num: Float!) {
+  copyManyActsByIds(ids: $ids, num: $num)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CopyManyActsByIdsGQL extends Apollo.Mutation<CopyManyActsByIdsMutation, CopyManyActsByIdsMutationVariables> {
+    document = CopyManyActsByIdsDocument;
     client = 'ActsClient';
   }
 export const FindAllActDocument = gql`
@@ -737,8 +806,8 @@ export const FindAllActDocument = gql`
     client = 'ActsClient';
   }
 export const GetWholeActWithIdsDocument = gql`
-    query getWholeActWithIds($data: String!) {
-  findByIdAct(id: $data) {
+    query getWholeActWithIds($data: String!, $relations: [String!]) {
+  findByIdAct(id: $data, relations: $relations) {
     ...WholeActWithIds
   }
 }
@@ -752,8 +821,8 @@ export const GetWholeActWithIdsDocument = gql`
     client = 'ActsClient';
   }
 export const GetAppByIdDocument = gql`
-    query getAppById($data: String!) {
-  findByIdApplication(id: $data) {
+    query getAppById($data: String!, $relations: [String!]) {
+  findByIdApplicationBase(id: $data, relations: $relations) {
     ...WholeApplication
   }
 }
@@ -764,5 +833,20 @@ export const GetAppByIdDocument = gql`
   })
   export class GetAppByIdGQL extends Apollo.Query<GetAppByIdQuery, GetAppByIdQueryVariables> {
     document = GetAppByIdDocument;
+    client = 'ActsClient';
+  }
+export const GetAppsByIdsDocument = gql`
+    query getAppsByIds($ids: [String!]!, $relations: [String!]) {
+  findManyByIdsApplicationBase(ids: $ids, relations: $relations) {
+    ...WholeApplication
+  }
+}
+    ${WholeApplicationFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAppsByIdsGQL extends Apollo.Query<GetAppsByIdsQuery, GetAppsByIdsQueryVariables> {
+    document = GetAppsByIdsDocument;
     client = 'ActsClient';
   }

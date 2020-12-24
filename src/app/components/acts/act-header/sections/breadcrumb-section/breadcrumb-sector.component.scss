@@ -1,0 +1,15 @@
+.breadcrumb-raw {
+    display: flex;
+}
+
+.breadcrumb-items {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    align-content: center
+}
+
+.breadcrumb-item {
+    display: block;
+    align-self: center;
+}

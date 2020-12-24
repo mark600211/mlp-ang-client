@@ -39,11 +39,17 @@ export type Address = {
   zip?: Maybe<Scalars['String']>;
 };
 
-export type Application = {
-  __typename?: 'Application';
-  datetime: DateAndTime;
+export type ApplicationBase = {
+  __typename?: 'ApplicationBase';
+  datetime?: Maybe<DateAndTime>;
   id: Scalars['ID'];
-  place: Scalars['String'];
+  place?: Maybe<Place>;
+};
+
+export type ApplicationInput = {
+  datetime?: Maybe<DateTimeInput>;
+  id: Scalars['ID'];
+  place?: Maybe<InputPlace>;
 };
 
 export type ClimaticEnvironmental = {
@@ -63,14 +69,14 @@ export type Customer = {
 
 export type DateAndTime = {
   __typename?: 'DateAndTime';
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 
 export type DateTimeInput = {
-  date: Scalars['DateTime'];
-  time: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
+  time?: Maybe<Scalars['String']>;
 };
 
 export type DefinedIndicator = {
@@ -99,6 +105,10 @@ export type Goal = {
   __typename?: 'Goal';
   id: Scalars['ID'];
   label: Scalars['String'];
+};
+
+export type InputPlace = {
+  id: Scalars['ID'];
 };
 
 export type Lab = {
@@ -566,9 +576,7 @@ export type PassedSample = {
 
 export type PatchDefinedIndicator = {
   id: Scalars['String'];
-  lab: Scalars['String'];
   label: Scalars['String'];
-  typeOfSample: Scalars['String'];
 };
 
 export type PatchOption = {
@@ -627,6 +635,22 @@ export type Query = {
   findByIdSampleType: SampleType;
   findByIdToolType: ToolType;
   findByIdTypeOfSample: TypeOfSample;
+  findManyByIdsClimaticEnvironmental: Array<ClimaticEnvironmental>;
+  findManyByIdsDefinedIndicator: Array<DefinedIndicator>;
+  findManyByIdsEnvironmentalEngineer: Array<EnvironmentalEngineer>;
+  findManyByIdsGoal: Array<Goal>;
+  findManyByIdsMethod: Array<Method>;
+  findManyByIdsNormativeDocument: Array<NormativeDocument>;
+  findManyByIdsObjectName: Array<ObjectName>;
+  findManyByIdsPassedSample: Array<PassedSample>;
+  findManyByIdsPlace: Array<Place>;
+  findManyByIdsPlanning: Array<Planning>;
+  findManyByIdsPreparation: Array<Preparation>;
+  findManyByIdsRepresentative: Array<Representative>;
+  findManyByIdsSample: Array<Sample>;
+  findManyByIdsSampleType: Array<SampleType>;
+  findManyByIdsToolType: Array<ToolType>;
+  findManyByIdsTypeOfSample: Array<TypeOfSample>;
   findManyWhereClimaticEnvironmental: Array<ClimaticEnvironmental>;
   findManyWhereDefinedIndicator: Array<DefinedIndicator>;
   findManyWhereEnvironmentalEngineer: Array<EnvironmentalEngineer>;
@@ -760,81 +784,193 @@ export type QueryFindAllTypeOfSampleArgs = {
 
 export type QueryFindByIdClimaticEnvironmentalArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdDefinedIndicatorArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdEnvironmentalEngineerArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdGoalArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdMethodArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdNormativeDocumentArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdObjectNameArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdPassedSampleArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdPlaceArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdPlanningArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdPreparationArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdRepresentativeArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdSampleArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdSampleTypeArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdToolTypeArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 
 export type QueryFindByIdTypeOfSampleArgs = {
   id: Scalars['String'];
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsClimaticEnvironmentalArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsDefinedIndicatorArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsEnvironmentalEngineerArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsGoalArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsMethodArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsNormativeDocumentArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsObjectNameArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsPassedSampleArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsPlaceArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsPlanningArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsPreparationArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsRepresentativeArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsSampleArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsSampleTypeArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsToolTypeArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QueryFindManyByIdsTypeOfSampleArgs = {
+  ids: Array<Scalars['String']>;
+  relations?: Maybe<Array<Scalars['String']>>;
 };
 
 

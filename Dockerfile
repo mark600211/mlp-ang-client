@@ -1,14 +1,19 @@
 # base image
-FROM node:alpine as builder
+FROM node:latest as buildernp
 
 # set working directory
-WORKDIR '/app'
+WORKDIR /app
 
 # install and cache app dependencies
-COPY ./package.json ./
-RUN npm install
-RUN npm install --save typescript@3.92
-RUN npm install -g @angular/cli
+COPY package.json .
+
+RUN npm cache clean --force
+
+RUN npm install --no-package-lock --legacy-peer-deps
+
+RUN npm install --save typescript@3.9.2 --no-package-lock --force --legacy-peer-deps
+
+RUN npm install -g @angular/cli --no-package-lock
 
 # add app
 COPY . .

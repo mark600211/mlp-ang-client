@@ -7,3 +7,13 @@
     top: 0;
     z-index: 500;
 }
+
+.header-breadcrumb {
+    display: flex;
+    flex-direction: row
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+}

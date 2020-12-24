@@ -35,6 +35,7 @@ import { ColumnModel } from "../models/column.model";
       </mat-card-content>
     </mat-card>
   `,
+  styles: ["mat-chip { margin-bottom: 5px }"],
 })
 export class ColumnFileterComponent implements OnInit {
   allColumnActive: boolean = false;

@@ -1,3 +1,5 @@
+import { ApplicationModel } from "src/app/shared/models/application.model";
+
 export class PatchActModel {
   public id: string;
   public name: string;
@@ -15,10 +17,10 @@ export class PatchActModel {
   public toolType: string;
   public climaticEnvironmental: string;
   public planning: string;
-  public normativeDocument: string[];
+  public normativeDocuments: string[];
   public sampleType: string;
   public sample: string;
-  public preparation: string[];
+  public preparations: string[];
   public goal: string;
   public definedIndicators: string[];
   public additions: string;
@@ -28,7 +30,7 @@ export class PatchActModel {
   public passedSample: string;
   public createdAt: string;
   public updatedAt: string;
-  // public applications: ApplicationModel[];
+  public applications: ApplicationModel[];
 
   constructor(options: {
     id?: string;
@@ -47,10 +49,10 @@ export class PatchActModel {
     toolType?: string;
     climaticEnvironmental?: string;
     planning?: string;
-    normativeDocument?: string[];
+    normativeDocuments?: string[];
     sampleType?: string;
     sample?: string;
-    preparation?: string[];
+    preparations?: string[];
     goal?: string;
     definedIndicators?: string[];
     additions?: string;
@@ -58,7 +60,7 @@ export class PatchActModel {
     environmentalEngineer?: string;
     representative?: string;
     passedSample?: string;
-    //   applications?: ApplicationModel[];
+    applications?: ApplicationModel[];
   }) {
     this.id = options.id || undefined;
     this.name = options.name;
@@ -73,10 +75,10 @@ export class PatchActModel {
     this.toolType = options.toolType || undefined;
     this.climaticEnvironmental = options.climaticEnvironmental || undefined;
     this.planning = options.planning || undefined;
-    this.normativeDocument = options.normativeDocument || undefined;
+    this.normativeDocuments = options.normativeDocuments || undefined;
     this.sampleType = options.sampleType || undefined;
     this.sample = options.sample || undefined;
-    this.preparation = options.preparation || undefined;
+    this.preparations = options.preparations || undefined;
     this.goal = options.goal || undefined;
     this.definedIndicators = options.definedIndicators || undefined;
     this.additions = options.additions || undefined;
@@ -85,6 +87,9 @@ export class PatchActModel {
     this.environmentalEngineer = options.environmentalEngineer || undefined;
     this.representative = options.representative || undefined;
     this.passedSample = options.passedSample || undefined;
-    //   this.applications = options.applications;
+    this.applications =
+      options.applications && options.applications.length > 0
+        ? options.applications
+        : [];
   }
 }

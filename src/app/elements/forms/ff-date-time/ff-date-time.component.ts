@@ -45,10 +45,21 @@ export class FfDateTimeComponent
   ngOnInit(): void {
     this.group = this.fb.group({});
     this.form.addControl(this.key, this.group);
+    console.log(this.form);
+
     this.fields = this.fieldsService.getFields();
+    if (this.value) {
+      this.addValue();
+    }
   }
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
+  }
+
+  addValue() {
+    this.fields.map((field) => {
+      field.value = this.value[`${field.key}`];
+    });
   }
 }

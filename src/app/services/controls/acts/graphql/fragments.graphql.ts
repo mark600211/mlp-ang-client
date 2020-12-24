@@ -40,7 +40,7 @@ export const WholeActWithIds = {
         id
       }
       sample
-      preparation {
+      preparations {
         id
       }
       goal {
@@ -62,11 +62,6 @@ export const WholeActWithIds = {
       }
       applications {
         id
-        place
-        datetime {
-          date
-          time
-        }
       }
     }
   `,
@@ -74,9 +69,11 @@ export const WholeActWithIds = {
 
 export const WholeApplication = {
   document: gql`
-    fragment WholeApplication on Application {
+    fragment WholeApplication on ApplicationBase {
       id
-      place
+      place {
+        id
+      }
       datetime {
         date
         time

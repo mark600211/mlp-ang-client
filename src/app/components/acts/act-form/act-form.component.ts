@@ -7,11 +7,10 @@ import {
 } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute, Data } from "@angular/router";
+import { ActivatedRoute, Data, Router } from "@angular/router";
 
 import * as _moment from "moment";
 import { default as _rollupMoment } from "moment";
-import { ActFormService } from "src/app/services/forms/act-form.service";
 import { GetWholeActWithIdsQuery } from "src/types/acts/generated";
 import { Subscription } from "rxjs";
 import { UpdateActDto } from "src/app/shared/models/dto/update-act.dto";
@@ -29,28 +28,20 @@ const moment = _moment || _rollupMoment;
 })
 export class ActFormComponent implements OnInit, AfterContentInit, OnDestroy {
   private subscriptions$: Subscription = new Subscription();
-  acts: Array<any>;
   act: GetWholeActWithIdsQuery["findByIdAct"];
-  apps: any[];
   statusControl: boolean;
-  dateTimeFields: any[];
-  habitanFields: any;
   formAct: FormGroup;
-  formControl: FormControl;
-  _update: boolean;
-  _copy: boolean;
   copyControl: boolean = false;
-
   fields: FieldBase<any>[];
 
   constructor(
     private acs: ActControlService,
-    private AFS: ActFormService,
     private activatedroute: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private fieldsService: ActFormFieldsService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
     this.subscriptions$.add(
       this.activatedroute.data.subscribe((data: Data) => {
@@ -72,7 +63,9 @@ export class ActFormComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnInit() {
     this.formAct = this.fb.group({});
     this.fields = this.fieldsService.getFields();
-    this.formAct.valueChanges.subscribe((val) => {});
+    if (this.act) {
+      this.addValue();
+    }
   }
 
   ngAfterContentInit() {
@@ -92,30 +85,51 @@ export class ActFormComponent implements OnInit, AfterContentInit, OnDestroy {
 
   onSubmit() {
     if (this.statusControl) {
-      this.subscriptions$
-        .add
-        // this.acs
-        //   .patchAct(
-        //     new UpdateActDto({ ...this.formAct.value, id: this.act.id }),
-        //     this.act.id
-        //   )
-        //   .subscribe((act) => {
-        //     this._snackBar.open(`Акт № ${act.name}`, "Обновлён Успешно", {
-        //       duration: 2000,
-        //     });
-        //   })
-        ();
+      this.subscriptions$.add;
+      this.acs
+        .patchAct(
+          new UpdateActDto({ ...this.formAct.value, id: this.act.id }),
+          this.act.id
+        )
+        .subscribe((act) => {
+          this.router.navigate(["acts/table"], {});
+          this._snackBar.open(`Акт ${act.name}`, "Обновлён Успешно", {
+            duration: 2000,
+          });
+        });
     } else {
       this.subscriptions$.add(
         this.acs
           .postAct(new PatchActModel(this.formAct.value))
           .subscribe((act) => {
+            this.router.navigate(["acts/table"]);
             this._snackBar.open(`Акт ${act.createAct.name}`, "Создан", {
               duration: 2000,
             });
           })
       );
     }
+  }
+
+  addValue() {
+    this.fields.map((field) => {
+      const val = this.act[`${field.key}`];
+      if (val?.id) {
+        field.value = val.id;
+      } else if (val?.date) {
+        field.value = {};
+        field.value["date"] = val.date;
+        field.value["time"] = val.time;
+      } else if (Array.isArray(val)) {
+        console.log(val);
+
+        (<Array<any>>val).map((value) => value.id);
+
+        field.value = (<Array<any>>val).map((value) => value.id);
+      } else {
+        field.value = val;
+      }
+    });
   }
 
   ngOnDestroy() {

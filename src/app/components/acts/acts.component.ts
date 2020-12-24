@@ -1,4 +1,12 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import {
+  AfterContentInit,
+  Component,
+  HostListener,
+  OnInit,
+} from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs/operators";
+import { SectionsService } from "./act-header/sections/sections.service";
 
 @Component({
   selector: "app-acts",
@@ -8,4 +16,10 @@ import { Component, HostListener, OnInit } from "@angular/core";
     <router-outlet> </router-outlet>
   `,
 })
-export class ActsComponent {}
+export class ActsComponent implements OnInit {
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.router.navigate(["acts/table"]);
+  }
+}

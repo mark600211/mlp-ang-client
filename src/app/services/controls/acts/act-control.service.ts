@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { ProcessHTTPMsgService } from "../../process-httpmsg.service";
 import {
+  CopyManyActsByIdsGQL,
   FindAllActGQL,
   FindAllActQuery,
   GetWholeActWithIdsGQL,
@@ -25,7 +26,8 @@ export class ActControlService {
     private readonly getAllActs: FindAllActGQL,
     private readonly getWholeActWithIds: GetWholeActWithIdsGQL,
     private readonly createAct: PostActGQL,
-    private readonly updateAct: PatchActGQL
+    private readonly updateAct: PatchActGQL,
+    private readonly copyManyActsByIdsGQL: CopyManyActsByIdsGQL
   ) {}
 
   getActs(
@@ -40,10 +42,6 @@ export class ActControlService {
       ids: string[];
     }[]
   ): Observable<FindAllActQuery["getTableContent"]> {
-    console.log(sort);
-
-    console.log(sortDirection);
-
     return this.getAllActs
       .watch(
         {
@@ -71,7 +69,30 @@ export class ActControlService {
     id: string
   ): Observable<GetWholeActWithIdsQuery["findByIdAct"]> {
     return this.getWholeActWithIds
-      .watch({ data: id })
+      .watch(
+        {
+          data: id,
+          relations: [
+            "customer",
+            "generalCustomer",
+            "lab",
+            "typeOfSample",
+            "place",
+            "method",
+            "toolType",
+            "normativeDocuments",
+            "sampleType",
+            "preparations",
+            "goal",
+            "definedIndicators",
+            "environmentalEngineer",
+            "representative",
+            "passedSample",
+            "applications",
+          ],
+        },
+        { fetchPolicy: "no-cache" }
+      )
       .valueChanges.pipe(map(({ data }) => data.findByIdAct))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
@@ -91,6 +112,13 @@ export class ActControlService {
     return this.updateAct
       .mutate({ data: body, id })
       .pipe(map(({ data }) => data.updateAct))
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  copyManyActsByIds(ids: string[], num: number = 1): Observable<boolean> {
+    return this.copyManyActsByIdsGQL
+      .mutate({ ids, num })
+      .pipe(map(({ data }) => data.copyManyActsByIds))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

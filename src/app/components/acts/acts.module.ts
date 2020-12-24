@@ -14,7 +14,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { DatePipe } from "@angular/common";
 import { EditActOptionsComponent } from "./act-form/edit-act-options/edit-act-options.component";
 import { ActApplitcationComponent } from "./act-form/act-applitcation/act-applitcation.component";
-import { ActsTableComponent } from "./acts-table/acts-table.component";
+import { ActsTableComponent, NewAct } from "./acts-table/acts-table.component";
 import { DocsComponent } from "./act-details/docs/docs.component";
 import { DetailsPdfComponent } from "./act-details/details-pdf/details-pdf.component";
 import { FilterOptionsPipe } from "./acts-table/pipes/filter-options.pipe";
@@ -25,13 +25,20 @@ import { TableFilterComponent } from "./acts-table/filters/table-filter.componen
 import { FilterCheapsetComponent } from "./acts-table/filters/filter-cheapset/filter-cheapset.component";
 import { ActHeaderComponent } from "./act-header/act-header.component";
 import { ActHeaderCentralSectionComponent } from "./act-header/sections/central-section.component";
+import { ActHeaderBreadcrumbComponent } from "./act-header/sections/breadcrumb-section/breadcrumb-section.component";
+import { ActHeaderRightSectionComponent } from "./act-header/sections/right-section.component";
+import { ButtonsSectionComponent } from "./acts-table/button-section/buttons-section.component";
+import { ButtonsModule } from "src/app/elements/buttons/buttons.module";
 
 @NgModule({
   declarations: [
     ActsComponent,
     ActHeaderComponent,
     ActHeaderCentralSectionComponent,
+    ActHeaderRightSectionComponent,
+    ActHeaderBreadcrumbComponent,
     ActFormComponent,
+    ButtonsSectionComponent,
     EditActOptionsComponent,
     ActApplitcationComponent,
     ActsTableComponent,
@@ -41,8 +48,10 @@ import { ActHeaderCentralSectionComponent } from "./act-header/sections/central-
     ColumnFileterComponent,
     TableFilterComponent,
     FilterCheapsetComponent,
+    NewAct,
   ],
   imports: [
+    ButtonsModule,
     SharedModule,
     FFModule,
     ActsRoutingModule,

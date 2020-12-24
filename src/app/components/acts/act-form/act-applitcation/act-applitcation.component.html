@@ -2,7 +2,7 @@
   <mat-expansion-panel-header>
     <mat-panel-title>Приложение</mat-panel-title>
   </mat-expansion-panel-header>
-  <div fxFlex fxLayoutGap="5px" fxLayout="column">
+  <div fxFlex fxLayoutGap="5px" fxLayout="column" *ngIf="controls">
     <mat-action-list>
       <button
         mat-button
@@ -11,6 +11,15 @@
         (click)="addField()"
       >
         Добавить строку
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="background-primary text-floral-white"
+        (click)="deleteAllFields()"
+        *ngIf="controls.length > 1"
+      >
+        Удалить все строки
       </button>
     </mat-action-list>
     <div *ngIf="controls.length !== 0">
@@ -22,25 +31,11 @@
           >
             <div [formGroupName]="i">
               <div *ngFor="let field of fields" fxFlex>
-                <div [ngSwitch]="field.controlType">
-                  <app-ff-select
-                    *ngSwitchCase="'SelectWAdr'"
-                    [control]="field.key"
-                    [label]="field.label"
-                    [form]="app"
-                    [key]="field.key"
-                    [populate]="field.populate"
-                    [editable]="field.editable"
-                    [deletable]="field.deletable"
-                  ></app-ff-select>
-                  <app-ff-date-time
-                    *ngSwitchCase="'datetime'"
-                    [form]="app"
-                    [controll]="field.key"
-                    [key]="field.key"
-                    [item]="app.value['datetime']"
-                  ></app-ff-date-time>
-                </div>
+                <app-form-renderer
+                  [form]="controls[i]"
+                  [field]="field"
+                  [field.value]="'test'"
+                ></app-form-renderer>
               </div>
               <app-clear-button
                 type="button"

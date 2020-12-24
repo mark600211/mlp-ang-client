@@ -11,10 +11,10 @@ import { HostDirective } from "src/app/directives/host.directive";
 import { SectionsService } from "./sections.service";
 
 @Component({
-  selector: "app-act-header-central",
+  selector: "app-act-header-right",
   template: ` <ng-template host></ng-template> `,
 })
-export class ActHeaderCentralSectionComponent implements OnInit {
+export class ActHeaderRightSectionComponent implements OnInit {
   @ViewChild(HostDirective, { static: true }) host: HostDirective;
 
   componentRef: ComponentRef<any>;
@@ -28,7 +28,7 @@ export class ActHeaderCentralSectionComponent implements OnInit {
 
   ngOnInit() {
     this.subscription$.add(
-      this.sectionsService.createCentralSource.subscribe(
+      this.sectionsService.createRightSource.subscribe(
         (component: Type<any>) => {
           const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
             component
@@ -44,7 +44,7 @@ export class ActHeaderCentralSectionComponent implements OnInit {
       )
     );
     this.subscription$.add(
-      this.sectionsService.destroyCentralSource.subscribe(() => {
+      this.sectionsService.destroyRightSource.subscribe(() => {
         if (this.componentRef) {
           this.componentRef.destroy();
         }

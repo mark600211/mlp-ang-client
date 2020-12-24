@@ -25,21 +25,4 @@ export class ActFormService {
     });
     return this.fb.group(group);
   }
-
-  initArray(key: string, items?: any[]): FormArray {
-    if (items && items.length > 0) {
-      let arrform = this.fb.array([]);
-      items.forEach((item) => {
-        let gr = this.initForm(key, "act", item);
-        arrform.push(gr);
-      });
-      return arrform;
-    } else {
-      let gr = this.initForm(key, "act");
-      let arr = [];
-      let arrform = this.fb.array(arr);
-      //   arrform.push(gr);
-      return arrform;
-    }
-  }
 }

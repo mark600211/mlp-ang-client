@@ -85,8 +85,8 @@ export class getAllActs {
 
 export class getWholeActWithIds {
   document = gql`
-    query getWholeActWithIds($data: String!) {
-      findByIdAct(id: $data) {
+    query getWholeActWithIds($data: String!, $relations: [String!]) {
+      findByIdAct(id: $data, relations: $relations) {
         ...WholeActWithIds
       }
     }
@@ -96,8 +96,19 @@ export class getWholeActWithIds {
 
 export class getAppById {
   document = gql`
-    query getAppById($data: String!) {
-      findByIdApplication(id: $data) {
+    query getAppById($data: String!, $relations: [String!]) {
+      findByIdApplicationBase(id: $data, relations: $relations) {
+        ...WholeApplication
+      }
+    }
+    ${WholeApplication.document}
+  `;
+}
+
+export class getAppsByIds {
+  document = gql`
+    query getAppsByIds($ids: [String!]!, $relations: [String!]) {
+      findManyByIdsApplicationBase(ids: $ids, relations: $relations) {
         ...WholeApplication
       }
     }

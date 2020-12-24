@@ -56,13 +56,9 @@ export class FfAutocompleteComponent implements OnInit {
         .getOptionsForOption(null, this.key)
         .subscribe((items) => {
           this.optionsList = items.map((item) => item.label);
-          console.log(this.optionsList);
-
           this.filteredOptions = this.form.controls[this.key].valueChanges.pipe(
             startWith(""),
             map((value) => {
-              console.log(value);
-
               return this._filter(value);
             })
           );
